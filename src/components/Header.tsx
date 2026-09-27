@@ -1,8 +1,17 @@
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Menu, X, ArrowRight, BookOpen, Sparkles } from 'lucide-react';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const links = [
     { name: 'Início', href: '#inicio' },
@@ -14,47 +23,80 @@ export function Header() {
   ];
 
   return (
-    <header className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100 shadow-sm transition-all">
+    <header 
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white/90 backdrop-blur-xl border-b border-neutral-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.05)]' 
+          : 'bg-white/70 backdrop-blur-md border-b border-neutral-100/60'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
+          {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <a href="#inicio" className="flex items-center">
-              <img
-                src="/assets/logo/logo.png"
-                alt="Magagnini Educação"
-                className="h-10 w-auto"
-                onError={(e) => {
-                  e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iNDAiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNlNWU3ZWIiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5YjExMWUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5MT0dPIEFRVUk8L3RleHQ+PC9zdmc+';
-                }}
-              />
+            <a href="#inicio" className="flex items-center gap-3 group">
+              <div className="relative">
+                <img
+                  src="/assets/logo/logo.png"
+                  alt="Magagnini Educação"
+                  className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                  }}
+                />
+                {/* Elegant Brand Fallback Logo */}
+                <div className="hidden flex items-center gap-2.5">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-wine-800 to-black text-white flex items-center justify-center font-serif font-bold text-xl shadow-md border border-wine-600/40">
+                    M
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-serif font-black tracking-tight text-neutral-900 text-lg leading-tight group-hover:text-wine-800 transition-colors">
+                      MAGAGNINI
+                    </span>
+                    <span className="text-[10px] font-sans font-bold tracking-[0.25em] text-wine-800 uppercase leading-none">
+                      Educação
+                    </span>
+                  </div>
+                </div>
+              </div>
             </a>
           </div>
           
-          <nav className="hidden md:flex space-x-8">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center space-x-1">
             {links.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="text-gray-900 hover:text-wine-800 px-3 py-2 text-sm font-medium transition-colors"
+                className="relative px-3.5 py-2 text-sm font-sans font-semibold text-neutral-700 hover:text-wine-800 transition-colors rounded-lg group"
               >
-                {link.name}
+                <span>{link.name}</span>
+                <span className="absolute bottom-1 left-3.5 right-3.5 h-0.5 bg-wine-700 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left rounded-full" />
               </a>
             ))}
           </nav>
 
+          {/* Premium 3D Action Button */}
           <div className="hidden md:flex items-center">
             <a
               href="#produtos"
-              className="bg-wine-800 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-wine-900 transition-colors shadow-md hover:shadow-lg"
+              className="relative inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-sm font-sans font-bold text-white bg-gradient-to-r from-wine-800 via-wine-700 to-wine-900 border border-wine-500/40 shadow-3d-wine hover:shadow-3d-wine-hover hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 group overflow-hidden"
             >
-              Conheça nossos materiais
+              {/* Subtle gloss line */}
+              <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out" />
+              <BookOpen size={16} className="text-wine-200 group-hover:scale-110 transition-transform" />
+              <span className="tracking-wide">Conheça nossos materiais</span>
+              <ArrowRight size={15} className="text-white/80 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
 
-          <div className="md:hidden flex items-center">
+          {/* Mobile hamburger button */}
+          <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-900 hover:text-wine-800 p-2"
+              className="p-2.5 rounded-xl text-neutral-800 hover:text-wine-800 hover:bg-neutral-100/80 transition-colors"
+              aria-label="Abrir menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -62,26 +104,34 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu dropdown */}
       {isOpen && (
-        <div className="md:hidden bg-white border-b border-gray-100 px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-lg">
-          {links.map((link) => (
+        <div className="lg:hidden bg-white/95 backdrop-blur-2xl border-b border-neutral-200 px-4 pt-3 pb-6 space-y-2 shadow-2xl animate-in slide-in-from-top-2 duration-200">
+          <div className="space-y-1">
+            {links.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="flex items-center justify-between px-4 py-3 text-base font-sans font-semibold text-neutral-800 hover:text-wine-800 hover:bg-wine-50/60 rounded-xl transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                <span>{link.name}</span>
+                <ArrowRight size={16} className="text-neutral-400" />
+              </a>
+            ))}
+          </div>
+
+          <div className="pt-2">
             <a
-              key={link.name}
-              href={link.href}
-              className="block px-3 py-2 text-base font-medium text-gray-900 hover:text-wine-800 hover:bg-gray-50 rounded-md"
+              href="#produtos"
+              className="flex items-center justify-center gap-2 w-full text-center bg-gradient-to-r from-wine-800 via-wine-700 to-wine-900 text-white px-6 py-3.5 rounded-2xl text-base font-sans font-bold shadow-3d-wine hover:shadow-3d-wine-hover transition-all"
               onClick={() => setIsOpen(false)}
             >
-              {link.name}
+              <Sparkles size={18} className="text-wine-200" />
+              <span>Conheça nossos materiais</span>
+              <ArrowRight size={18} />
             </a>
-          ))}
-          <a
-            href="#produtos"
-            className="block w-full text-center mt-4 bg-wine-800 text-white px-6 py-3 rounded-full text-base font-semibold hover:bg-wine-900 transition-colors"
-            onClick={() => setIsOpen(false)}
-          >
-            Conheça nossos materiais
-          </a>
+          </div>
         </div>
       )}
     </header>
