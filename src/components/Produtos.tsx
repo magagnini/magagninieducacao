@@ -1,41 +1,94 @@
 import { produtos } from '../data/produtos';
+import { PerspectiveBook } from './PerspectiveBook';
+import { Sparkles, ArrowRight, CheckCircle2 } from 'lucide-react';
 
-function ProductCard({ produto, actionText }: { produto: any, actionText: string }) {
+interface ProdutoItem {
+  id: string;
+  nome: string;
+  descricao: string;
+  imagem: string;
+  detalhe?: string;
+  subtitulo?: string;
+  destaque?: boolean;
+}
+
+function ProductCard({ 
+  produto, 
+  actionText,
+  bookSize = "default" 
+}: { 
+  produto: ProdutoItem; 
+  actionText: string;
+  bookSize?: "sm" | "default" | "lg";
+}) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full group">
-      <div className="aspect-[4/3] bg-gray-50 relative overflow-hidden flex items-center justify-center p-6">
-        <img 
-          src={produto.imagem} 
-          alt={produto.nome}
-          className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
-          onError={(e) => {
-            e.currentTarget.style.display = 'none';
-            e.currentTarget.nextElementSibling?.classList.remove('hidden');
+    <div className={`bg-white rounded-3xl border transition-all duration-300 flex flex-col h-full group ${
+      produto.destaque 
+        ? 'border-wine-200 shadow-lg hover:shadow-2xl hover:border-wine-400 bg-gradient-to-b from-wine-50/40 via-white to-white' 
+        : 'border-gray-100 shadow-sm hover:shadow-xl hover:border-gray-200'
+    }`}>
+      {/* 3D Book Showcase Area */}
+      <div className="relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[290px]">
+        {/* Subtle grid accent background */}
+        <div 
+          className="absolute inset-0 opacity-40 pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(#e5e7eb 1px, transparent 1px)",
+            backgroundSize: "16px 16px"
           }}
         />
-        <div className="hidden absolute inset-0 flex flex-col items-center justify-center text-gray-400 bg-gray-100 p-4 text-center">
-          <span className="text-sm font-medium mb-1">Placeholder: {produto.nome}</span>
-          <span className="text-xs break-all">{produto.imagem}</span>
-        </div>
+
+        {/* 3D Perspective Book */}
+        <PerspectiveBook
+          size={bookSize}
+          coverImage={produto.imagem}
+          title={produto.nome}
+          subtitle={produto.descricao}
+          badge={produto.detalhe}
+          isDestaque={produto.destaque}
+        />
         
-        {produto.detalhe && (
-          <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold ${
-            produto.destaque ? 'bg-wine-800 text-white shadow-md' : 'bg-gray-900 text-white'
-          }`}>
-            {produto.detalhe}
+        {/* Floating badge for Apostilões or Top Sellers */}
+        {produto.destaque && (
+          <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-wine-800 text-white shadow-md">
+            <Sparkles size={12} className="text-wine-200" />
+            <span>Produto Especial</span>
           </div>
         )}
       </div>
       
-      <div className="p-6 flex flex-col flex-grow">
-        <h3 className="text-xl font-bold text-gray-900 mb-2">{produto.nome}</h3>
+      {/* Product Details Area */}
+      <div className="p-6 md:p-7 flex flex-col flex-grow">
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <h3 className="text-xl font-bold text-gray-900 group-hover:text-wine-900 transition-colors">
+            {produto.nome}
+          </h3>
+        </div>
+
         {produto.subtitulo && (
-          <h4 className="text-sm font-semibold text-wine-800 mb-2 uppercase tracking-wider">{produto.subtitulo}</h4>
+          <h4 className="text-xs font-bold text-wine-800 mb-2 uppercase tracking-wider">
+            {produto.subtitulo}
+          </h4>
         )}
-        <p className="text-gray-600 text-sm mb-6 flex-grow">{produto.descricao}</p>
+
+        <p className="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">
+          {produto.descricao}
+        </p>
+
+        {/* Features Preview */}
+        <div className="mb-6 pt-4 border-t border-gray-100 flex items-center gap-2 text-xs text-gray-500">
+          <CheckCircle2 size={15} className="text-wine-700 flex-shrink-0" />
+          <span>Atividades estruturadas e prontas para uso</span>
+        </div>
         
-        <button className="w-full py-3 px-4 bg-gray-50 hover:bg-wine-800 hover:text-white text-gray-900 font-semibold rounded-xl border border-gray-200 hover:border-wine-800 transition-colors">
-          {actionText}
+        {/* Call to action button */}
+        <button className={`w-full py-3.5 px-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 ${
+          produto.destaque
+            ? 'bg-wine-800 hover:bg-wine-900 text-white shadow-md hover:shadow-lg hover:gap-3'
+            : 'bg-gray-900 hover:bg-wine-800 text-white shadow-sm hover:shadow-md hover:gap-3'
+        }`}>
+          <span>{actionText}</span>
+          <ArrowRight size={16} className="transition-transform" />
         </button>
       </div>
     </div>
@@ -46,45 +99,88 @@ export function Produtos() {
   return (
     <div id="produtos" className="bg-white">
       {/* Apostilas Acadêmicas */}
-      <section id="apostilas" className="py-20 border-b border-gray-100">
+      <section id="apostilas" className="py-24 border-b border-gray-100 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Apostilas Acadêmicas</h2>
+            <span className="text-wine-800 text-sm font-bold tracking-widest uppercase mb-3 inline-block">
+              Preparação e Excelência
+            </span>
+            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl tracking-tight">
+              Apostilas Acadêmicas
+            </h2>
             <p className="mt-4 text-lg text-gray-600">
-              Materiais voltados à preparação acadêmica e ao desenvolvimento de habilidades.
+              Materiais voltados à preparação acadêmica e ao desenvolvimento de habilidades essenciais.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {produtos.apostilasAcademicas.map((prod) => (
-              <ProductCard key={prod.id} produto={prod} actionText="Conhecer apostila" />
+              <ProductCard 
+                key={prod.id} 
+                produto={prod} 
+                actionText="Conhecer apostila" 
+                bookSize="default"
+              />
             ))}
           </div>
         </div>
       </section>
 
       {/* Atividades Adaptadas */}
-      <section id="atividades" className="py-20 bg-gray-50">
+      <section id="atividades" className="py-24 bg-gray-50/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Atividades Adaptadas</h2>
+            <span className="text-wine-800 text-sm font-bold tracking-widest uppercase mb-3 inline-block">
+              Inclusão e Pedagogia
+            </span>
+            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl tracking-tight">
+              Atividades Adaptadas
+            </h2>
             <p className="mt-4 text-lg text-gray-600">
-              Materiais desenvolvidos para apoiar o trabalho pedagógico com atividades estruturadas e adaptadas.
+              Materiais desenvolvidos para apoiar o trabalho pedagógico com atividades estruturadas e adaptadas para diferentes níveis.
             </p>
           </div>
           
-          {/* Destaques */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
-            {produtos.atividadesAdaptadas.filter(p => p.destaque).map((prod) => (
-              <ProductCard key={prod.id} produto={prod} actionText="Conhecer apostilão" />
-            ))}
+          {/* Apostilões em Destaque */}
+          <div className="mb-14">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-2.5 h-2.5 rounded-full bg-wine-800" />
+              <h3 className="text-xl font-bold text-gray-900">
+                Apostilões — Anos Finais (+500 atividades)
+              </h3>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {produtos.atividadesAdaptadas.filter(p => p.destaque).map((prod) => (
+                <ProductCard 
+                  key={prod.id} 
+                  produto={prod} 
+                  actionText="Conhecer apostilão completo" 
+                  bookSize="default"
+                />
+              ))}
+            </div>
           </div>
 
-          {/* Grid de Anos */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {produtos.atividadesAdaptadas.filter(p => !p.destaque).map((prod) => (
-              <ProductCard key={prod.id} produto={prod} actionText="Conhecer material" />
-            ))}
+          {/* Grid de Apostilas por Ano Escolar */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-2.5 h-2.5 rounded-full bg-gray-900" />
+              <h3 className="text-xl font-bold text-gray-900">
+                Apostilas por Ano Escolar (~100 atividades cada)
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {produtos.atividadesAdaptadas.filter(p => !p.destaque).map((prod) => (
+                <ProductCard 
+                  key={prod.id} 
+                  produto={prod} 
+                  actionText="Conhecer material" 
+                  bookSize="sm"
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
