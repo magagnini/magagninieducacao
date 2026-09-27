@@ -19,7 +19,9 @@ import {
   Menu,
   X,
   Phone,
-  ArrowLeft
+  ArrowLeft,
+  Play,
+  ExternalLink
 } from 'lucide-react';
 
 const WHATSAPP_URL = "https://wa.me/5511998713683?text=Ol%C3%A1!%20Quero%20falar%20sobre%20o%20Themis%20Class";
@@ -32,6 +34,7 @@ export function ThemisPage({ onBackToMagagnini }: ThemisPageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<'pedagogica' | 'disciplinar'>('pedagogica');
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   const faqs = [
     {
@@ -101,12 +104,11 @@ export function ThemisPage({ onBackToMagagnini }: ThemisPageProps) {
               
               <a href="#inicio" className="flex items-center gap-3 group">
                 <img
-                  src="/assets/produtos/solucoes-digitais/themis-class.png"
+                  src="/assets/logo/themis-class.png"
                   alt="Themis Class"
                   className="h-10 w-auto object-contain"
                   onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                    e.currentTarget.src = "/assets/produtos/solucoes-digitais/themis-class.png";
                   }}
                 />
                 <div className="hidden flex items-center gap-2">
@@ -126,13 +128,16 @@ export function ThemisPage({ onBackToMagagnini }: ThemisPageProps) {
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-7 text-sm font-semibold text-neutral-700">
+            <nav className="hidden lg:flex items-center space-x-6 text-sm font-semibold text-neutral-700">
+              <a href="#demonstracao-video" className="text-wine-800 hover:text-wine-900 font-bold flex items-center gap-1.5 transition-colors">
+                <Play size={13} className="fill-wine-800 text-wine-800" />
+                <span>Vídeo</span>
+              </a>
               <a href="#como-funciona" className="hover:text-wine-800 transition-colors">Como Funciona</a>
               <a href="#funcionalidades" className="hover:text-wine-800 transition-colors">Funcionalidades</a>
               <a href="#ocorrencias" className="hover:text-wine-800 transition-colors">Ocorrências</a>
               <a href="#comunicacao" className="hover:text-wine-800 transition-colors">Famílias</a>
               <a href="#dashboard" className="hover:text-wine-800 transition-colors">Plataforma</a>
-              <a href="#seguranca" className="hover:text-wine-800 transition-colors">Segurança</a>
               <a href="#faq" className="hover:text-wine-800 transition-colors">FAQ</a>
             </nav>
 
@@ -232,10 +237,11 @@ export function ThemisPage({ onBackToMagagnini }: ThemisPageProps) {
                 </a>
 
                 <a
-                  href="#como-funciona"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-700 bg-white border border-neutral-300 hover:border-wine-800 hover:text-wine-800 shadow-sm transition-all"
+                  href="#demonstracao-video"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-800 bg-white border border-neutral-300 hover:border-wine-800 hover:text-wine-800 shadow-sm transition-all group"
                 >
-                  <span>Ver como funciona ↓</span>
+                  <Play size={16} className="text-wine-800 fill-wine-800 group-hover:scale-110 transition-transform" />
+                  <span>Assistir Demonstração</span>
                 </a>
               </div>
 
@@ -418,6 +424,96 @@ export function ThemisPage({ onBackToMagagnini }: ThemisPageProps) {
                 <p className="text-neutral-600 text-sm leading-relaxed">{pillar.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* SEÇÃO — DEMONSTRAÇÃO EM VÍDEO (POSIÇÃO ESTRATÉGICA)      */}
+      {/* ========================================================= */}
+      <section id="demonstracao-video" className="py-24 bg-neutral-950 text-white relative overflow-hidden">
+        {/* Glow backdrop */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-wine-900/25 rounded-full blur-[160px] pointer-events-none" />
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-950/80 border border-wine-800/60 text-wine-300 text-xs font-bold uppercase tracking-wider mb-4 shadow-inner">
+            <Play size={12} className="fill-wine-400 text-wine-400" />
+            <span>Demonstração Oficial em Vídeo</span>
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-4">
+            Veja o Themis Class em Ação
+          </h2>
+
+          <p className="text-neutral-300 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+            Assista à apresentação e conheça na prática como o sistema agiliza o registro de ocorrências, organiza os encaminhamentos e conecta coordenação, professores e famílias.
+          </p>
+
+          {/* Video Container Card */}
+          <div className="relative group max-w-4xl mx-auto rounded-3xl overflow-hidden border border-neutral-800 bg-neutral-900 shadow-[0_25px_70px_rgba(0,0,0,0.85)]">
+            <div 
+              className="relative aspect-video w-full overflow-hidden bg-black flex items-center justify-center cursor-pointer"
+              onClick={() => setIsVideoModalOpen(true)}
+            >
+              <img 
+                src="/assets/logo/themis-class-video.png" 
+                alt="Vídeo Demonstração Themis Class" 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                onError={(e) => {
+                  e.currentTarget.src = "/assets/logo/THEMIS-CLASS-VIDEO.png";
+                }}
+              />
+              
+              {/* Dark overlay with wine gradient on hover */}
+              <div className="absolute inset-0 bg-black/35 group-hover:bg-wine-950/20 transition-colors duration-300" />
+
+              {/* Pulsing Play Button */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="relative flex items-center justify-center">
+                  <span className="absolute inline-flex h-24 w-24 rounded-full bg-wine-600 opacity-40 animate-ping" />
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-tr from-wine-900 via-wine-700 to-rose-600 text-white flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300 border-2 border-white/40">
+                    <Play size={34} className="ml-1 fill-white text-white sm:w-10 sm:h-10" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom badge */}
+              <div className="absolute bottom-4 left-4 right-4 sm:left-6 sm:right-auto flex items-center gap-3 bg-neutral-950/85 backdrop-blur-md px-4 py-2 rounded-xl border border-neutral-800 text-xs text-neutral-300 pointer-events-none">
+                <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+                <span className="font-semibold text-white">Demonstração Interativa</span>
+                <span className="text-neutral-500">•</span>
+                <span>Clique para assistir ao vídeo</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Links & YouTube Link */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <button
+              onClick={() => setIsVideoModalOpen(true)}
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-wine-800 hover:bg-wine-700 text-white font-bold text-sm shadow-lg transition-all"
+            >
+              <Play size={16} className="fill-white" />
+              <span>Assistir Demonstração</span>
+            </button>
+            <a
+              href="https://www.youtube.com/watch?v=uJ8j--NHcfI"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white font-semibold text-sm border border-neutral-800 transition-all group"
+            >
+              <span>Assistir no YouTube</span>
+              <ExternalLink size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white text-neutral-950 hover:bg-neutral-100 font-bold text-sm transition-all"
+            >
+              <span>Falar com Especialista</span>
+              <ArrowRight size={16} />
+            </a>
           </div>
         </div>
       </section>
@@ -1188,6 +1284,56 @@ export function ThemisPage({ onBackToMagagnini }: ThemisPageProps) {
           </div>
         </div>
       </footer>
+
+      {/* Video Modal Player */}
+      {isVideoModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 sm:p-6"
+          onClick={() => setIsVideoModalOpen(false)}
+        >
+          <div 
+            className="relative w-full max-w-4xl bg-black rounded-3xl overflow-hidden border border-neutral-800 shadow-2xl animate-in fade-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 bg-neutral-900/95 border-b border-neutral-800">
+              <div className="flex items-center gap-2">
+                <Play size={16} className="text-wine-500 fill-wine-500" />
+                <span className="text-sm font-semibold text-neutral-200">
+                  Themis Class — Demonstração da Plataforma
+                </span>
+              </div>
+              <button 
+                onClick={() => setIsVideoModalOpen(false)}
+                className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors"
+                aria-label="Fechar vídeo"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="relative aspect-video w-full bg-black">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/uJ8j--NHcfI?autoplay=1"
+                title="Themis Class — Demonstração"
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            <div className="p-4 bg-neutral-950 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-400">
+              <span>Quer ver como aplicar o Themis Class na sua escola?</span>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-wine-800 hover:bg-wine-700 text-white font-bold transition-colors"
+              >
+                <span>Falar no WhatsApp</span>
+                <ArrowRight size={14} />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

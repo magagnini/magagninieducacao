@@ -37,12 +37,11 @@ export function Header() {
             <a href="#inicio" className="flex items-center gap-3 group">
               <div className="relative">
                 <img
-                  src="/assets/logo/logo.png"
+                  src="/assets/logo/magagnini-mista-branca.png"
                   alt="Magagnini Educação"
-                  className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="h-11 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                   onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                    e.currentTarget.src = "/assets/logo/MISTA BRANCA - 1920X800.png";
                   }}
                 />
                 {/* Elegant Brand Fallback Logo */}

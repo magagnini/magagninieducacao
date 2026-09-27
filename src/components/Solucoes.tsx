@@ -1,11 +1,12 @@
 import { produtos } from '../data/produtos';
-import { ArrowRight, ExternalLink, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 interface SolucoesProps {
   onOpenThemis?: () => void;
+  onOpenAtheneum?: () => void;
 }
 
-export function Solucoes({ onOpenThemis }: SolucoesProps) {
+export function Solucoes({ onOpenThemis, onOpenAtheneum }: SolucoesProps) {
   return (
     <section id="solucoes" className="py-24 bg-white border-b border-gray-100 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -91,15 +92,13 @@ export function Solucoes({ onOpenThemis }: SolucoesProps) {
                         <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                       </button>
                     ) : (
-                      <a
-                        href="https://atheneumlibhome.vercel.app/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2.5 bg-gray-900 hover:bg-wine-800 text-white px-8 py-4 rounded-2xl font-bold text-base shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all group"
+                      <button
+                        onClick={onOpenAtheneum}
+                        className="inline-flex items-center justify-center gap-2.5 bg-wine-800 hover:bg-wine-900 text-white px-8 py-4 rounded-2xl font-bold text-base shadow-3d-wine hover:shadow-3d-wine-hover hover:-translate-y-0.5 active:translate-y-0 transition-all group"
                       >
                         <span>Conhecer o {solucao.nome}</span>
-                        <ExternalLink size={18} className="group-hover:translate-x-0.5 transition-transform" />
-                      </a>
+                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                      </button>
                     )}
                   </div>
                 </div>
