@@ -1,25 +1,21 @@
-import { produtos } from '../data/produtos';
+import { produtos, type Produto } from '../data/produtos';
 import { PerspectiveBook } from './PerspectiveBook';
-import { Sparkles, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Sparkles, ArrowRight, CheckCircle2, Calculator, Microscope } from 'lucide-react';
 
-interface ProdutoItem {
-  id: string;
-  nome: string;
-  descricao: string;
-  imagem: string;
-  detalhe?: string;
-  subtitulo?: string;
-  destaque?: boolean;
+interface ProdutosProps {
+  onNavigate?: (page: 'provao-paulista' | 'obmep' | 'matematica' | 'ciencias') => void;
 }
 
 function ProductCard({ 
   produto, 
   actionText,
-  bookSize = "default" 
+  bookSize = "default",
+  onSelect
 }: { 
-  produto: ProdutoItem; 
+  produto: Produto; 
   actionText: string;
   bookSize?: "sm" | "default" | "lg";
+  onSelect?: () => void;
 }) {
   return (
     <div className={`bg-white rounded-3xl border transition-all duration-300 flex flex-col h-full group ${
@@ -29,7 +25,6 @@ function ProductCard({
     }`}>
       {/* 3D Book Showcase Area */}
       <div className="relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[290px]">
-        {/* Subtle grid accent background */}
         <div 
           className="absolute inset-0 opacity-40 pointer-events-none"
           style={{
@@ -38,7 +33,6 @@ function ProductCard({
           }}
         />
 
-        {/* 3D Perspective Book */}
         <PerspectiveBook
           size={bookSize}
           coverImage={produto.imagem}
@@ -48,7 +42,6 @@ function ProductCard({
           isDestaque={produto.destaque}
         />
         
-        {/* Floating badge for Apostilões or Top Sellers */}
         {produto.destaque && (
           <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-wine-800 text-white shadow-md">
             <Sparkles size={12} className="text-wine-200" />
@@ -75,18 +68,19 @@ function ProductCard({
           {produto.descricao}
         </p>
 
-        {/* Features Preview */}
         <div className="mb-6 pt-4 border-t border-gray-100 flex items-center gap-2 text-xs text-gray-500">
           <CheckCircle2 size={15} className="text-wine-700 flex-shrink-0" />
           <span>Atividades estruturadas e prontas para uso</span>
         </div>
         
-        {/* Call to action button */}
-        <button className={`w-full py-3.5 px-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 ${
-          produto.destaque
-            ? 'bg-wine-800 hover:bg-wine-900 text-white shadow-md hover:shadow-lg hover:gap-3'
-            : 'bg-gray-900 hover:bg-wine-800 text-white shadow-sm hover:shadow-md hover:gap-3'
-        }`}>
+        <button 
+          onClick={onSelect}
+          className={`w-full py-3.5 px-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 ${
+            produto.destaque
+              ? 'bg-wine-800 hover:bg-wine-900 text-white shadow-md hover:shadow-lg hover:gap-3'
+              : 'bg-gray-900 hover:bg-wine-800 text-white shadow-sm hover:shadow-md hover:gap-3'
+          }`}
+        >
           <span>{actionText}</span>
           <ArrowRight size={16} className="transition-transform" />
         </button>
@@ -95,7 +89,20 @@ function ProductCard({
   );
 }
 
-export function Produtos() {
+export function Produtos({ onNavigate }: ProdutosProps) {
+  const handleSelectProduct = (prodId: string) => {
+    if (!onNavigate) return;
+    if (prodId === 'obmep-vol-1') {
+      onNavigate('obmep');
+    } else if (prodId === 'provao-paulista') {
+      onNavigate('provao-paulista');
+    } else if (prodId.startsWith('matematica')) {
+      onNavigate('matematica');
+    } else if (prodId.startsWith('ciencias')) {
+      onNavigate('ciencias');
+    }
+  };
+
   return (
     <div id="produtos" className="bg-white">
       {/* Apostilas Acadêmicas */}
@@ -109,7 +116,7 @@ export function Produtos() {
               Apostilas Acadêmicas
             </h2>
             <p className="mt-4 text-lg text-gray-600">
-              Materiais voltados à preparação acadêmica e ao desenvolvimento de habilidades essenciais.
+              Materiais voltados à preparação acadêmica, olimpíadas do conhecimento e vestibulares seriados.
             </p>
           </div>
           
@@ -118,8 +125,9 @@ export function Produtos() {
               <ProductCard 
                 key={prod.id} 
                 produto={prod} 
-                actionText="Conhecer apostila" 
+                actionText="Conhecer apostila completa" 
                 bookSize="default"
+                onSelect={() => handleSelectProduct(prod.id)}
               />
             ))}
           </div>
@@ -134,11 +142,50 @@ export function Produtos() {
               Inclusão e Pedagogia
             </span>
             <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl tracking-tight">
-              Atividades Adaptadas
+              Atividades Adaptadas por Área
             </h2>
             <p className="mt-4 text-lg text-gray-600">
-              Materiais desenvolvidos para apoiar o trabalho pedagógico com atividades estruturadas e adaptadas para diferentes níveis.
+              Materiais estruturados e adaptados reunidos por disciplina para apoiar o planejamento pedagógico integral.
             </p>
+          </div>
+
+          {/* Atalhos para as Landing Pages de Matemática e Ciências */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 max-w-4xl mx-auto">
+            <div 
+              onClick={() => onNavigate?.('matematica')}
+              className="p-6 rounded-3xl bg-white border border-neutral-200 hover:border-wine-400 hover:shadow-xl transition-all cursor-pointer flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold">
+                  <Calculator size={24} />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-neutral-900 group-hover:text-wine-800 transition-colors">
+                    Matemática Adaptada
+                  </h4>
+                  <p className="text-xs text-neutral-500">6º ao 9º ano + Apostilão Anos Finais</p>
+                </div>
+              </div>
+              <ArrowRight size={20} className="text-wine-800 group-hover:translate-x-1 transition-transform" />
+            </div>
+
+            <div 
+              onClick={() => onNavigate?.('ciencias')}
+              className="p-6 rounded-3xl bg-white border border-neutral-200 hover:border-wine-400 hover:shadow-xl transition-all cursor-pointer flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold">
+                  <Microscope size={24} />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-neutral-900 group-hover:text-wine-800 transition-colors">
+                    Ciências Adaptadas
+                  </h4>
+                  <p className="text-xs text-neutral-500">6º ao 9º ano + Apostilão Anos Finais</p>
+                </div>
+              </div>
+              <ArrowRight size={20} className="text-wine-800 group-hover:translate-x-1 transition-transform" />
+            </div>
           </div>
           
           {/* Apostilões em Destaque */}
@@ -157,6 +204,7 @@ export function Produtos() {
                   produto={prod} 
                   actionText="Conhecer apostilão completo" 
                   bookSize="default"
+                  onSelect={() => handleSelectProduct(prod.id)}
                 />
               ))}
             </div>
@@ -178,6 +226,7 @@ export function Produtos() {
                   produto={prod} 
                   actionText="Conhecer material" 
                   bookSize="sm"
+                  onSelect={() => handleSelectProduct(prod.id)}
                 />
               ))}
             </div>
