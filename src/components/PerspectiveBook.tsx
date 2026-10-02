@@ -54,12 +54,10 @@ export function PerspectiveBook({
   return (
     <div className="flex items-center justify-center p-4 py-8 group select-none">
       {/* 3D Container with Perspective */}
-      <div 
-        className="relative [perspective:1000px] w-min h-min"
-      >
-        {/* Shadow underneath */}
+      <div className="relative [perspective:1000px] w-min h-min">
+        {/* Soft centered ambient ground shadow */}
         <div 
-          className="absolute -bottom-6 left-2 right-2 h-6 bg-black/25 blur-md rounded-full transform -rotate-1 group-hover:scale-105 group-hover:bg-black/35 transition-all duration-300 pointer-events-none"
+          className="absolute -bottom-4 left-4 right-4 h-5 bg-black/30 blur-lg rounded-full pointer-events-none transition-all duration-500 group-hover:scale-105 group-hover:bg-black/40"
         />
 
         {/* 3D Rotating Book Wrapper */}
@@ -69,69 +67,36 @@ export function PerspectiveBook({
             height: selectedSize.height,
             transformStyle: "preserve-3d",
           }}
-          className="relative transition-transform duration-500 ease-out [transform:rotateY(-12deg)_rotateX(4deg)] group-hover:[transform:rotateY(-24deg)_rotateX(6deg)_scale(1.04)]"
+          className="relative transition-transform duration-500 ease-out [transform:rotateY(-6deg)_rotateX(2deg)] group-hover:[transform:rotateY(-18deg)_rotateX(4deg)_scale(1.03)]"
         >
-          {/* Back Cover */}
+          {/* Back Cover - aligned without shadow bleed */}
           <div
-            className="absolute inset-0 bg-[#1a1a1a] rounded-r-[4px] rounded-l-[6px] shadow-2xl"
+            className="absolute inset-0 bg-neutral-900 rounded-r-[4px] rounded-l-[5px] pointer-events-none"
             style={{
-              transform: "translateZ(-10px)",
+              transform: "translateZ(-8px)",
             }}
           />
 
-          {/* Book Spine (Left 3D Face) */}
+          {/* Book Page Edges (Right Thickness - Cleanly nested) */}
           <div
-            className={cn(
-              "absolute left-0 top-0 h-full flex items-center justify-center overflow-hidden border-y border-white/10",
-              isDestaque 
-                ? "bg-gradient-to-r from-wine-950 via-wine-800 to-wine-900 text-white" 
-                : "bg-gradient-to-r from-neutral-950 via-neutral-900 to-neutral-800 text-white/90"
-            )}
+            className="absolute right-0 top-[3px] bottom-[3px] w-[10px] bg-gradient-to-r from-neutral-300 via-neutral-100 to-[#ded6cb] rounded-r-[3px] border-y border-neutral-300 pointer-events-none"
             style={{
-              width: selectedSize.depth,
-              transform: `rotateY(-90deg) translateZ(${parseInt(selectedSize.depth) / 2}px)`,
-              transformOrigin: "left center",
-              borderRadius: "4px 0 0 4px",
-            }}
-          >
-            <span className="text-[9px] font-bold tracking-widest uppercase truncate -rotate-90 whitespace-nowrap opacity-80">
-              {title}
-            </span>
-          </div>
-
-          {/* Page Edge (Right 3D Face - Pages Thickness) */}
-          <div
-            className="absolute right-0 top-[2px] bottom-[2px] bg-gradient-to-l from-[#faf8f5] via-[#ede8e1] to-[#ded6cb] border-y border-neutral-300"
-            style={{
-              width: selectedSize.depth,
-              transform: `rotateY(90deg) translateZ(${parseInt(selectedSize.depth) / 2 - 1}px)`,
-              transformOrigin: "right center",
-              backgroundImage: "repeating-linear-gradient(to right, #0000000a 0px, #0000000a 1px, transparent 1px, transparent 3px)",
-            }}
-          />
-
-          {/* Page Edge (Bottom 3D Face) */}
-          <div
-            className="absolute left-[3px] right-[2px] bottom-0 bg-[#e8e2d8] border-x border-neutral-300"
-            style={{
-              height: selectedSize.depth,
-              transform: `rotateX(-90deg) translateZ(${parseInt(selectedSize.depth) / 2}px)`,
-              transformOrigin: "bottom center",
-              backgroundImage: "repeating-linear-gradient(to bottom, #0000000d 0px, #0000000d 1px, transparent 1px, transparent 3px)",
+              transform: "translateZ(-4px)",
+              backgroundImage: "repeating-linear-gradient(to right, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 1px, transparent 1px, transparent 3px)",
             }}
           />
 
           {/* Front Cover (Front 3D Face) */}
           <div
             className={cn(
-              "absolute inset-0 overflow-hidden size-full flex flex-col rounded-r-[5px] rounded-l-[6px] border border-black/15 shadow-[2px_4px_16px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.4),inset_3px_0_4px_rgba(0,0,0,0.3)]",
+              "relative overflow-hidden size-full flex flex-col rounded-r-[5px] rounded-l-[5px] border border-black/20 shadow-[0_12px_28px_-6px_rgba(0,0,0,0.35),0_6px_12px_-4px_rgba(0,0,0,0.25),inset_0_1px_1px_rgba(255,255,255,0.4),inset_3px_0_4px_rgba(0,0,0,0.25)]",
               isDestaque 
                 ? "bg-gradient-to-br from-wine-900 via-wine-800 to-black text-white" 
                 : "bg-gradient-to-br from-neutral-900 via-neutral-950 to-black text-white",
               className
             )}
             style={{
-              transform: `translateZ(${parseInt(selectedSize.depth) / 2}px)`,
+              transform: "translateZ(2px)",
             }}
           >
             {/* Custom or Provided Image Cover */}

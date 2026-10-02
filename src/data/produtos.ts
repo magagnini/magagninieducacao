@@ -50,7 +50,7 @@ export const produtos = {
         'Gabarito detalhado com explicação passo a passo',
         'Foco nas vagas diretas da USP, UNICAMP, UNESP e FATEC'
       ],
-      linkCompra: 'https://wa.me/5511998713683?text=Ol%C3%A1!%20Quero%20adquirir%20a%20Apostila%20do%20Prov%C3%A3o%20Paulista',
+      linkCompra: 'https://pay.cakto.com.br/ypkhicy_752822',
       ativo: true
     }
   ],
@@ -170,7 +170,7 @@ export const produtos = {
         'Instrumento definitivo para o planejamento pedagógico adaptado',
         'Economia de tempo e padronização com qualidade editorial'
       ],
-      linkCompra: undefined, // Preparado para quando fornecido
+      linkCompra: 'https://pay.cakto.com.br/k4zqo3a_1165309',
       ativo: true
     },
     {
@@ -189,7 +189,7 @@ export const produtos = {
         'Atividades em formato acessível para reforço e avaliação',
         'Alinhamento integral à BNCC para o 6º ano'
       ],
-      linkCompra: undefined,
+      linkCompra: 'https://pay.cakto.com.br/vaqccgz_1165300',
       ativo: true
     },
     {
@@ -208,7 +208,7 @@ export const produtos = {
         'Gradação de complexidade para inclusão pedagógica efetiva',
         'Pronta para uso individual ou atividades guiadas'
       ],
-      linkCompra: undefined,
+      linkCompra: 'https://pay.cakto.com.br/v7zjwqo_1165295',
       ativo: true
     },
     {
@@ -227,7 +227,7 @@ export const produtos = {
         'Material inclusivo para estudantes com dificuldades de aprendizagem',
         'Suporte integral ao professor regente e profissional de apoio'
       ],
-      linkCompra: undefined,
+      linkCompra: 'https://pay.cakto.com.br/jjd2jbn_1165281',
       ativo: true
     },
     {
@@ -246,7 +246,7 @@ export const produtos = {
         'Questões guiadas passo a passo com suporte conceitual',
         'Transição segura e estimulante para o Ensino Médio'
       ],
-      linkCompra: undefined,
+      linkCompra: 'https://pay.cakto.com.br/chyk7to_1165289',
       ativo: true
     }
   ],

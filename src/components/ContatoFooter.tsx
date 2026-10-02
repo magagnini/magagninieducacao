@@ -1,4 +1,46 @@
+import { useState } from 'react';
+import { Send, MessageCircle } from 'lucide-react';
+
 export function Contato() {
+  const [formData, setFormData] = useState({
+    nome: '',
+    telefone: '',
+    email: '',
+    assunto: '',
+    mensagem: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.nome.trim() && !formData.mensagem.trim()) {
+      alert('Por favor, preencha seu nome e sua mensagem para iniciar o contato.');
+      return;
+    }
+
+    const linhas = [
+      'Olá, Vinícius! Vim pelo site da Magagnini Educação.',
+      '',
+      `*Nome:* ${formData.nome.trim() || 'Não informado'}`,
+      `*Telefone:* ${formData.telefone.trim() || 'Não informado'}`,
+      `*E-mail:* ${formData.email.trim() || 'Não informado'}`,
+      `*Assunto:* ${formData.assunto.trim() || 'Contato Geral'}`,
+      '',
+      '*Mensagem:*',
+      formData.mensagem.trim() || 'Olá! Gostaria de conversar com você sobre as soluções da Magagnini Educação.'
+    ];
+
+    const texto = linhas.join('\n');
+    const url = `https://wa.me/5511998713683?text=${encodeURIComponent(texto)}`;
+
+    window.open(url, '_blank');
+  };
+
   return (
     <section id="contato" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,36 +53,86 @@ export function Contato() {
           </div>
           
           <div className="bg-gray-50 p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100">
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="nome" className="block text-sm font-medium text-gray-700 mb-2">Nome</label>
-                  <input type="text" id="nome" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-wine-800 focus:border-wine-800 transition-colors" placeholder="Seu nome completo" />
+                  <label htmlFor="nome" className="block text-sm font-medium text-gray-700 mb-2">Nome *</label>
+                  <input 
+                    type="text" 
+                    id="nome" 
+                    name="nome"
+                    required
+                    value={formData.nome}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-wine-800 focus:border-wine-800 transition-colors bg-white" 
+                    placeholder="Seu nome completo" 
+                  />
                 </div>
                 <div>
-                  <label htmlFor="telefone" className="block text-sm font-medium text-gray-700 mb-2">Telefone</label>
-                  <input type="tel" id="telefone" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-wine-800 focus:border-wine-800 transition-colors" placeholder="(00) 00000-0000" />
+                  <label htmlFor="telefone" className="block text-sm font-medium text-gray-700 mb-2">Telefone (WhatsApp)</label>
+                  <input 
+                    type="tel" 
+                    id="telefone" 
+                    name="telefone"
+                    value={formData.telefone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-wine-800 focus:border-wine-800 transition-colors bg-white" 
+                    placeholder="(00) 00000-0000" 
+                  />
                 </div>
               </div>
               
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">E-mail</label>
-                <input type="email" id="email" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-wine-800 focus:border-wine-800 transition-colors" placeholder="seu@email.com" />
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-wine-800 focus:border-wine-800 transition-colors bg-white" 
+                  placeholder="seu@email.com" 
+                />
               </div>
               
               <div>
                 <label htmlFor="assunto" className="block text-sm font-medium text-gray-700 mb-2">Assunto</label>
-                <input type="text" id="assunto" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-wine-800 focus:border-wine-800 transition-colors" placeholder="Como podemos ajudar?" />
+                <input 
+                  type="text" 
+                  id="assunto" 
+                  name="assunto"
+                  value={formData.assunto}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-wine-800 focus:border-wine-800 transition-colors bg-white" 
+                  placeholder="Como podemos ajudar?" 
+                />
               </div>
               
               <div>
-                <label htmlFor="mensagem" className="block text-sm font-medium text-gray-700 mb-2">Mensagem</label>
-                <textarea id="mensagem" rows={4} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-wine-800 focus:border-wine-800 transition-colors resize-none" placeholder="Escreva sua mensagem..."></textarea>
+                <label htmlFor="mensagem" className="block text-sm font-medium text-gray-700 mb-2">Mensagem *</label>
+                <textarea 
+                  id="mensagem" 
+                  name="mensagem"
+                  required
+                  rows={4} 
+                  value={formData.mensagem}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-wine-800 focus:border-wine-800 transition-colors resize-none bg-white" 
+                  placeholder="Escreva sua mensagem..."
+                />
               </div>
               
-              <button type="button" className="w-full bg-wine-800 text-white font-bold py-4 rounded-xl hover:bg-wine-900 transition-colors shadow-md">
-                Enviar mensagem
+              <button 
+                type="submit" 
+                className="w-full bg-wine-800 text-white font-bold py-4 rounded-xl hover:bg-wine-900 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <MessageCircle size={20} />
+                <span>Enviar mensagem via WhatsApp</span>
+                <Send size={16} />
               </button>
+              <p className="text-xs text-center text-gray-500">
+                Ao enviar, você será direcionado para iniciar a conversa no WhatsApp oficial Magagnini Educação: <strong>(11) 99871-3683</strong>.
+              </p>
             </form>
           </div>
           

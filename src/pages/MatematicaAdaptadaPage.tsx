@@ -579,7 +579,15 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini }: MatematicaAdaptada
           </p>
 
           <a
-            href="#produtos"
+            href="#matematica-anos-finais"
+            onClick={(e) => {
+              e.preventDefault();
+              const el = document.getElementById('matematica-anos-finais');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+                window.history.pushState(null, '', '#matematica-anos-finais');
+              }
+            }}
             className="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-2xl text-lg font-bold text-white bg-gradient-to-r from-wine-800 via-wine-700 to-rose-700 hover:from-wine-700 hover:to-rose-600 shadow-2xl hover:scale-105 transition-all border border-wine-500/40"
           >
             <span>GARANTIR MEU MATERIAL DE MATEMÁTICA</span>

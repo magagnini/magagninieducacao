@@ -16,7 +16,8 @@ import {
 import { PerspectiveBook } from '../components/PerspectiveBook';
 import { EmpilhamentoDeVantagens } from '../components/EmpilhamentoDeVantagens';
 
-const WHATSAPP_PROVAO = "https://wa.me/5511998713683?text=Ol%C3%A1!%20Quero%20adquirir%20a%20Apostila%20do%20Prov%C3%A3o%20Paulista";
+const CHECKOUT_PROVAO = "https://pay.cakto.com.br/ypkhicy_752822";
+const WHATSAPP_PROVAO = "https://wa.me/5511998713683?text=Ol%C3%A1!%20Gostaria%20de%20tirar%20d%C3%BAvidas%20sobre%20a%20Apostila%20do%20Prov%C3%A3o%20Paulista";
 
 interface ProvaoPaulistaPageProps {
   onBackToMagagnini?: () => void;
@@ -124,7 +125,7 @@ export function ProvaoPaulistaPage({ onBackToMagagnini }: ProvaoPaulistaPageProp
 
             <div className="hidden md:flex items-center gap-3">
               <a
-                href={WHATSAPP_PROVAO}
+                href={CHECKOUT_PROVAO}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-wine-800 via-wine-700 to-wine-900 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all border border-wine-500/40"
@@ -171,7 +172,7 @@ export function ProvaoPaulistaPage({ onBackToMagagnini }: ProvaoPaulistaPageProp
             </a>
             <div className="pt-2">
               <a
-                href={WHATSAPP_PROVAO}
+                href={CHECKOUT_PROVAO}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white bg-wine-800 shadow"
@@ -224,7 +225,7 @@ export function ProvaoPaulistaPage({ onBackToMagagnini }: ProvaoPaulistaPageProp
 
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
                 <a
-                  href={WHATSAPP_PROVAO}
+                  href={CHECKOUT_PROVAO}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-wine-800 to-wine-900 shadow-3d-wine hover:shadow-3d-wine-hover hover:-translate-y-0.5 transition-all border border-wine-600/40"
@@ -372,7 +373,7 @@ export function ProvaoPaulistaPage({ onBackToMagagnini }: ProvaoPaulistaPageProp
           </p>
 
           <a
-            href={WHATSAPP_PROVAO}
+            href={CHECKOUT_PROVAO}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-2xl text-lg font-bold text-white bg-gradient-to-r from-wine-800 via-wine-700 to-rose-700 hover:from-wine-700 hover:to-rose-600 shadow-2xl hover:scale-105 transition-all border border-wine-500/40"
