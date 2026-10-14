@@ -280,7 +280,15 @@ export function CienciasAdaptadaPage({ onBackToMagagnini }: CienciasAdaptadaPage
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                className={`p-5 rounded-2xl border text-center transition-all flex flex-col items-center justify-between group ${
+                onClick={(e) => {
+                  e.preventDefault();
+                  const btn = document.getElementById(`compra-${item.id}`) || document.getElementById(item.id);
+                  if (btn) {
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    window.history.pushState(null, '', `#${item.id}`);
+                  }
+                }}
+                className={`p-5 rounded-2xl border text-center transition-all flex flex-col items-center justify-between group cursor-pointer ${
                   item.destaque 
                     ? 'bg-gradient-to-b from-wine-50 to-white border-wine-300 shadow-md hover:shadow-xl hover:border-wine-500' 
                     : 'bg-white border-neutral-200 hover:border-wine-300 hover:shadow-md'
@@ -479,7 +487,7 @@ export function CienciasAdaptadaPage({ onBackToMagagnini }: CienciasAdaptadaPage
                       </div>
 
                       {/* Botão de Compra / Contato */}
-                      <div>
+                      <div id={`compra-${prod.id}`} className="scroll-mt-36">
                         {hasLink ? (
                           <a
                             href={prod.linkCompra}

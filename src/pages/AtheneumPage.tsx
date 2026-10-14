@@ -21,7 +21,7 @@ import {
   Check
 } from 'lucide-react';
 
-const WHATSAPP_URL = "https://wa.me/5511998713683?text=Ol%C3%A1!%20Quero%20falar%20sobre%20o%20Atheneum%20Lib";
+const WHATSAPP_URL = "https://wa.me/5511998713683?text=Ola!%20Gostaria%20de%20falar%20sobre%20o%20Atheneum%20Lib";
 
 interface AtheneumPageProps {
   onBackToMagagnini?: () => void;
@@ -867,10 +867,10 @@ export function AtheneumPage({ onBackToMagagnini }: AtheneumPageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-wine-800 text-xs font-bold uppercase tracking-widest block mb-3">
-              Investimento Transparente
+              Condições para sua Escola
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-neutral-950 tracking-tight">
-              Investimento com retorno imediato.
+              Acesso Completo para sua Instituição.
             </h2>
             <p className="mt-4 text-lg text-neutral-600">
               Tudo o que você precisa em um único plano completo, sem cobranças extras ou surpresas.
@@ -895,64 +895,57 @@ export function AtheneumPage({ onBackToMagagnini }: AtheneumPageProps) {
                 </p>
               </div>
 
-              {/* Items Breakdown with crossed-out values */}
-              <div className="space-y-3 pb-6 border-b border-neutral-800 text-sm">
-                <div className="flex items-center justify-between text-neutral-300">
-                  <span className="flex items-center gap-2">
-                    <Check size={16} className="text-wine-400" />
+              {/* Items Breakdown without prices */}
+              <div className="space-y-3.5 pb-8 border-b border-neutral-800 text-sm">
+                <div className="flex items-center justify-between text-neutral-200">
+                  <span className="flex items-center gap-2.5">
+                    <Check size={18} className="text-wine-400 flex-shrink-0" />
                     <span>Sistema de Gestão Completo</span>
                   </span>
-                  <span className="line-through text-neutral-500 font-mono">R$ 997,00/ano</span>
+                  <span className="text-emerald-400 font-semibold text-xs uppercase bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded-full">Incluso</span>
                 </div>
 
-                <div className="flex items-center justify-between text-neutral-300">
-                  <span className="flex items-center gap-2">
-                    <Check size={16} className="text-wine-400" />
+                <div className="flex items-center justify-between text-neutral-200">
+                  <span className="flex items-center gap-2.5">
+                    <Check size={18} className="text-wine-400 flex-shrink-0" />
                     <span>Curso de Gestão de Bibliotecas</span>
                   </span>
-                  <span className="line-through text-neutral-500 font-mono">R$ 497,00</span>
+                  <span className="text-emerald-400 font-semibold text-xs uppercase bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded-full">Incluso</span>
                 </div>
 
-                <div className="flex items-center justify-between text-neutral-300">
-                  <span className="flex items-center gap-2">
-                    <Check size={16} className="text-wine-400" />
+                <div className="flex items-center justify-between text-neutral-200">
+                  <span className="flex items-center gap-2.5">
+                    <Check size={18} className="text-wine-400 flex-shrink-0" />
                     <span>Suporte Prioritário no WhatsApp</span>
                   </span>
-                  <span className="line-through text-neutral-500 font-mono">R$ 297,00/ano</span>
+                  <span className="text-emerald-400 font-semibold text-xs uppercase bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded-full">Incluso</span>
                 </div>
 
-                <div className="flex items-center justify-between text-neutral-300">
-                  <span className="flex items-center gap-2">
-                    <Check size={16} className="text-wine-400" />
+                <div className="flex items-center justify-between text-neutral-200">
+                  <span className="flex items-center gap-2.5">
+                    <Check size={18} className="text-wine-400 flex-shrink-0" />
                     <span>Backups semanais em nuvem</span>
                   </span>
-                  <span className="line-through text-neutral-500 font-mono">R$ 197,00/ano</span>
+                  <span className="text-emerald-400 font-semibold text-xs uppercase bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded-full">Incluso</span>
                 </div>
 
-                <div className="flex items-center justify-between text-neutral-300">
-                  <span className="flex items-center gap-2">
-                    <Check size={16} className="text-wine-400" />
+                <div className="flex items-center justify-between text-neutral-200">
+                  <span className="flex items-center gap-2.5">
+                    <Check size={18} className="text-wine-400 flex-shrink-0" />
                     <span>Acervo e Leitores ilimitados</span>
                   </span>
-                  <span className="text-emerald-400 font-semibold text-xs uppercase">Incluso</span>
+                  <span className="text-emerald-400 font-semibold text-xs uppercase bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded-full">Incluso</span>
                 </div>
               </div>
 
-              {/* Price section */}
+              {/* Consultation / Contact text */}
               <div className="my-8 text-center">
-                <span className="text-xs uppercase tracking-wider text-neutral-400 font-semibold block mb-1">
-                  Valor Total: <span className="line-through">R$ 1.491,00/ano</span>
+                <span className="text-xs uppercase tracking-wider text-wine-400 font-bold block mb-2">
+                  Atendimento Comercial Exclusivo
                 </span>
-                
-                <div className="inline-block my-2">
-                  <span className="text-neutral-400 text-sm font-semibold">Oferta Especial Hoje:</span>
-                  <div className="text-4xl sm:text-5xl font-black text-white tracking-tight mt-1">
-                    12x <span className="text-wine-400">R$ 31,02</span>
-                  </div>
-                  <div className="text-neutral-300 text-sm mt-1 font-medium">
-                    ou apenas <strong>R$ 299,90 à vista</strong> ao ano
-                  </div>
-                </div>
+                <p className="text-sm text-neutral-300 leading-relaxed max-w-md mx-auto">
+                  Entre em contato conosco pelo WhatsApp para conhecer a plataforma, tirar dúvidas e solicitar uma demonstração personalizada para a sua instituição.
+                </p>
               </div>
 
               {/* Action Button */}
@@ -962,14 +955,14 @@ export function AtheneumPage({ onBackToMagagnini }: AtheneumPageProps) {
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-3 py-4 px-6 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-wine-800 to-rose-700 hover:from-wine-700 hover:to-rose-600 shadow-xl hover:-translate-y-0.5 transition-all"
               >
-                <span>Garantir Acesso Agora</span>
+                <span>Falar sobre o Atheneum Lib no WhatsApp</span>
                 <ArrowRight size={18} />
               </a>
 
               {/* Guarantee */}
               <div className="mt-6 flex items-center justify-center gap-2 text-xs text-neutral-400 text-center">
                 <ShieldCheck size={18} className="text-emerald-400 flex-shrink-0" />
-                <span>Garantia incondicional de 7 dias ou seu dinheiro 100% de volta.</span>
+                <span>Atendimento humanizado e demonstração sem compromisso.</span>
               </div>
             </div>
           </div>

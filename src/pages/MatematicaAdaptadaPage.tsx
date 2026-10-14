@@ -8,7 +8,6 @@ import {
   Calculator, 
   Compass, 
   GraduationCap, 
-  Layers, 
   Check, 
   ChevronDown, 
   Menu, 
@@ -51,12 +50,6 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini }: MatematicaAdaptada
       descricao: 'Habilidades essenciais dos anos finais do Ensino Fundamental selecionadas com precisão.',
       icone: <GraduationCap className="w-5 h-5 text-wine-800" />,
       beneficio: 'Garante o cumprimento dos objetivos de aprendizagem do ano letivo'
-    },
-    {
-      titulo: '⏳ Economia Real de Tempo para o Educador',
-      descricao: 'Material pronto para impressão e aplicação imediata em sala regular ou atendimento educacional especializado (AEE).',
-      icone: <Layers className="w-5 h-5 text-wine-800" />,
-      beneficio: 'Dezenas de horas poupadas no planejamento semanal de adaptações'
     }
   ];
 
@@ -277,7 +270,15 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini }: MatematicaAdaptada
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                className={`p-5 rounded-2xl border text-center transition-all flex flex-col items-center justify-between group ${
+                onClick={(e) => {
+                  e.preventDefault();
+                  const btn = document.getElementById(`compra-${item.id}`) || document.getElementById(item.id);
+                  if (btn) {
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    window.history.pushState(null, '', `#${item.id}`);
+                  }
+                }}
+                className={`p-5 rounded-2xl border text-center transition-all flex flex-col items-center justify-between group cursor-pointer ${
                   item.destaque 
                     ? 'bg-gradient-to-b from-wine-50 to-white border-wine-300 shadow-md hover:shadow-xl hover:border-wine-500' 
                     : 'bg-white border-neutral-200 hover:border-wine-300 hover:shadow-md'
@@ -478,7 +479,7 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini }: MatematicaAdaptada
                       </div>
 
                       {/* Botão de Compra Individual (Regra 59) */}
-                      <div>
+                      <div id={`compra-${prod.id}`} className="scroll-mt-36">
                         {hasLink ? (
                           <a
                             href={prod.linkCompra}
@@ -582,9 +583,9 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini }: MatematicaAdaptada
             href="#matematica-anos-finais"
             onClick={(e) => {
               e.preventDefault();
-              const el = document.getElementById('matematica-anos-finais');
+              const el = document.getElementById('compra-matematica-anos-finais') || document.getElementById('matematica-anos-finais');
               if (el) {
-                el.scrollIntoView({ behavior: 'smooth' });
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 window.history.pushState(null, '', '#matematica-anos-finais');
               }
             }}
