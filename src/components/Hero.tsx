@@ -54,7 +54,7 @@ export function Hero() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-wine-500" />
               </span>
               <span className="text-xs font-sans font-bold tracking-[0.18em] uppercase text-wine-200">
-                Produção Acadêmica & Tecnologia Escolar
+                Portal Educacional Integrado
               </span>
               <Sparkles size={13} className="text-amber-300" />
             </div>
@@ -65,28 +65,28 @@ export function Hero() {
                 Educação que
               </span>
               <span className="block mt-2 font-serif font-bold italic bg-gradient-to-r from-rose-200 via-wine-400 to-amber-200 bg-clip-text text-transparent drop-shadow-lg">
-                transforma conteúdo em resultado.
+                transforma conhecimento em oportunidades.
               </span>
             </h1>
 
             {/* Subtitle */}
             <p className="mt-6 text-base text-neutral-300 sm:text-lg md:text-xl lg:text-lg xl:text-xl font-sans font-normal leading-relaxed max-w-2xl">
-              Materiais educacionais, atividades adaptadas e soluções digitais desenvolvidas para tornar o trabalho educacional mais <strong className="text-white font-semibold">organizado</strong>, <strong className="text-white font-semibold">acessível</strong> e <strong className="text-white font-semibold">eficiente</strong>.
+              A Magagnini Educação reúne materiais didáticos, conteúdos gratuitos e soluções digitais para apoiar estudantes, professores e gestores escolares.
             </p>
 
             {/* Micro Highlights Pill */}
             <div className="mt-6 flex flex-wrap gap-4 items-center text-xs font-sans text-neutral-300 sm:justify-center lg:justify-start">
               <div className="flex items-center gap-1.5">
                 <CheckCircle size={14} className="text-wine-400" />
-                <span>+500 Atividades Estruturadas</span>
+                <span>Alunos: Provão Paulista & OBMEP</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle size={14} className="text-wine-400" />
-                <span>Provão Paulista & OBMEP</span>
+                <span>Professores: Atividades Adaptadas</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle size={14} className="text-wine-400" />
-                <span>Software Escolar Integrado</span>
+                <span>Gestores: Themis Class & Atheneum</span>
               </div>
             </div>
 
@@ -95,13 +95,13 @@ export function Hero() {
               
               {/* Primary 3D Button */}
               <a
-                href="#apostilas"
+                href="#perfis"
                 className="relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-sans font-bold text-white bg-gradient-to-r from-wine-800 via-wine-700 to-wine-900 border border-wine-500/50 shadow-3d-wine hover:shadow-3d-wine-hover hover:-translate-y-1 active:translate-y-0 transition-all duration-300 group overflow-hidden"
               >
                 {/* Shiny gloss beam */}
                 <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out" />
                 <BookOpen size={19} className="text-wine-200 group-hover:scale-110 transition-transform" />
-                <span className="tracking-wide">Conheça nossos materiais</span>
+                <span className="tracking-wide">Conheça nossos conteúdos</span>
                 <ArrowRight size={17} className="text-white/80 group-hover:translate-x-1 transition-transform" />
               </a>
 
@@ -111,7 +111,7 @@ export function Hero() {
                 className="relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-sans font-bold text-white backdrop-blur-xl bg-white/10 hover:bg-white/15 border border-white/20 hover:border-wine-400/60 shadow-3d-dark hover:-translate-y-1 active:translate-y-0 transition-all duration-300 group"
               >
                 <Laptop size={19} className="text-neutral-300 group-hover:text-wine-300 transition-colors" />
-                <span className="tracking-wide">Conheça nossas soluções</span>
+                <span className="tracking-wide">Explore nossas soluções</span>
                 <ArrowRight size={17} className="text-white/70 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
@@ -132,11 +132,11 @@ export function Hero() {
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-wine-500" />
                   <span className="text-xs font-sans font-bold tracking-widest text-white/90 uppercase">
-                    Destaque Editorial 3D
+                    Portal Magagnini
                   </span>
                 </div>
                 <span className="text-[11px] font-sans font-semibold px-2.5 py-0.5 rounded-full bg-wine-800/80 text-wine-200 border border-wine-500/30">
-                  Edição Anos Finais
+                  Alunos • Professores • Gestores
                 </span>
               </div>
 
@@ -178,7 +178,7 @@ export function Hero() {
               {/* Caption */}
               <div className="mt-4 text-center">
                 <p className="text-[11px] font-sans text-neutral-400">
-                  Educação + Matemática + Tecnologia + Produção Editorial
+                  Conhecimento para ensinar • Oportunidades para aprender • Tecnologia para transformar
                 </p>
               </div>
             </div>

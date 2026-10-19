@@ -1,9 +1,9 @@
 import { produtos, type Produto } from '../data/produtos';
 import { PerspectiveBook } from './PerspectiveBook';
-import { Sparkles, ArrowRight, CheckCircle2, Calculator, Microscope } from 'lucide-react';
+import { Sparkles, ArrowRight, CheckCircle2, Calculator, Microscope, GraduationCap, Users } from 'lucide-react';
 
 interface ProdutosProps {
-  onNavigate?: (page: 'provao-paulista' | 'obmep' | 'matematica' | 'ciencias') => void;
+  onNavigate?: (page: 'provao-paulista' | 'obmep' | 'matematica' | 'ciencias' | 'themis' | 'atheneum') => void;
 }
 
 function ProductCard({ 
@@ -21,7 +21,7 @@ function ProductCard({
     <div className={`bg-white rounded-3xl border transition-all duration-300 flex flex-col h-full group ${
       produto.destaque 
         ? 'border-wine-200 shadow-lg hover:shadow-2xl hover:border-wine-400 bg-gradient-to-b from-wine-50/40 via-white to-white' 
-        : 'border-gray-100 shadow-sm hover:shadow-xl hover:border-gray-200'
+        : 'border-gray-200 shadow-sm hover:shadow-xl hover:border-wine-300'
     }`}>
       {/* 3D Book Showcase Area */}
       <div className="relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[290px]">
@@ -45,7 +45,7 @@ function ProductCard({
         {produto.destaque && (
           <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-wine-800 text-white shadow-md">
             <Sparkles size={12} className="text-wine-200" />
-            <span>Produto Especial</span>
+            <span>Edição Especial</span>
           </div>
         )}
       </div>
@@ -75,7 +75,7 @@ function ProductCard({
         
         <button 
           onClick={onSelect}
-          className={`w-full py-3.5 px-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 ${
+          className={`w-full py-3.5 px-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
             produto.destaque
               ? 'bg-wine-800 hover:bg-wine-900 text-white shadow-md hover:shadow-lg hover:gap-3'
               : 'bg-gray-900 hover:bg-wine-800 text-white shadow-sm hover:shadow-md hover:gap-3'
@@ -105,18 +105,20 @@ export function Produtos({ onNavigate }: ProdutosProps) {
 
   return (
     <div id="produtos" className="bg-white">
-      {/* Apostilas Acadêmicas */}
+      
+      {/* 1. Materiais para Estudantes */}
       <section id="apostilas" className="py-24 border-b border-gray-100 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-wine-800 text-sm font-bold tracking-widest uppercase mb-3 inline-block">
-              Preparação e Excelência
-            </span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-50 text-wine-800 text-xs font-bold uppercase tracking-wider mb-4 border border-wine-200">
+              <GraduationCap size={15} />
+              <span>Para Estudantes</span>
+            </div>
             <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl tracking-tight">
-              Apostilas Acadêmicas
+              Materiais para Estudantes
             </h2>
-            <p className="mt-4 text-lg text-gray-600">
-              Materiais voltados à preparação acadêmica, olimpíadas do conhecimento e vestibulares seriados.
+            <p className="mt-4 text-base sm:text-lg text-gray-600">
+              Apostilas preparatórias com resoluções comentadas e suporte multimídia para olimpíadas e vestibulares seriados.
             </p>
           </div>
           
@@ -134,18 +136,19 @@ export function Produtos({ onNavigate }: ProdutosProps) {
         </div>
       </section>
 
-      {/* Atividades Adaptadas */}
-      <section id="atividades" className="py-24 bg-gray-50/60">
+      {/* 2. Materiais para Professores */}
+      <section id="atividades" className="py-24 bg-gray-50/60 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-wine-800 text-sm font-bold tracking-widest uppercase mb-3 inline-block">
-              Inclusão e Pedagogia
-            </span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-50 text-wine-800 text-xs font-bold uppercase tracking-wider mb-4 border border-wine-200">
+              <Users size={15} />
+              <span>Para Professores</span>
+            </div>
             <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl tracking-tight">
-              Atividades Adaptadas por Área
+              Materiais para Professores
             </h2>
-            <p className="mt-4 text-lg text-gray-600">
-              Materiais estruturados e adaptados reunidos por disciplina para apoiar o planejamento pedagógico integral.
+            <p className="mt-4 text-base sm:text-lg text-gray-600">
+              Apostilas adaptadas de Matemática e Ciências e os volumes unificados (Apostilões) para o Ensino Fundamental.
             </p>
           </div>
 

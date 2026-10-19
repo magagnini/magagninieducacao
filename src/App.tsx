@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { PerfilSelector } from './components/PerfilSelector';
 import { Sobre } from './components/Sobre';
 import { Categorias } from './components/Categorias';
 import { Produtos } from './components/Produtos';
@@ -13,9 +14,15 @@ import { ObmepPage } from './pages/ObmepPage';
 import { ProvaoPaulistaPage } from './pages/ProvaoPaulistaPage';
 import { MatematicaAdaptadaPage } from './pages/MatematicaAdaptadaPage';
 import { CienciasAdaptadaPage } from './pages/CienciasAdaptadaPage';
+import { AlunosPage } from './pages/AlunosPage';
+import { ProfessoresPage } from './pages/ProfessoresPage';
+import { GestoresPage } from './pages/GestoresPage';
 
-type AppPage = 
+export type AppPage = 
   | 'magagnini' 
+  | 'alunos'
+  | 'professores'
+  | 'gestores'
   | 'themis' 
   | 'atheneum' 
   | 'obmep' 
@@ -28,6 +35,13 @@ function App() {
     if (typeof window !== 'undefined') {
       const path = window.location.pathname;
       const hash = window.location.hash;
+      
+      // Profiles
+      if (path === '/alunos' || hash === '#alunos') return 'alunos';
+      if (path === '/professores' || hash === '#professores') return 'professores';
+      if (path === '/gestores' || hash === '#gestores') return 'gestores';
+
+      // Products & Solutions
       if (path === '/themis-class' || hash === '#themis-class') return 'themis';
       if (path === '/atheneum-lib' || hash === '#atheneum-lib') return 'atheneum';
       if (path === '/materiais/obmep' || hash === '#obmep') return 'obmep';
@@ -42,7 +56,14 @@ function App() {
     const handleRoute = () => {
       const path = window.location.pathname;
       const hash = window.location.hash;
-      if (path === '/themis-class' || hash === '#themis-class') {
+
+      if (path === '/alunos' || hash === '#alunos') {
+        setCurrentPage('alunos');
+      } else if (path === '/professores' || hash === '#professores') {
+        setCurrentPage('professores');
+      } else if (path === '/gestores' || hash === '#gestores') {
+        setCurrentPage('gestores');
+      } else if (path === '/themis-class' || hash === '#themis-class') {
         setCurrentPage('themis');
       } else if (path === '/atheneum-lib' || hash === '#atheneum-lib') {
         setCurrentPage('atheneum');
@@ -69,21 +90,38 @@ function App() {
 
   const navigateToPage = (page: AppPage) => {
     setCurrentPage(page);
-    let hash = '';
-    if (page === 'themis') hash = '#themis-class';
-    else if (page === 'atheneum') hash = '#atheneum-lib';
-    else if (page === 'obmep') hash = '#obmep';
-    else if (page === 'provao-paulista') hash = '#provao-paulista';
-    else if (page === 'matematica') hash = '#matematica-adaptada';
-    else if (page === 'ciencias') hash = '#ciencias-adaptadas';
+    let targetUrl = '/';
+    
+    if (page === 'alunos') targetUrl = '/alunos';
+    else if (page === 'professores') targetUrl = '/professores';
+    else if (page === 'gestores') targetUrl = '/gestores';
+    else if (page === 'themis') targetUrl = '#themis-class';
+    else if (page === 'atheneum') targetUrl = '#atheneum-lib';
+    else if (page === 'obmep') targetUrl = '#obmep';
+    else if (page === 'provao-paulista') targetUrl = '#provao-paulista';
+    else if (page === 'matematica') targetUrl = '#matematica-adaptada';
+    else if (page === 'ciencias') targetUrl = '#ciencias-adaptadas';
 
-    window.history.pushState({}, '', hash || '/');
+    try {
+      window.history.pushState({}, '', targetUrl);
+    } catch {
+      // Fallback for file protocol or restricted history
+      if (page === 'alunos') window.location.hash = '#alunos';
+      else if (page === 'professores') window.location.hash = '#professores';
+      else if (page === 'gestores') window.location.hash = '#gestores';
+      else window.location.hash = targetUrl;
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const navigateToMagagnini = () => {
     setCurrentPage('magagnini');
-    window.history.pushState({}, '', '/');
+    try {
+      window.history.pushState({}, '', '/');
+    } catch {
+      window.location.hash = '';
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -112,12 +150,51 @@ function App() {
     return <CienciasAdaptadaPage onBackToMagagnini={navigateToMagagnini} />;
   }
 
+  // Profile Landing Pages
+  if (currentPage === 'alunos') {
+    return (
+      <AlunosPage 
+        onBackToMagagnini={navigateToMagagnini}
+        onNavigateToProfessores={() => navigateToPage('professores')}
+        onNavigateToGestores={() => navigateToPage('gestores')}
+        onNavigateToProvao={() => navigateToPage('provao-paulista')}
+        onNavigateToObmep={() => navigateToPage('obmep')}
+      />
+    );
+  }
+
+  if (currentPage === 'professores') {
+    return (
+      <ProfessoresPage 
+        onBackToMagagnini={navigateToMagagnini}
+        onNavigateToAlunos={() => navigateToPage('alunos')}
+        onNavigateToGestores={() => navigateToPage('gestores')}
+        onNavigateToMatematica={() => navigateToPage('matematica')}
+        onNavigateToCiencias={() => navigateToPage('ciencias')}
+      />
+    );
+  }
+
+  if (currentPage === 'gestores') {
+    return (
+      <GestoresPage 
+        onBackToMagagnini={navigateToMagagnini}
+        onNavigateToAlunos={() => navigateToPage('alunos')}
+        onNavigateToProfessores={() => navigateToPage('professores')}
+        onNavigateToThemis={() => navigateToPage('themis')}
+        onNavigateToAtheneum={() => navigateToPage('atheneum')}
+      />
+    );
+  }
+
   // Home Page
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      <Header onNavigate={navigateToPage} currentPage={currentPage} />
       <main>
         <Hero />
+        {/* Seção de Seleção de Perfil imediatamente após a Hero */}
+        <PerfilSelector onSelectProfile={(p) => navigateToPage(p)} />
         <Sobre />
         <Categorias />
         <Produtos onNavigate={(p) => navigateToPage(p)} />
@@ -127,7 +204,10 @@ function App() {
         />
         <Numeros />
         <ParaQuem />
-        <CTA />
+        <CTA onConhecerSobre={() => {
+          const el = document.getElementById('sobre');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }} />
         <Contato />
       </main>
       <Footer />
