@@ -1,4 +1,5 @@
 import { GraduationCap, Users, Building2, ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface PerfilSelectorProps {
   onSelectProfile: (profile: 'alunos' | 'professores' | 'gestores') => void;
@@ -64,7 +65,13 @@ export function PerfilSelector({ onSelectProfile }: PerfilSelectorProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-50 border border-wine-200 text-wine-800 text-xs font-bold uppercase tracking-wider mb-4">
             <Sparkles size={14} className="text-wine-700" />
             <span>Portal Magagnini Educação</span>
@@ -75,16 +82,34 @@ export function PerfilSelector({ onSelectProfile }: PerfilSelectorProps) {
           <p className="mt-4 text-base sm:text-lg text-neutral-600 leading-relaxed">
             Escolha seu perfil e descubra conteúdos, materiais e soluções preparados para suas necessidades.
           </p>
-        </div>
+        </motion.div>
 
-        {/* 3 Profile Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        {/* 3 Profile Cards Grid with coordinated entrance animation */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch overflow-hidden lg:overflow-visible">
           {perfis.map((perfil) => {
             const isDark = perfil.destaque;
 
+            // Animação coordenada: Alunos vem da esquerda, Professores de baixo e Gestores da direita
+            const initialMotion = 
+              perfil.id === 'alunos'
+                ? { opacity: 0, x: -90, y: 0 }
+                : perfil.id === 'professores'
+                ? { opacity: 0, x: 0, y: 90 }
+                : { opacity: 0, x: 90, y: 0 };
+
+            const delay = perfil.id === 'alunos' ? 0 : perfil.id === 'professores' ? 0.12 : 0.24;
+
             return (
-              <div
+              <motion.div
                 key={perfil.id}
+                initial={initialMotion}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ 
+                  duration: 0.85, 
+                  delay, 
+                  ease: [0.16, 1, 0.3, 1] 
+                }}
                 onClick={() => onSelectProfile(perfil.id)}
                 className={`rounded-3xl p-8 sm:p-9 flex flex-col justify-between border transition-all duration-300 cursor-pointer group hover:-translate-y-1.5 ${
                   isDark
@@ -159,7 +184,7 @@ export function PerfilSelector({ onSelectProfile }: PerfilSelectorProps) {
                     <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
                   </button>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

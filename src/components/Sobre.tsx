@@ -1,9 +1,16 @@
+import { motion } from 'framer-motion';
+
 export function Sobre() {
   return (
-    <section id="sobre" className="py-24 bg-white">
+    <section id="sobre" className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
             <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
               Educação, conhecimento e tecnologia.
             </h2>
@@ -18,8 +25,14 @@ export function Sobre() {
                 O objetivo é transformar conhecimento em materiais práticos e soluções que possam ser utilizados no cotidiano educacional.
               </p>
             </div>
-          </div>
-          <div className="mt-10 lg:mt-0">
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-10 lg:mt-0"
+          >
             <div className="aspect-[4/3] rounded-2xl bg-gray-100 border border-gray-200 overflow-hidden relative shadow-lg">
               <img 
                 src="/assets/institucional/sobre.jpg" 
@@ -35,7 +48,7 @@ export function Sobre() {
                 <span className="text-sm">/assets/institucional/sobre.jpg</span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

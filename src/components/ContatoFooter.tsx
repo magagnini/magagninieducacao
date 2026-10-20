@@ -135,35 +135,6 @@ export function Contato() {
               </p>
             </form>
           </div>
-          
-          <div className="mt-12 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700">
-            <a 
-              href="https://wa.me/5511998713683" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center hover:text-wine-800 transition-colors"
-            >
-              <span className="w-10 h-10 bg-wine-50 text-wine-800 rounded-full flex items-center justify-center mr-3 font-bold border border-wine-200">
-                W
-              </span>
-              <span className="font-semibold">(11) 99871-3683</span>
-            </a>
-            <a 
-              href="mailto:contato@magagninieducacao.com.br" 
-              className="flex items-center hover:text-wine-800 transition-colors"
-            >
-              <span className="w-10 h-10 bg-wine-50 text-wine-800 rounded-full flex items-center justify-center mr-3 font-bold border border-wine-200">
-                @
-              </span>
-              <span className="font-semibold">contato@magagninieducacao.com.br</span>
-            </a>
-            <div className="flex items-center">
-              <span className="w-10 h-10 bg-wine-50 text-wine-800 rounded-full flex items-center justify-center mr-3 font-bold border border-wine-200">
-                I
-              </span>
-              <span className="font-semibold">@magagnini.educacao</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>

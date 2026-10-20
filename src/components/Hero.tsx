@@ -1,4 +1,5 @@
 import { ArrowRight, BookOpen, Laptop, Sparkles, GraduationCap, CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { PerspectiveBook } from './PerspectiveBook';
 
 export function Hero() {
@@ -140,16 +141,39 @@ export function Hero() {
                 </span>
               </div>
 
-              {/* 3D Perspective Book inside Hero */}
-              <div className="py-2 flex items-center justify-center">
-                <PerspectiveBook
-                  size="lg"
-                  coverImage="/assets/produtos/atividades-adaptadas/apostilao-matematica-anos-finais.png"
-                  title="Apostilão de Matemática — Anos Finais"
-                  subtitle="Mais de 500 atividades adaptadas e estruturadas"
-                  badge="+500 atividades"
-                  isDestaque={true}
-                />
+              {/* 3D Perspective Book inside Hero com rotação cinematográfica de entrada */}
+              <div className="py-2 flex items-center justify-center [perspective:1200px]">
+                <motion.div
+                  initial={{ 
+                    opacity: 0, 
+                    rotateY: -220, 
+                    rotateX: 18, 
+                    scale: 0.65, 
+                    y: 40 
+                  }}
+                  animate={{ 
+                    opacity: 1, 
+                    rotateY: 0, 
+                    rotateX: 0, 
+                    scale: 1, 
+                    y: 0 
+                  }}
+                  transition={{ 
+                    duration: 1.35, 
+                    ease: [0.16, 1, 0.3, 1],
+                    delay: 0.25
+                  }}
+                  style={{ transformStyle: 'preserve-3d' }}
+                >
+                  <PerspectiveBook
+                    size="lg"
+                    coverImage="/assets/produtos/atividades-adaptadas/apostilao-matematica-anos-finais.png"
+                    title="Apostilão de Matemática — Anos Finais"
+                    subtitle="Mais de 500 atividades adaptadas e estruturadas"
+                    badge="+500 atividades"
+                    isDestaque={true}
+                  />
+                </motion.div>
               </div>
 
               {/* Floating Floating Badges around the book */}

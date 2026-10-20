@@ -1,5 +1,6 @@
 import { produtos } from '../data/produtos';
 import { ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface SolucoesProps {
   onOpenThemis?: () => void;
@@ -8,9 +9,17 @@ interface SolucoesProps {
 
 export function Solucoes({ onOpenThemis, onOpenAtheneum }: SolucoesProps) {
   return (
-    <section id="solucoes" className="py-24 bg-white border-b border-gray-100 relative">
+    <section id="solucoes" className="py-24 bg-white border-b border-gray-100 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        
+        {/* Section Header with Fade-In */}
+        <motion.div 
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-3xl mx-auto mb-20"
+        >
           <span className="text-wine-800 text-xs font-bold tracking-widest uppercase mb-3 inline-block">
             Tecnologia Educacional
           </span>
@@ -20,22 +29,38 @@ export function Solucoes({ onOpenThemis, onOpenAtheneum }: SolucoesProps) {
           <p className="mt-4 text-lg sm:text-xl text-gray-600 font-medium">
             Tecnologia desenvolvida para resolver problemas reais da rotina escolar.
           </p>
-        </div>
+        </motion.div>
 
         <div className="space-y-28">
           {produtos.solucoesDigitais.map((solucao, idx) => {
             const isThemis = solucao.id === 'themis-class';
             const isAtheneum = solucao.id === 'atheneum-lib';
+            const isReversed = idx % 2 !== 0;
+
+            // Content Column initial x:
+            // if not reversed (Themis), content is on left -> x: -70
+            // if reversed (Atheneum), content is on right -> x: 70
+            const contentInitialX = isReversed ? 70 : -70;
+            // Mockup Column initial x:
+            // if not reversed (Themis), mockup is on right -> x: 70
+            // if reversed (Atheneum), mockup is on left -> x: -70
+            const mockupInitialX = isReversed ? -70 : 70;
 
             return (
               <div 
                 key={solucao.id} 
                 className={`lg:grid lg:grid-cols-12 lg:gap-16 items-center ${
-                  idx % 2 !== 0 ? 'lg:grid-flow-col-dense' : ''
+                  isReversed ? 'lg:grid-flow-col-dense' : ''
                 }`}
               >
                 {/* Content Column */}
-                <div className={`lg:col-span-6 ${idx % 2 !== 0 ? 'lg:col-start-7' : ''}`}>
+                <motion.div 
+                  initial={{ opacity: 0, x: contentInitialX }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                  className={`lg:col-span-6 ${isReversed ? 'lg:col-start-7' : ''}`}
+                >
                   <div className="mb-4">
                     <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-wine-50 text-wine-800 rounded-full text-xs font-bold uppercase tracking-wider mb-4 border border-wine-200">
                       <ShieldCheck size={14} className="text-wine-700" />
@@ -101,10 +126,16 @@ export function Solucoes({ onOpenThemis, onOpenAtheneum }: SolucoesProps) {
                       </button>
                     )}
                   </div>
-                </div>
+                </motion.div>
                 
                 {/* Visual / Screenshot / Mockup Column */}
-                <div className={`mt-10 lg:mt-0 lg:col-span-6 ${idx % 2 !== 0 ? 'lg:col-start-1' : ''}`}>
+                <motion.div 
+                  initial={{ opacity: 0, x: mockupInitialX }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className={`mt-10 lg:mt-0 lg:col-span-6 ${isReversed ? 'lg:col-start-1' : ''}`}
+                >
                   <div className="relative rounded-3xl bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-4 sm:p-6 border border-neutral-800 shadow-2xl group overflow-hidden">
                     {/* Simulated software window header */}
                     <div className="flex items-center justify-between pb-4 mb-4 border-b border-neutral-800/80">
@@ -137,7 +168,7 @@ export function Solucoes({ onOpenThemis, onOpenAtheneum }: SolucoesProps) {
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </div>
             );
           })}
