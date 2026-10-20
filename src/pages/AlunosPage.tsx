@@ -87,13 +87,13 @@ export function AlunosPage({
       {/* ========================================================= */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-b border-neutral-200/80 shadow-sm transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-20 gap-4">
             
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-shrink-0">
               {onBackToMagagnini && (
                 <button
                   onClick={onBackToMagagnini}
-                  className="mr-1 p-2 rounded-xl text-neutral-500 hover:text-wine-800 hover:bg-neutral-100 transition-colors flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
+                  className="mr-1 p-2 rounded-xl text-neutral-500 hover:text-wine-800 hover:bg-neutral-100 transition-colors flex items-center gap-1.5 text-xs font-semibold cursor-pointer whitespace-nowrap"
                   title="Voltar ao portal principal"
                 >
                   <ArrowLeft size={16} />
@@ -103,35 +103,35 @@ export function AlunosPage({
 
               <button 
                 onClick={onBackToMagagnini}
-                className="flex items-center gap-3 group text-left cursor-pointer"
+                className="flex items-center gap-3 group text-left cursor-pointer flex-shrink-0"
               >
                 <img
                   src="/assets/logo/magagnini-mista-branca.png"
                   alt="Magagnini Educação"
-                  className="h-10 w-auto object-contain"
+                  className="h-9 sm:h-10 w-auto object-contain flex-shrink-0"
                   onError={(e) => {
                     e.currentTarget.src = "/assets/logo/MISTA BRANCA - 1920X800.png";
                   }}
                 />
-                <span className="hidden md:inline-block border-l border-neutral-300 pl-3 text-xs font-bold text-wine-800 uppercase tracking-widest">
+                <span className="hidden md:inline-block border-l border-neutral-300 pl-3 text-xs font-bold text-wine-800 uppercase tracking-widest whitespace-nowrap">
                   Área do Aluno
                 </span>
               </button>
             </div>
 
             {/* Navigation Links */}
-            <nav className="hidden lg:flex items-center space-x-6 text-sm font-semibold text-neutral-700">
-              <a href="#por-que-estudar" className="hover:text-wine-800 transition-colors">Por que estudar?</a>
-              <a href="#oportunidades" className="hover:text-wine-800 transition-colors">Oportunidades</a>
-              <a href="#conteudos-gratuitos" className="hover:text-wine-800 transition-colors">Vídeos & Playlists</a>
-              <a href="#apostilas-estudantes" className="hover:text-wine-800 transition-colors">Apostilas</a>
+            <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6 text-xs xl:text-sm font-semibold text-neutral-700 whitespace-nowrap">
+              <a href="#por-que-estudar" className="hover:text-wine-800 transition-colors whitespace-nowrap">Por que Estudar</a>
+              <a href="#oportunidades" className="hover:text-wine-800 transition-colors whitespace-nowrap">Oportunidades</a>
+              <a href="#conteudos-gratuitos" className="hover:text-wine-800 transition-colors whitespace-nowrap">Vídeos & Aulas</a>
+              <a href="#apostilas-estudantes" className="hover:text-wine-800 transition-colors whitespace-nowrap">Apostilas</a>
               
-              <div className="h-4 w-px bg-neutral-300 mx-2" />
+              <div className="h-4 w-px bg-neutral-300 mx-1 xl:mx-2 flex-shrink-0" />
 
               {onNavigateToProfessores && (
                 <button 
                   onClick={onNavigateToProfessores}
-                  className="text-neutral-500 hover:text-wine-800 text-xs font-bold uppercase tracking-wider cursor-pointer"
+                  className="text-neutral-500 hover:text-wine-800 text-xs font-bold uppercase tracking-wider cursor-pointer whitespace-nowrap"
                 >
                   Professores →
                 </button>
@@ -139,19 +139,19 @@ export function AlunosPage({
               {onNavigateToGestores && (
                 <button 
                   onClick={onNavigateToGestores}
-                  className="text-neutral-500 hover:text-wine-800 text-xs font-bold uppercase tracking-wider cursor-pointer"
+                  className="text-neutral-500 hover:text-wine-800 text-xs font-bold uppercase tracking-wider cursor-pointer whitespace-nowrap"
                 >
                   Gestores →
                 </button>
               )}
             </nav>
 
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-3 flex-shrink-0">
               <a
                 href="#apostilas-estudantes"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all"
+                className="inline-flex items-center gap-2 px-4 xl:px-5 py-2.5 rounded-full text-xs font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all whitespace-nowrap"
               >
-                <span>Apostilas de Preparação</span>
+                <span>Ver Apostilas</span>
                 <ArrowRight size={14} />
               </a>
             </div>

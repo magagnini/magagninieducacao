@@ -11,9 +11,15 @@ import {
   ExternalLink,
   Menu, 
   X,
-  Compass
+  Compass,
+  Calculator,
+  Microscope,
+  Sparkles,
+  Dna,
+  Atom
 } from 'lucide-react';
 import { PerspectiveBook } from '../components/PerspectiveBook';
+import { produtos } from '../data/produtos';
 
 function YoutubeIcon({ className = "w-5 h-5", size = 20 }: { className?: string; size?: number }) {
   return (
@@ -56,13 +62,13 @@ export function ProfessoresPage({
       {/* ========================================================= */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-b border-neutral-200/80 shadow-sm transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-20 gap-4">
             
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-shrink-0">
               {onBackToMagagnini && (
                 <button
                   onClick={onBackToMagagnini}
-                  className="mr-1 p-2 rounded-xl text-neutral-500 hover:text-wine-800 hover:bg-neutral-100 transition-colors flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
+                  className="mr-1 p-2 rounded-xl text-neutral-500 hover:text-wine-800 hover:bg-neutral-100 transition-colors flex items-center gap-1.5 text-xs font-semibold cursor-pointer whitespace-nowrap"
                   title="Voltar ao portal principal"
                 >
                   <ArrowLeft size={16} />
@@ -72,34 +78,34 @@ export function ProfessoresPage({
 
               <button 
                 onClick={onBackToMagagnini}
-                className="flex items-center gap-3 group text-left cursor-pointer"
+                className="flex items-center gap-3 group text-left cursor-pointer flex-shrink-0"
               >
                 <img
                   src="/assets/logo/magagnini-mista-branca.png"
                   alt="Magagnini Educação"
-                  className="h-10 w-auto object-contain"
+                  className="h-9 sm:h-10 w-auto object-contain flex-shrink-0"
                   onError={(e) => {
                     e.currentTarget.src = "/assets/logo/MISTA BRANCA - 1920X800.png";
                   }}
                 />
-                <span className="hidden md:inline-block border-l border-neutral-300 pl-3 text-xs font-bold text-wine-800 uppercase tracking-widest">
+                <span className="hidden md:inline-block border-l border-neutral-300 pl-3 text-xs font-bold text-wine-800 uppercase tracking-widest whitespace-nowrap">
                   Área do Professor
                 </span>
               </button>
             </div>
 
             {/* Navigation Links */}
-            <nav className="hidden lg:flex items-center space-x-6 text-sm font-semibold text-neutral-700">
-              <a href="#materiais-adaptados" className="hover:text-wine-800 transition-colors">Apostilas Adaptadas</a>
-              <a href="#importancia-adaptacao" className="hover:text-wine-800 transition-colors">Por que Adaptar?</a>
-              <a href="#conteudos-canal" className="hover:text-wine-800 transition-colors">Conteúdos do Canal</a>
+            <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6 text-xs xl:text-sm font-semibold text-neutral-700 whitespace-nowrap">
+              <a href="#materiais-adaptados" className="hover:text-wine-800 transition-colors whitespace-nowrap">Apostilas Adaptadas</a>
+              <a href="#importancia-adaptacao" className="hover:text-wine-800 transition-colors whitespace-nowrap">Por que Adaptar?</a>
+              <a href="#conteudos-canal" className="hover:text-wine-800 transition-colors whitespace-nowrap">Vídeos & Canal</a>
               
-              <div className="h-4 w-px bg-neutral-300 mx-2" />
+              <div className="h-4 w-px bg-neutral-300 mx-1 xl:mx-2 flex-shrink-0" />
 
               {onNavigateToAlunos && (
                 <button 
                   onClick={onNavigateToAlunos}
-                  className="text-neutral-500 hover:text-wine-800 text-xs font-bold uppercase tracking-wider cursor-pointer"
+                  className="text-neutral-500 hover:text-wine-800 text-xs font-bold uppercase tracking-wider cursor-pointer whitespace-nowrap"
                 >
                   Alunos →
                 </button>
@@ -107,19 +113,19 @@ export function ProfessoresPage({
               {onNavigateToGestores && (
                 <button 
                   onClick={onNavigateToGestores}
-                  className="text-neutral-500 hover:text-wine-800 text-xs font-bold uppercase tracking-wider cursor-pointer"
+                  className="text-neutral-500 hover:text-wine-800 text-xs font-bold uppercase tracking-wider cursor-pointer whitespace-nowrap"
                 >
                   Gestores →
                 </button>
               )}
             </nav>
 
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-3 flex-shrink-0">
               <a
                 href="#materiais-adaptados"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all"
+                className="inline-flex items-center gap-2 px-4 xl:px-5 py-2.5 rounded-full text-xs font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all whitespace-nowrap"
               >
-                <span>Apostilas Adaptadas</span>
+                <span>Ver Materiais</span>
                 <ArrowRight size={14} />
               </a>
             </div>
@@ -343,150 +349,284 @@ export function ProfessoresPage({
       <section id="materiais-adaptados" className="py-24 bg-neutral-50/60 border-b border-neutral-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
+          {/* Cabeçalho da Seção */}
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-wine-800 text-xs font-bold uppercase tracking-widest block mb-3">
-              Catálogo Pedagógico Adaptado
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-neutral-950 tracking-tight">
-              Materiais para apoiar seu trabalho em sala de aula.
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-50 text-wine-800 text-xs font-bold uppercase tracking-wider mb-4 border border-wine-200">
+              <Users size={15} />
+              <span>Para Professores</span>
+            </div>
+            <h2 className="text-3xl font-extrabold text-neutral-950 sm:text-4xl tracking-tight">
+              Materiais para Professores
             </h2>
             <p className="mt-4 text-base sm:text-lg text-neutral-600">
-              Conheça as apostilas adaptadas de Matemática e Ciências desenvolvidas para apoiar o trabalho pedagógico nos Anos Finais do Ensino Fundamental.
+              Apostilas adaptadas de Matemática e Ciências e os volumes unificados (Apostilões) para o Ensino Fundamental.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {/* Atalhos para as Áreas (Matemática e Ciências) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 max-w-4xl mx-auto">
+            <div 
+              onClick={() => onNavigateToMatematica?.()}
+              className="p-6 rounded-3xl bg-white border border-neutral-200 hover:border-wine-400 hover:shadow-xl transition-all cursor-pointer flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold">
+                  <Calculator size={24} />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-neutral-900 group-hover:text-wine-800 transition-colors">
+                    Matemática Adaptada
+                  </h4>
+                  <p className="text-xs text-neutral-500">6º ao 9º ano + Apostilão Anos Finais</p>
+                </div>
+              </div>
+              <ArrowRight size={20} className="text-wine-800 group-hover:translate-x-1 transition-transform" />
+            </div>
+
+            <div 
+              onClick={() => onNavigateToCiencias?.()}
+              className="p-6 rounded-3xl bg-white border border-neutral-200 hover:border-wine-400 hover:shadow-xl transition-all cursor-pointer flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold">
+                  <Microscope size={24} />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-neutral-900 group-hover:text-wine-800 transition-colors">
+                    Ciências Adaptadas
+                  </h4>
+                  <p className="text-xs text-neutral-500">6º ao 9º ano + Apostilão Anos Finais</p>
+                </div>
+              </div>
+              <ArrowRight size={20} className="text-wine-800 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+          
+          {/* Apostilões em Destaque */}
+          <div className="mb-14">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-2.5 h-2.5 rounded-full bg-wine-800" />
+              <h3 className="text-xl font-bold text-neutral-950">
+                Apostilões — Anos Finais (+500 atividades)
+              </h3>
+            </div>
             
-            {/* Card 1: Matemática — Anos Finais */}
-            <div className="bg-white rounded-3xl p-8 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all flex flex-col justify-between">
-              <div>
-                <div className="flex justify-center mb-6">
-                  <PerspectiveBook
-                    size="default"
-                    coverImage="/assets/produtos/atividades-adaptadas/apostilao-matematica-anos-finais.png"
-                    title="Apostilão de Matemática"
-                    subtitle="6º ao 9º Ano (+500 atividades)"
-                    badge="+500 Atividades"
-                    isDestaque={true}
-                  />
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {produtos.atividadesAdaptadas.filter(p => p.destaque).map((prod) => (
+                <div 
+                  key={prod.id}
+                  className="bg-white rounded-3xl border border-wine-200 shadow-lg hover:shadow-2xl hover:border-wine-400 bg-gradient-to-b from-wine-50/40 via-white to-white transition-all duration-300 flex flex-col h-full group"
+                >
+                  {/* 3D Book Showcase */}
+                  <div className="relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[290px]">
+                    <div 
+                      className="absolute inset-0 opacity-40 pointer-events-none"
+                      style={{
+                        backgroundImage: "radial-gradient(#e5e7eb 1px, transparent 1px)",
+                        backgroundSize: "16px 16px"
+                      }}
+                    />
 
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-wine-50 text-wine-800 border border-wine-200">
-                    6º ao 9º Ano • Matemática
-                  </span>
-                </div>
-
-                <h3 className="text-2xl font-bold text-neutral-950 mb-3">
-                  Matemática — Anos Finais
-                </h3>
-
-                <p className="text-sm text-neutral-600 leading-relaxed mb-6">
-                  Apresenta as apostilas adaptadas de Matemática do 6º, 7º, 8º e 9º ano e o Apostilão de Matemática reunindo mais de 500 atividades estruturadas com apoio visual e gradação de dificuldade.
-                </p>
-
-                <div className="space-y-2 mb-8 text-xs text-neutral-700">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-wine-800 flex-shrink-0" />
-                    <span>Apostilas individuais (6º, 7º, 8º e 9º anos) com ~100 atividades</span>
+                    <PerspectiveBook
+                      size="default"
+                      coverImage={prod.imagem}
+                      title={prod.nome}
+                      subtitle={prod.descricao}
+                      badge={prod.detalhe}
+                      isDestaque={true}
+                    />
+                    
+                    <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-wine-800 text-white shadow-md">
+                      <Sparkles size={12} className="text-wine-200" />
+                      <span>Edição Especial</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-wine-800 flex-shrink-0" />
-                    <span>Apostilão completo reunindo todos os quatro anos finais</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-wine-800 flex-shrink-0" />
-                    <span>Linguagem direta, apoio visual e alinhamento à BNCC</span>
+                  
+                  {/* Product Details Area */}
+                  <div className="p-6 md:p-7 flex flex-col flex-grow">
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      <h3 className="text-xl font-bold text-neutral-950 group-hover:text-wine-900 transition-colors">
+                        {prod.nome}
+                      </h3>
+                    </div>
+
+                    {prod.subtitulo && (
+                      <h4 className="text-xs font-bold text-wine-800 mb-2 uppercase tracking-wider">
+                        {prod.subtitulo}
+                      </h4>
+                    )}
+
+                    <p className="text-neutral-600 text-sm mb-6 flex-grow leading-relaxed">
+                      {prod.descricao}
+                    </p>
+
+                    <div className="mb-6 pt-4 border-t border-neutral-100 flex items-center gap-2 text-xs text-neutral-600">
+                      <CheckCircle2 size={15} className="text-wine-700 flex-shrink-0" />
+                      <span>Atividades estruturadas e prontas para uso</span>
+                    </div>
+                    
+                    <button 
+                      onClick={() => {
+                        if (prod.id.startsWith('matematica')) {
+                          onNavigateToMatematica?.();
+                        } else {
+                          onNavigateToCiencias?.();
+                        }
+                      }}
+                      className="w-full py-3.5 px-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 bg-wine-800 hover:bg-wine-900 text-white shadow-md hover:shadow-lg hover:gap-3 transition-all duration-200 cursor-pointer"
+                    >
+                      <span>Conhecer apostilão completo</span>
+                      <ArrowRight size={16} className="transition-transform" />
+                    </button>
                   </div>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
 
-              <div className="pt-4 border-t border-neutral-100">
-                {onNavigateToMatematica ? (
-                  <button
-                    onClick={onNavigateToMatematica}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md transition-all cursor-pointer"
-                  >
-                    <span>Conhecer materiais de Matemática</span>
-                    <ArrowRight size={16} />
-                  </button>
-                ) : (
-                  <a
-                    href="#matematica-adaptada"
-                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md transition-all"
-                  >
-                    <span>Conhecer materiais de Matemática</span>
-                    <ArrowRight size={16} />
-                  </a>
-                )}
-              </div>
+          {/* Grid de Apostilas por Ano Escolar */}
+          <div className="mb-16">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-2.5 h-2.5 rounded-full bg-neutral-900" />
+              <h3 className="text-xl font-bold text-neutral-950">
+                Apostilas por Ano Escolar (~100 atividades cada)
+              </h3>
             </div>
 
-            {/* Card 2: Ciências — Anos Finais */}
-            <div className="bg-white rounded-3xl p-8 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all flex flex-col justify-between">
-              <div>
-                <div className="flex justify-center mb-6">
-                  <PerspectiveBook
-                    size="default"
-                    coverImage="/assets/produtos/atividades-adaptadas/apostilao-ciencias-anos-finais.png"
-                    title="Apostilão de Ciências"
-                    subtitle="6º ao 9º Ano (+500 atividades)"
-                    badge="+500 Atividades"
-                    isDestaque={false}
-                  />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {produtos.atividadesAdaptadas.filter(p => !p.destaque).map((prod) => (
+                <div 
+                  key={prod.id}
+                  className="bg-white rounded-3xl border border-neutral-200 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all duration-300 flex flex-col h-full group"
+                >
+                  {/* 3D Book Showcase */}
+                  <div className="relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[240px]">
+                    <div 
+                      className="absolute inset-0 opacity-40 pointer-events-none"
+                      style={{
+                        backgroundImage: "radial-gradient(#e5e7eb 1px, transparent 1px)",
+                        backgroundSize: "16px 16px"
+                      }}
+                    />
+
+                    <PerspectiveBook
+                      size="sm"
+                      coverImage={prod.imagem}
+                      title={prod.nome}
+                      subtitle={prod.descricao}
+                      badge={prod.detalhe}
+                      isDestaque={false}
+                    />
+                  </div>
+                  
+                  {/* Product Details Area */}
+                  <div className="p-6 flex flex-col flex-grow">
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <h3 className="text-base font-bold text-neutral-950 group-hover:text-wine-900 transition-colors">
+                        {prod.nome}
+                      </h3>
+                    </div>
+
+                    {prod.subtitulo && (
+                      <h4 className="text-[11px] font-bold text-wine-800 mb-2 uppercase tracking-wider">
+                        {prod.subtitulo}
+                      </h4>
+                    )}
+
+                    <p className="text-neutral-600 text-xs mb-5 flex-grow leading-relaxed">
+                      {prod.descricao}
+                    </p>
+
+                    <div className="mb-5 pt-3 border-t border-neutral-100 flex items-center gap-2 text-xs text-neutral-500">
+                      <CheckCircle2 size={14} className="text-wine-700 flex-shrink-0" />
+                      <span>Atividades estruturadas e prontas para uso</span>
+                    </div>
+                    
+                    <button 
+                      onClick={() => {
+                        if (prod.id.startsWith('matematica')) {
+                          onNavigateToMatematica?.();
+                        } else {
+                          onNavigateToCiencias?.();
+                        }
+                      }}
+                      className="w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-neutral-900 hover:bg-wine-800 text-white shadow-sm hover:shadow-md hover:gap-2.5 transition-all duration-200 cursor-pointer"
+                    >
+                      <span>Conhecer material</span>
+                      <ArrowRight size={14} className="transition-transform" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ========================================================= */}
+          {/* BLOCO: BIOLOGIA E FÍSICA EM BREVE                         */}
+          {/* ========================================================= */}
+          <div className="rounded-3xl bg-gradient-to-br from-neutral-950 via-neutral-900 to-wine-950 text-white p-8 sm:p-12 border border-wine-500/30 relative overflow-hidden shadow-2xl">
+            {/* Glows decorativos */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-wine-700/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-10 left-10 w-72 h-72 bg-neutral-800/40 rounded-full blur-2xl pointer-events-none" />
+            
+            <div className="relative z-10 max-w-4xl mx-auto text-center">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-900/80 border border-wine-500/40 text-wine-200 text-xs font-bold uppercase tracking-wider mb-6">
+                <Sparkles size={14} className="text-wine-300" />
+                <span>Próximos Lançamentos Pedagógicos</span>
+              </div>
+
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight mb-4">
+                Biologia e Física estarão disponíveis em breve
+              </h3>
+
+              <p className="text-sm sm:text-base text-neutral-300 leading-relaxed max-w-2xl mx-auto mb-10">
+                Nossa equipe pedagógica já está desenvolvendo as novas apostilas adaptadas de <strong>Biologia</strong> e <strong>Física</strong> para os Anos Finais do Ensino Fundamental e Ensino Médio, mantendo o rigor editorial com esquemas visuais, linguagem clara e atividades inclusivas.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-10">
+                <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-wine-500/40 transition-all">
+                  <div className="w-12 h-12 rounded-xl bg-wine-900/60 text-wine-300 flex items-center justify-center font-bold mb-4 border border-wine-700/50">
+                    <Dna size={24} />
+                  </div>
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-lg font-bold text-white">Biologia Adaptada</h4>
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-wine-950 text-wine-300 border border-wine-700/60 px-2.5 py-0.5 rounded-full">
+                      Em Breve
+                    </span>
+                  </div>
+                  <p className="text-xs text-neutral-300 leading-relaxed">
+                    Citologia, Genética, Ecologia, Fisiologia Humana e Evolução com infográficos didáticos, mapas conceituais e atividades estruturadas para diferentes ritmos de aprendizagem.
+                  </p>
                 </div>
 
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-wine-50 text-wine-800 border border-wine-200">
-                    6º ao 9º Ano • Ciências
-                  </span>
-                </div>
-
-                <h3 className="text-2xl font-bold text-neutral-950 mb-3">
-                  Ciências — Anos Finais
-                </h3>
-
-                <p className="text-sm text-neutral-600 leading-relaxed mb-6">
-                  Apresenta as apostilas adaptadas de Ciências do 6º, 7º, 8º e 9º ano e o Apostilão de Ciências com infográficos didáticos, esquemas visuais e contextualização científica acessível.
-                </p>
-
-                <div className="space-y-2 mb-8 text-xs text-neutral-700">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-wine-800 flex-shrink-0" />
-                    <span>Apostilas individuais (6º, 7º, 8º e 9º anos) com esquemas visuais</span>
+                <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-wine-500/40 transition-all">
+                  <div className="w-12 h-12 rounded-xl bg-wine-900/60 text-wine-300 flex items-center justify-center font-bold mb-4 border border-wine-700/50">
+                    <Atom size={24} />
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-wine-800 flex-shrink-0" />
-                    <span>Apostilão completo de Ciências para planejamento integrado</span>
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-lg font-bold text-white">Física Adaptada</h4>
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-wine-950 text-wine-300 border border-wine-700/60 px-2.5 py-0.5 rounded-full">
+                      Em Breve
+                    </span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-wine-800 flex-shrink-0" />
-                    <span>Eixos da BNCC: Matéria, Vida, Evolução, Terra e Universo</span>
-                  </div>
+                  <p className="text-xs text-neutral-300 leading-relaxed">
+                    Mecânica, Termologia, Ondulatória, Óptica e Eletricidade básica explicadas de forma intuitiva, associando fenômenos do cotidiano a esquemas gráficos acessíveis.
+                  </p>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-neutral-100">
-                {onNavigateToCiencias ? (
-                  <button
-                    onClick={onNavigateToCiencias}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md transition-all cursor-pointer"
-                  >
-                    <span>Conhecer materiais de Ciências</span>
-                    <ArrowRight size={16} />
-                  </button>
-                ) : (
-                  <a
-                    href="#ciencias-adaptadas"
-                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md transition-all"
-                  >
-                    <span>Conhecer materiais de Ciências</span>
-                    <ArrowRight size={16} />
-                  </a>
-                )}
+              <div className="inline-flex flex-col sm:flex-row items-center gap-4">
+                <a
+                  href="https://wa.me/5511998713683?text=Ol%C3%A1!%20Gostaria%20de%20ser%20avisado%20sobre%20o%20lan%C3%A7amento%20das%20apostilas%20adaptadas%20de%20Biologia%20e%20F%C3%ADsica."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl text-sm font-bold text-white bg-wine-800 hover:bg-wine-700 shadow-md hover:shadow-lg transition-all"
+                >
+                  <span>Ser avisado no lançamento via WhatsApp</span>
+                  <ArrowRight size={16} />
+                </a>
               </div>
             </div>
-
           </div>
 
         </div>
