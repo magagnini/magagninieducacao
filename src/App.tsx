@@ -17,6 +17,7 @@ import { CienciasAdaptadaPage } from './pages/CienciasAdaptadaPage';
 import { AlunosPage } from './pages/AlunosPage';
 import { ProfessoresPage } from './pages/ProfessoresPage';
 import { GestoresPage } from './pages/GestoresPage';
+import { FlipBookModal } from './components/FlipBookModal';
 
 export type AppPage = 
   | 'magagnini' 
@@ -31,6 +32,7 @@ export type AppPage =
   | 'ciencias';
 
 function App() {
+  const [flipBookOpen, setFlipBookOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<AppPage>(() => {
     if (typeof window !== 'undefined') {
       const path = window.location.pathname;
@@ -125,93 +127,83 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Render individual product / solution landing pages
-  if (currentPage === 'themis') {
-    return <ThemisPage onBackToMagagnini={navigateToMagagnini} />;
-  }
-
-  if (currentPage === 'atheneum') {
-    return <AtheneumPage onBackToMagagnini={navigateToMagagnini} />;
-  }
-
-  if (currentPage === 'obmep') {
-    return <ObmepPage onBackToMagagnini={navigateToMagagnini} />;
-  }
-
-  if (currentPage === 'provao-paulista') {
-    return <ProvaoPaulistaPage onBackToMagagnini={navigateToMagagnini} />;
-  }
-
-  if (currentPage === 'matematica') {
-    return <MatematicaAdaptadaPage onBackToMagagnini={navigateToMagagnini} />;
-  }
-
-  if (currentPage === 'ciencias') {
-    return <CienciasAdaptadaPage onBackToMagagnini={navigateToMagagnini} />;
-  }
-
-  // Profile Landing Pages
-  if (currentPage === 'alunos') {
-    return (
-      <AlunosPage 
-        onBackToMagagnini={navigateToMagagnini}
-        onNavigateToProfessores={() => navigateToPage('professores')}
-        onNavigateToGestores={() => navigateToPage('gestores')}
-        onNavigateToProvao={() => navigateToPage('provao-paulista')}
-        onNavigateToObmep={() => navigateToPage('obmep')}
-      />
-    );
-  }
-
-  if (currentPage === 'professores') {
-    return (
-      <ProfessoresPage 
-        onBackToMagagnini={navigateToMagagnini}
-        onNavigateToAlunos={() => navigateToPage('alunos')}
-        onNavigateToGestores={() => navigateToPage('gestores')}
-        onNavigateToMatematica={() => navigateToPage('matematica')}
-        onNavigateToCiencias={() => navigateToPage('ciencias')}
-      />
-    );
-  }
-
-  if (currentPage === 'gestores') {
-    return (
-      <GestoresPage 
-        onBackToMagagnini={navigateToMagagnini}
-        onNavigateToAlunos={() => navigateToPage('alunos')}
-        onNavigateToProfessores={() => navigateToPage('professores')}
-        onNavigateToThemis={() => navigateToPage('themis')}
-        onNavigateToAtheneum={() => navigateToPage('atheneum')}
-      />
-    );
-  }
-
-  // Home Page
   return (
-    <div className="min-h-screen bg-white">
-      <Header onNavigate={navigateToPage} currentPage={currentPage} />
-      <main>
-        <Hero />
-        {/* Seção de Seleção de Perfil imediatamente após a Hero */}
-        <PerfilSelector onSelectProfile={(p) => navigateToPage(p)} />
-        <Sobre />
-        <Categorias />
-        <Produtos onNavigate={(p) => navigateToPage(p)} />
-        <Solucoes 
-          onOpenThemis={() => navigateToPage('themis')} 
-          onOpenAtheneum={() => navigateToPage('atheneum')} 
+    <>
+      <FlipBookModal isOpen={flipBookOpen} onClose={() => setFlipBookOpen(false)} />
+      
+      {currentPage === 'themis' && <ThemisPage onBackToMagagnini={navigateToMagagnini} />}
+      
+      {currentPage === 'atheneum' && <AtheneumPage onBackToMagagnini={navigateToMagagnini} />}
+      
+      {currentPage === 'obmep' && <ObmepPage onBackToMagagnini={navigateToMagagnini} />}
+      
+      {currentPage === 'provao-paulista' && <ProvaoPaulistaPage onBackToMagagnini={navigateToMagagnini} />}
+      
+      {currentPage === 'matematica' && (
+        <MatematicaAdaptadaPage 
+          onBackToMagagnini={navigateToMagagnini} 
+          onOpenFlipBook={() => setFlipBookOpen(true)}
         />
-        <Numeros />
-        <ParaQuem />
-        <CTA onConhecerSobre={() => {
-          const el = document.getElementById('sobre');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }} />
-        <Contato />
-      </main>
-      <Footer />
-    </div>
+      )}
+      
+      {currentPage === 'ciencias' && <CienciasAdaptadaPage onBackToMagagnini={navigateToMagagnini} />}
+      
+      {currentPage === 'alunos' && (
+        <AlunosPage 
+          onBackToMagagnini={navigateToMagagnini}
+          onNavigateToProfessores={() => navigateToPage('professores')}
+          onNavigateToGestores={() => navigateToPage('gestores')}
+          onNavigateToProvao={() => navigateToPage('provao-paulista')}
+          onNavigateToObmep={() => navigateToPage('obmep')}
+        />
+      )}
+      
+      {currentPage === 'professores' && (
+        <ProfessoresPage 
+          onBackToMagagnini={navigateToMagagnini}
+          onNavigateToAlunos={() => navigateToPage('alunos')}
+          onNavigateToGestores={() => navigateToPage('gestores')}
+          onNavigateToMatematica={() => navigateToPage('matematica')}
+          onNavigateToCiencias={() => navigateToPage('ciencias')}
+          onOpenFlipBook={() => setFlipBookOpen(true)}
+        />
+      )}
+      
+      {currentPage === 'gestores' && (
+        <GestoresPage 
+          onBackToMagagnini={navigateToMagagnini}
+          onNavigateToAlunos={() => navigateToPage('alunos')}
+          onNavigateToProfessores={() => navigateToPage('professores')}
+          onNavigateToThemis={() => navigateToPage('themis')}
+          onNavigateToAtheneum={() => navigateToPage('atheneum')}
+        />
+      )}
+      
+      {currentPage === 'magagnini' && (
+        <div className="min-h-screen bg-white">
+          <Header onNavigate={navigateToPage} currentPage={currentPage} />
+          <main>
+            <Hero onOpenFlipBook={() => setFlipBookOpen(true)} />
+            <PerfilSelector onSelectProfile={(p) => navigateToPage(p)} />
+            <Sobre />
+            <Categorias />
+            <Produtos onNavigate={(p) => navigateToPage(p)} />
+            <Solucoes 
+              onOpenThemis={() => navigateToPage('themis')} 
+              onOpenAtheneum={() => navigateToPage('atheneum')} 
+            />
+            <Numeros />
+            <ParaQuem />
+            <CTA onConhecerSobre={() => {
+              const el = document.getElementById('sobre');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }} />
+            <Contato />
+          </main>
+          <Footer />
+        </div>
+      )}
+    </>
   );
 }
 

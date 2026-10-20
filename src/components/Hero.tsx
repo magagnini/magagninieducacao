@@ -2,7 +2,11 @@ import { ArrowRight, BookOpen, Laptop, Sparkles, GraduationCap, CheckCircle } fr
 import { motion } from 'framer-motion';
 import { PerspectiveBook } from './PerspectiveBook';
 
-export function Hero() {
+interface HeroProps {
+  onOpenFlipBook?: () => void;
+}
+
+export function Hero({ onOpenFlipBook }: HeroProps = {}) {
   return (
     <section 
       id="inicio" 
@@ -142,7 +146,11 @@ export function Hero() {
               </div>
 
               {/* 3D Perspective Book inside Hero com rotação cinematográfica de entrada */}
-              <div className="py-2 flex items-center justify-center [perspective:1200px]">
+              <div 
+                onClick={onOpenFlipBook}
+                className={`py-2 flex flex-col items-center justify-center [perspective:1200px] ${onOpenFlipBook ? 'cursor-pointer group' : ''}`}
+                title={onOpenFlipBook ? "Clique para folhear a amostra digital em 3D" : undefined}
+              >
                 <motion.div
                   initial={{ 
                     opacity: 0, 
@@ -174,6 +182,20 @@ export function Hero() {
                     isDestaque={true}
                   />
                 </motion.div>
+
+                {onOpenFlipBook && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenFlipBook();
+                    }}
+                    className="mt-3 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold text-wine-200 bg-white/10 hover:bg-wine-800 border border-white/20 hover:border-wine-500 shadow-md backdrop-blur-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                  >
+                    <Sparkles size={12} className="text-wine-400" />
+                    <span>Folhear amostra interativa (13 pág.)</span>
+                  </button>
+                )}
               </div>
 
               {/* Floating Floating Badges around the book */}

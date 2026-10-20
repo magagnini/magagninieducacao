@@ -20,9 +20,10 @@ import { EmpilhamentoDeVantagens } from '../components/EmpilhamentoDeVantagens';
 
 interface MatematicaAdaptadaPageProps {
   onBackToMagagnini?: () => void;
+  onOpenFlipBook?: () => void;
 }
 
-export function MatematicaAdaptadaPage({ onBackToMagagnini }: MatematicaAdaptadaPageProps) {
+export function MatematicaAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: MatematicaAdaptadaPageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
@@ -230,18 +231,33 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini }: MatematicaAdaptada
             </div>
 
             {/* Right: Showcase with 3D Book */}
-            <div className="mt-12 lg:mt-0 lg:col-span-5 flex justify-center relative">
-              <div className="relative group">
+            <div className="mt-12 lg:mt-0 lg:col-span-5 flex flex-col items-center justify-center relative">
+              <div 
+                onClick={onOpenFlipBook}
+                className={`relative group ${onOpenFlipBook ? 'cursor-pointer' : ''}`}
+                title={onOpenFlipBook ? "Clique para folhear a amostra digital em 3D" : undefined}
+              >
                 <div className="absolute -inset-4 bg-gradient-to-tr from-wine-800/20 to-transparent rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none" />
                 <PerspectiveBook
                   size="lg"
-                  coverImage="/assets/produtos/atividades-adaptadas/matematica-8-ano.png"
-                  title="Matemática Adaptada"
+                  coverImage="/assets/produtos/atividades-adaptadas/apostilao-matematica-anos-finais.png"
+                  title="Apostilão de Matemática"
                   subtitle="Anos Finais"
                   badge="+500 Atividades"
                   isDestaque={true}
                 />
               </div>
+
+              {onOpenFlipBook && (
+                <button
+                  type="button"
+                  onClick={onOpenFlipBook}
+                  className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-wine-900 bg-wine-50 hover:bg-wine-100 border border-wine-300 shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                >
+                  <Sparkles size={13} className="text-wine-800" />
+                  <span>Folhear amostra interativa (13 pág.)</span>
+                </button>
+              )}
             </div>
 
           </div>
@@ -479,7 +495,7 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini }: MatematicaAdaptada
                       </div>
 
                       {/* Botão de Compra Individual (Regra 59) */}
-                      <div id={`compra-${prod.id}`} className="scroll-mt-36">
+                      <div id={`compra-${prod.id}`} className="scroll-mt-36 flex flex-wrap items-center gap-4">
                         {hasLink ? (
                           <a
                             href={prod.linkCompra}
@@ -502,6 +518,17 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini }: MatematicaAdaptada
                             <span>CONSULTAR DISPONIBILIDADE NO WHATSAPP</span>
                             <ExternalLink size={18} />
                           </a>
+                        )}
+
+                        {isApostilao && onOpenFlipBook && (
+                          <button
+                            type="button"
+                            onClick={onOpenFlipBook}
+                            className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-sm sm:text-base font-bold text-wine-200 bg-white/10 hover:bg-white/15 border border-white/20 transition-all cursor-pointer"
+                          >
+                            <Sparkles size={16} className="text-wine-400" />
+                            <span>Folhear 13 Páginas (3D)</span>
+                          </button>
                         )}
                       </div>
 

@@ -12,6 +12,7 @@ import {
   Menu, 
   X
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface GestoresPageProps {
   onBackToMagagnini?: () => void;
@@ -193,7 +194,12 @@ export function GestoresPage({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
             
-            <div className="lg:col-span-7 text-center lg:text-left">
+            <motion.div 
+              initial={{ opacity: 0, x: -70 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-7 text-center lg:text-left"
+            >
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-900/60 border border-wine-500/40 text-wine-200 text-xs font-bold uppercase tracking-wider mb-6">
                 <Building2 size={15} className="text-wine-400" />
                 <span>Gestão Escolar & Tecnologia Administrativa</span>
@@ -240,10 +246,15 @@ export function GestoresPage({
                   <div className="text-xs text-neutral-400">Escola + Famílias</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right: Solutions Graphic Showcase */}
-            <div className="mt-14 lg:mt-0 lg:col-span-5 flex justify-center relative">
+            <motion.div 
+              initial={{ opacity: 0, x: 70 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-14 lg:mt-0 lg:col-span-5 flex justify-center relative"
+            >
               <div className="relative w-full max-w-md rounded-3xl bg-neutral-900 border border-neutral-800 p-6 shadow-2xl overflow-hidden">
                 <div className="flex items-center justify-between pb-4 mb-5 border-b border-neutral-800">
                   <div className="flex items-center gap-2">
@@ -292,7 +303,7 @@ export function GestoresPage({
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
           </div>
         </div>
@@ -317,7 +328,13 @@ export function GestoresPage({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-3xl bg-neutral-50/80 border border-neutral-200/80 hover:border-wine-300 hover:shadow-lg transition-all flex flex-col justify-between">
+            <motion.div 
+              initial={{ opacity: 0, x: -60, y: 0 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="p-8 rounded-3xl bg-neutral-50/80 border border-neutral-200/80 hover:border-wine-300 hover:shadow-lg transition-all flex flex-col justify-between"
+            >
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold mb-6 border border-wine-100">
                   <Clock size={24} />
@@ -327,9 +344,15 @@ export function GestoresPage({
                   Consulte registros e acompanhe informações relevantes ao longo do tempo, evitando perdas de dados e retrabalho da equipe gestora.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="p-8 rounded-3xl bg-neutral-50/80 border border-neutral-200/80 hover:border-wine-300 hover:shadow-lg transition-all flex flex-col justify-between">
+            <motion.div 
+              initial={{ opacity: 0, x: 0, y: 60 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="p-8 rounded-3xl bg-neutral-50/80 border border-neutral-200/80 hover:border-wine-300 hover:shadow-lg transition-all flex flex-col justify-between"
+            >
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold mb-6 border border-wine-100">
                   <Users size={24} />
@@ -339,9 +362,15 @@ export function GestoresPage({
                   Organize os processos de comunicação entre escola e responsáveis com transparência, agilidade e registro formal de notificações.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="p-8 rounded-3xl bg-neutral-50/80 border border-neutral-200/80 hover:border-wine-300 hover:shadow-lg transition-all flex flex-col justify-between">
+            <motion.div 
+              initial={{ opacity: 0, x: 60, y: 0 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="p-8 rounded-3xl bg-neutral-50/80 border border-neutral-200/80 hover:border-wine-300 hover:shadow-lg transition-all flex flex-col justify-between"
+            >
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold mb-6 border border-wine-100">
                   <FileText size={24} />
@@ -351,7 +380,7 @@ export function GestoresPage({
                   Registre as ações realizadas e facilite a continuidade do trabalho pedagógico e administrativo entre coordenação e professores.
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
 
         </div>
@@ -365,7 +394,13 @@ export function GestoresPage({
           
           <div className="lg:grid lg:grid-cols-12 lg:gap-16 items-center">
             
-            <div className="lg:col-span-6">
+            <motion.div 
+              initial={{ opacity: 0, x: -70 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-6"
+            >
               <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-wine-50 text-wine-800 rounded-full text-xs font-bold uppercase tracking-wider mb-4 border border-wine-200">
                 <ShieldCheck size={14} className="text-wine-700" />
                 <span>Gestão Escolar & Ocorrências</span>
@@ -417,10 +452,16 @@ export function GestoresPage({
                   </a>
                 )}
               </div>
-            </div>
+            </motion.div>
 
             {/* Visual Column */}
-            <div className="mt-12 lg:mt-0 lg:col-span-6">
+            <motion.div 
+              initial={{ opacity: 0, x: 70 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-12 lg:mt-0 lg:col-span-6"
+            >
               <div className="rounded-3xl bg-neutral-900 p-6 border border-neutral-800 shadow-2xl relative overflow-hidden group">
                 <div className="flex items-center justify-between pb-4 mb-4 border-b border-neutral-800">
                   <div className="flex items-center gap-2">
@@ -443,7 +484,7 @@ export function GestoresPage({
                   />
                 </div>
               </div>
-            </div>
+            </motion.div>
 
           </div>
 
@@ -459,7 +500,13 @@ export function GestoresPage({
           <div className="lg:grid lg:grid-cols-12 lg:gap-16 items-center">
             
             {/* Visual Column */}
-            <div className="order-2 lg:order-1 lg:col-span-6 mt-12 lg:mt-0">
+            <motion.div 
+              initial={{ opacity: 0, x: -70 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="order-2 lg:order-1 lg:col-span-6 mt-12 lg:mt-0"
+            >
               <div className="rounded-3xl bg-neutral-900 p-6 border border-neutral-800 shadow-2xl relative overflow-hidden group">
                 <div className="flex items-center justify-between pb-4 mb-4 border-b border-neutral-800">
                   <div className="flex items-center gap-2">
@@ -482,10 +529,16 @@ export function GestoresPage({
                   />
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Content Column */}
-            <div className="order-1 lg:order-2 lg:col-span-6">
+            <motion.div 
+              initial={{ opacity: 0, x: 70 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="order-1 lg:order-2 lg:col-span-6"
+            >
               <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-wine-50 text-wine-800 rounded-full text-xs font-bold uppercase tracking-wider mb-4 border border-wine-200">
                 <BookOpen size={14} className="text-wine-700" />
                 <span>Gestão de Bibliotecas</span>
@@ -537,7 +590,7 @@ export function GestoresPage({
                   </a>
                 )}
               </div>
-            </div>
+            </motion.div>
 
           </div>
 
@@ -588,20 +641,33 @@ export function GestoresPage({
                 titulo: 'Apoio à rotina administrativa',
                 desc: 'Economize tempo da coordenação e aumente a produtividade da gestão com processos digitais.'
               }
-            ].map((ben, idx) => (
-              <div 
-                key={idx}
-                className="p-7 rounded-3xl bg-white border border-neutral-200/90 shadow-sm hover:border-wine-300 hover:shadow-md transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold text-sm mb-4 border border-wine-100">
-                    0{idx + 1}
+            ].map((ben, idx) => {
+              const initialMotion = 
+                idx % 3 === 0
+                  ? { opacity: 0, x: -50, y: 0 }
+                  : idx % 3 === 2
+                  ? { opacity: 0, x: 50, y: 0 }
+                  : { opacity: 0, x: 0, y: 50 };
+
+              return (
+                <motion.div 
+                  key={idx}
+                  initial={initialMotion}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.75, delay: (idx % 3) * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="p-7 rounded-3xl bg-white border border-neutral-200/90 shadow-sm hover:border-wine-300 hover:shadow-md transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="w-10 h-10 rounded-xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold text-sm mb-4 border border-wine-100">
+                      0{idx + 1}
+                    </div>
+                    <h3 className="font-bold text-neutral-950 text-lg mb-2">{ben.titulo}</h3>
+                    <p className="text-sm text-neutral-600 leading-relaxed">{ben.desc}</p>
                   </div>
-                  <h3 className="font-bold text-neutral-950 text-lg mb-2">{ben.titulo}</h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed">{ben.desc}</p>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
 
         </div>
@@ -611,7 +677,13 @@ export function GestoresPage({
       {/* 7. CTA FINAL — GESTORES                                   */}
       {/* ========================================================= */}
       <section className="py-24 bg-gradient-to-br from-neutral-950 via-wine-950 to-black text-white relative text-center">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
           <span className="text-wine-400 text-xs font-bold uppercase tracking-widest block mb-4">
             Modernização Escolar
           </span>
@@ -658,7 +730,7 @@ export function GestoresPage({
               </a>
             )}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ========================================================= */}

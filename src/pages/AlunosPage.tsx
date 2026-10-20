@@ -14,6 +14,7 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { PerspectiveBook } from '../components/PerspectiveBook';
 
 function YoutubeIcon({ className = "w-5 h-5", size = 20 }: { className?: string; size?: number }) {
@@ -242,7 +243,12 @@ export function AlunosPage({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
             
-            <div className="lg:col-span-7 text-center lg:text-left">
+            <motion.div 
+              initial={{ opacity: 0, x: -70 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-7 text-center lg:text-left"
+            >
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-900/60 border border-wine-500/40 text-wine-200 text-xs font-bold uppercase tracking-wider mb-6">
                 <GraduationCap size={15} className="text-wine-400" />
                 <span>Área do Aluno • Preparação Acadêmica</span>
@@ -289,10 +295,15 @@ export function AlunosPage({
                   <div className="text-xs text-neutral-400">OBMEP & Provão Paulista</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right: Book Showcase Preview */}
-            <div className="mt-14 lg:mt-0 lg:col-span-5 flex justify-center relative">
+            <motion.div 
+              initial={{ opacity: 0, x: 70 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-14 lg:mt-0 lg:col-span-5 flex justify-center relative"
+            >
               <div className="relative group">
                 <div className="absolute -inset-4 bg-wine-800/30 rounded-3xl blur-2xl opacity-75 pointer-events-none" />
                 <PerspectiveBook
@@ -304,7 +315,7 @@ export function AlunosPage({
                   isDestaque={true}
                 />
               </div>
-            </div>
+            </motion.div>
 
           </div>
         </div>
@@ -350,20 +361,33 @@ export function AlunosPage({
                 titulo: 'Construa seu futuro',
                 texto: 'O conhecimento pode ampliar suas possibilidades de ingresso em instituições de ensino e de participação em programas acadêmicos.'
               }
-            ].map((card, idx) => (
-              <div 
-                key={idx}
-                className="p-8 rounded-3xl bg-neutral-50/80 border border-neutral-200/80 hover:border-wine-300 hover:shadow-lg hover:-translate-y-1 transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-12 h-12 rounded-2xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold mb-6 border border-wine-100">
-                    {card.icone}
+            ].map((card, idx) => {
+              const initialMotion = 
+                idx === 0 
+                  ? { opacity: 0, x: -60, y: 0 }
+                  : idx === 3
+                  ? { opacity: 0, x: 60, y: 0 }
+                  : { opacity: 0, x: 0, y: 60 };
+
+              return (
+                <motion.div 
+                  key={idx}
+                  initial={initialMotion}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="p-8 rounded-3xl bg-neutral-50/80 border border-neutral-200/80 hover:border-wine-300 hover:shadow-lg hover:-translate-y-1 transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-2xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold mb-6 border border-wine-100">
+                      {card.icone}
+                    </div>
+                    <h3 className="text-lg font-bold text-neutral-950 mb-3">{card.titulo}</h3>
+                    <p className="text-sm text-neutral-600 leading-relaxed">{card.texto}</p>
                   </div>
-                  <h3 className="text-lg font-bold text-neutral-950 mb-3">{card.titulo}</h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed">{card.texto}</p>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
 
         </div>
@@ -388,7 +412,13 @@ export function AlunosPage({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-3xl bg-neutral-900 border border-neutral-800 hover:border-wine-500/60 transition-all flex flex-col justify-between">
+            <motion.div 
+              initial={{ opacity: 0, x: -70 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="p-8 rounded-3xl bg-neutral-900 border border-neutral-800 hover:border-wine-500/60 transition-all flex flex-col justify-between"
+            >
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-wine-950 text-wine-400 flex items-center justify-center font-bold mb-6 border border-wine-800/60">
                   <Award size={24} />
@@ -401,9 +431,15 @@ export function AlunosPage({
               <div className="mt-6 pt-4 border-t border-neutral-800 text-xs text-neutral-400">
                 Foco em dedicação e mérito
               </div>
-            </div>
+            </motion.div>
 
-            <div className="p-8 rounded-3xl bg-neutral-900 border border-neutral-800 hover:border-wine-500/60 transition-all flex flex-col justify-between">
+            <motion.div 
+              initial={{ opacity: 0, y: 70 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="p-8 rounded-3xl bg-neutral-900 border border-neutral-800 hover:border-wine-500/60 transition-all flex flex-col justify-between"
+            >
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-wine-950 text-wine-400 flex items-center justify-center font-bold mb-6 border border-wine-800/60">
                   <Sparkles size={24} />
@@ -416,9 +452,15 @@ export function AlunosPage({
               <div className="mt-6 pt-4 border-t border-neutral-800 text-xs text-neutral-400">
                 OBMEP, OBA e competições científicas
               </div>
-            </div>
+            </motion.div>
 
-            <div className="p-8 rounded-3xl bg-neutral-900 border border-neutral-800 hover:border-wine-500/60 transition-all flex flex-col justify-between">
+            <motion.div 
+              initial={{ opacity: 0, x: 70 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="p-8 rounded-3xl bg-neutral-900 border border-neutral-800 hover:border-wine-500/60 transition-all flex flex-col justify-between"
+            >
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-wine-950 text-wine-400 flex items-center justify-center font-bold mb-6 border border-wine-800/60">
                   <BookOpen size={24} />
@@ -431,7 +473,7 @@ export function AlunosPage({
               <div className="mt-6 pt-4 border-t border-neutral-800 text-xs text-neutral-400">
                 Introdução à pesquisa acadêmica
               </div>
-            </div>
+            </motion.div>
           </div>
 
           <div className="mt-14 text-center">
@@ -455,7 +497,13 @@ export function AlunosPage({
           
           <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
             
-            <div className="lg:col-span-5 text-center lg:text-left mb-10 lg:mb-0">
+            <motion.div 
+              initial={{ opacity: 0, x: -70 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-5 text-center lg:text-left mb-10 lg:mb-0"
+            >
               <span className="text-wine-800 text-xs font-bold uppercase tracking-widest block mb-3">
                 Canal Magagnini Educação
               </span>
@@ -487,10 +535,16 @@ export function AlunosPage({
                   <span>Acessar Canal Oficial</span>
                 </a>
               </div>
-            </div>
+            </motion.div>
 
             {/* Embedded Responsive YouTube Player */}
-            <div className="lg:col-span-7">
+            <motion.div 
+              initial={{ opacity: 0, x: 70 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-7"
+            >
               <div className="rounded-3xl overflow-hidden bg-neutral-950 border border-neutral-800 shadow-2xl relative aspect-video">
                 <iframe
                   className="w-full h-full"
@@ -511,7 +565,7 @@ export function AlunosPage({
                   Abrir no YouTube <ExternalLink size={12} />
                 </a>
               </div>
-            </div>
+            </motion.div>
 
           </div>
 
@@ -641,7 +695,13 @@ export function AlunosPage({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             
             {/* Card 1: Apostila Provão Paulista */}
-            <div className="bg-white rounded-3xl p-8 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all flex flex-col justify-between">
+            <motion.div 
+              initial={{ opacity: 0, x: -70 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-white rounded-3xl p-8 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all flex flex-col justify-between"
+            >
               <div>
                 <div className="flex justify-center mb-6">
                   <PerspectiveBook
@@ -713,10 +773,16 @@ export function AlunosPage({
                   <ExternalLink size={13} />
                 </a>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 2: Apostila OBMEP Vol. 1 */}
-            <div className="bg-white rounded-3xl p-8 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all flex flex-col justify-between">
+            <motion.div 
+              initial={{ opacity: 0, x: 70 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-white rounded-3xl p-8 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all flex flex-col justify-between"
+            >
               <div>
                 <div className="flex justify-center mb-6">
                   <PerspectiveBook
@@ -788,7 +854,7 @@ export function AlunosPage({
                   <ExternalLink size={13} />
                 </a>
               </div>
-            </div>
+            </motion.div>
 
           </div>
 

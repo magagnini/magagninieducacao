@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { PerspectiveBook } from '../components/PerspectiveBook';
 import { produtos } from '../data/produtos';
+import { motion } from 'framer-motion';
 
 function YoutubeIcon({ className = "w-5 h-5", size = 20 }: { className?: string; size?: number }) {
   return (
@@ -41,6 +42,7 @@ interface ProfessoresPageProps {
   onNavigateToGestores?: () => void;
   onNavigateToMatematica?: () => void;
   onNavigateToCiencias?: () => void;
+  onOpenFlipBook?: () => void;
 }
 
 export function ProfessoresPage({
@@ -48,7 +50,8 @@ export function ProfessoresPage({
   onNavigateToAlunos,
   onNavigateToGestores,
   onNavigateToMatematica,
-  onNavigateToCiencias
+  onNavigateToCiencias,
+  onOpenFlipBook
 }: ProfessoresPageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -209,7 +212,12 @@ export function ProfessoresPage({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
             
-            <div className="lg:col-span-7 text-center lg:text-left">
+            <motion.div 
+              initial={{ opacity: 0, x: -70 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-7 text-center lg:text-left"
+            >
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-900/60 border border-wine-500/40 text-wine-200 text-xs font-bold uppercase tracking-wider mb-6">
                 <Users size={15} className="text-wine-400" />
                 <span>Área do Professor • Apoio à Prática Pedagógica</span>
@@ -256,11 +264,20 @@ export function ProfessoresPage({
                   <div className="text-xs text-neutral-400">PDFs em alta resolução</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right: Book Showcase Preview */}
-            <div className="mt-14 lg:mt-0 lg:col-span-5 flex justify-center relative">
-              <div className="relative group">
+            <motion.div 
+              initial={{ opacity: 0, x: 70 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-14 lg:mt-0 lg:col-span-5 flex flex-col items-center justify-center relative"
+            >
+              <div 
+                onClick={onOpenFlipBook}
+                className="relative group cursor-pointer"
+                title="Clique para folhear a amostra digital 3D"
+              >
                 <div className="absolute -inset-4 bg-wine-800/30 rounded-3xl blur-2xl opacity-75 pointer-events-none" />
                 <PerspectiveBook
                   size="lg"
@@ -271,7 +288,17 @@ export function ProfessoresPage({
                   isDestaque={true}
                 />
               </div>
-            </div>
+
+              {onOpenFlipBook && (
+                <button
+                  onClick={onOpenFlipBook}
+                  className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-wine-200 bg-white/10 hover:bg-white/15 border border-white/20 shadow-md backdrop-blur-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                >
+                  <Sparkles size={13} className="text-wine-400" />
+                  <span>Folhear amostra interativa (13 pág.)</span>
+                </button>
+              )}
+            </motion.div>
 
           </div>
         </div>
@@ -317,20 +344,33 @@ export function ProfessoresPage({
                 titulo: 'Flexibilidade em sala',
                 texto: 'Adapte a utilização dos materiais conforme os objetivos pedagógicos e as necessidades da turma.'
               }
-            ].map((card, idx) => (
-              <div 
-                key={idx}
-                className="p-8 rounded-3xl bg-neutral-50/80 border border-neutral-200/80 hover:border-wine-300 hover:shadow-lg hover:-translate-y-1 transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-12 h-12 rounded-2xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold mb-6 border border-wine-100">
-                    {card.icone}
+            ].map((card, idx) => {
+              const initialMotion = 
+                idx === 0 
+                  ? { opacity: 0, x: -60, y: 0 }
+                  : idx === 3
+                  ? { opacity: 0, x: 60, y: 0 }
+                  : { opacity: 0, x: 0, y: 60 };
+
+              return (
+                <motion.div 
+                  key={idx}
+                  initial={initialMotion}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="p-8 rounded-3xl bg-neutral-50/80 border border-neutral-200/80 hover:border-wine-300 hover:shadow-lg hover:-translate-y-1 transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-2xl bg-wine-50 text-wine-800 flex items-center justify-center font-bold mb-6 border border-wine-100">
+                      {card.icone}
+                    </div>
+                    <h3 className="text-lg font-bold text-neutral-950 mb-3">{card.titulo}</h3>
+                    <p className="text-sm text-neutral-600 leading-relaxed">{card.texto}</p>
                   </div>
-                  <h3 className="text-lg font-bold text-neutral-950 mb-3">{card.titulo}</h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed">{card.texto}</p>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Pedagogy Note */}
@@ -365,7 +405,11 @@ export function ProfessoresPage({
 
           {/* Atalhos para as Áreas (Matemática e Ciências) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 max-w-4xl mx-auto">
-            <div 
+            <motion.div 
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               onClick={() => onNavigateToMatematica?.()}
               className="p-6 rounded-3xl bg-white border border-neutral-200 hover:border-wine-400 hover:shadow-xl transition-all cursor-pointer flex items-center justify-between group"
             >
@@ -381,9 +425,13 @@ export function ProfessoresPage({
                 </div>
               </div>
               <ArrowRight size={20} className="text-wine-800 group-hover:translate-x-1 transition-transform" />
-            </div>
+            </motion.div>
 
-            <div 
+            <motion.div 
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               onClick={() => onNavigateToCiencias?.()}
               className="p-6 rounded-3xl bg-white border border-neutral-200 hover:border-wine-400 hover:shadow-xl transition-all cursor-pointer flex items-center justify-between group"
             >
@@ -399,7 +447,7 @@ export function ProfessoresPage({
                 </div>
               </div>
               <ArrowRight size={20} className="text-wine-800 group-hover:translate-x-1 transition-transform" />
-            </div>
+            </motion.div>
           </div>
           
           {/* Apostilões em Destaque */}
@@ -412,75 +460,108 @@ export function ProfessoresPage({
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {produtos.atividadesAdaptadas.filter(p => p.destaque).map((prod) => (
-                <div 
-                  key={prod.id}
-                  className="bg-white rounded-3xl border border-wine-200 shadow-lg hover:shadow-2xl hover:border-wine-400 bg-gradient-to-b from-wine-50/40 via-white to-white transition-all duration-300 flex flex-col h-full group"
-                >
-                  {/* 3D Book Showcase */}
-                  <div className="relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[290px]">
+              {produtos.atividadesAdaptadas.filter(p => p.destaque).map((prod, idx) => {
+                const isMatematica = prod.id.startsWith('matematica');
+                return (
+                  <motion.div 
+                    key={prod.id}
+                    initial={{ opacity: 0, x: idx === 0 ? -60 : 60 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                    className="bg-white rounded-3xl border border-wine-200 shadow-lg hover:shadow-2xl hover:border-wine-400 bg-gradient-to-b from-wine-50/40 via-white to-white transition-all duration-300 flex flex-col h-full group"
+                  >
+                    {/* 3D Book Showcase */}
                     <div 
-                      className="absolute inset-0 opacity-40 pointer-events-none"
-                      style={{
-                        backgroundImage: "radial-gradient(#e5e7eb 1px, transparent 1px)",
-                        backgroundSize: "16px 16px"
-                      }}
-                    />
-
-                    <PerspectiveBook
-                      size="default"
-                      coverImage={prod.imagem}
-                      title={prod.nome}
-                      subtitle={prod.descricao}
-                      badge={prod.detalhe}
-                      isDestaque={true}
-                    />
-                    
-                    <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-wine-800 text-white shadow-md">
-                      <Sparkles size={12} className="text-wine-200" />
-                      <span>Edição Especial</span>
-                    </div>
-                  </div>
-                  
-                  {/* Product Details Area */}
-                  <div className="p-6 md:p-7 flex flex-col flex-grow">
-                    <div className="flex items-center justify-between gap-2 mb-2">
-                      <h3 className="text-xl font-bold text-neutral-950 group-hover:text-wine-900 transition-colors">
-                        {prod.nome}
-                      </h3>
-                    </div>
-
-                    {prod.subtitulo && (
-                      <h4 className="text-xs font-bold text-wine-800 mb-2 uppercase tracking-wider">
-                        {prod.subtitulo}
-                      </h4>
-                    )}
-
-                    <p className="text-neutral-600 text-sm mb-6 flex-grow leading-relaxed">
-                      {prod.descricao}
-                    </p>
-
-                    <div className="mb-6 pt-4 border-t border-neutral-100 flex items-center gap-2 text-xs text-neutral-600">
-                      <CheckCircle2 size={15} className="text-wine-700 flex-shrink-0" />
-                      <span>Atividades estruturadas e prontas para uso</span>
-                    </div>
-                    
-                    <button 
                       onClick={() => {
-                        if (prod.id.startsWith('matematica')) {
-                          onNavigateToMatematica?.();
-                        } else {
-                          onNavigateToCiencias?.();
+                        if (isMatematica && onOpenFlipBook) {
+                          onOpenFlipBook();
                         }
                       }}
-                      className="w-full py-3.5 px-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 bg-wine-800 hover:bg-wine-900 text-white shadow-md hover:shadow-lg hover:gap-3 transition-all duration-200 cursor-pointer"
+                      className={`relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[290px] ${isMatematica && onOpenFlipBook ? 'cursor-pointer' : ''}`}
                     >
-                      <span>Conhecer apostilão completo</span>
-                      <ArrowRight size={16} className="transition-transform" />
-                    </button>
-                  </div>
-                </div>
-              ))}
+                      <div 
+                        className="absolute inset-0 opacity-40 pointer-events-none"
+                        style={{
+                          backgroundImage: "radial-gradient(#e5e7eb 1px, transparent 1px)",
+                          backgroundSize: "16px 16px"
+                        }}
+                      />
+
+                      <PerspectiveBook
+                        size="default"
+                        coverImage={prod.imagem}
+                        title={prod.nome}
+                        subtitle={prod.descricao}
+                        badge={prod.detalhe}
+                        isDestaque={true}
+                      />
+                      
+                      <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-wine-800 text-white shadow-md">
+                        <Sparkles size={12} className="text-wine-200" />
+                        <span>Edição Especial</span>
+                      </div>
+
+                      {isMatematica && onOpenFlipBook && (
+                        <div className="absolute bottom-3 right-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-neutral-900/90 text-white backdrop-blur shadow-md hover:bg-wine-800 transition-colors">
+                          <Sparkles size={12} className="text-wine-300" />
+                          <span>Folhear 13 Páginas</span>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Product Details Area */}
+                    <div className="p-6 md:p-7 flex flex-col flex-grow">
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <h3 className="text-xl font-bold text-neutral-950 group-hover:text-wine-900 transition-colors">
+                          {prod.nome}
+                        </h3>
+                      </div>
+
+                      {prod.subtitulo && (
+                        <h4 className="text-xs font-bold text-wine-800 mb-2 uppercase tracking-wider">
+                          {prod.subtitulo}
+                        </h4>
+                      )}
+
+                      <p className="text-neutral-600 text-sm mb-6 flex-grow leading-relaxed">
+                        {prod.descricao}
+                      </p>
+
+                      <div className="mb-6 pt-4 border-t border-neutral-100 flex items-center gap-2 text-xs text-neutral-600">
+                        <CheckCircle2 size={15} className="text-wine-700 flex-shrink-0" />
+                        <span>Atividades estruturadas e prontas para uso</span>
+                      </div>
+                      
+                      <div className="flex flex-col gap-2.5">
+                        <button 
+                          onClick={() => {
+                            if (prod.id.startsWith('matematica')) {
+                              onNavigateToMatematica?.();
+                            } else {
+                              onNavigateToCiencias?.();
+                            }
+                          }}
+                          className="w-full py-3.5 px-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 bg-wine-800 hover:bg-wine-900 text-white shadow-md hover:shadow-lg hover:gap-3 transition-all duration-200 cursor-pointer"
+                        >
+                          <span>Conhecer apostilão completo</span>
+                          <ArrowRight size={16} className="transition-transform" />
+                        </button>
+
+                        {isMatematica && onOpenFlipBook && (
+                          <button
+                            onClick={onOpenFlipBook}
+                            className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-200 transition-colors cursor-pointer"
+                          >
+                            <Sparkles size={13} className="text-wine-800" />
+                            <span>Folhear amostra interativa em 3D</span>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
@@ -494,70 +575,83 @@ export function ProfessoresPage({
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {produtos.atividadesAdaptadas.filter(p => !p.destaque).map((prod) => (
-                <div 
-                  key={prod.id}
-                  className="bg-white rounded-3xl border border-neutral-200 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all duration-300 flex flex-col h-full group"
-                >
-                  {/* 3D Book Showcase */}
-                  <div className="relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[240px]">
-                    <div 
-                      className="absolute inset-0 opacity-40 pointer-events-none"
-                      style={{
-                        backgroundImage: "radial-gradient(#e5e7eb 1px, transparent 1px)",
-                        backgroundSize: "16px 16px"
-                      }}
-                    />
+              {produtos.atividadesAdaptadas.filter(p => !p.destaque).map((prod, idx) => {
+                const initialMotion = 
+                  idx % 4 === 0 
+                    ? { opacity: 0, x: -50, y: 0 }
+                    : idx % 4 === 3 
+                    ? { opacity: 0, x: 50, y: 0 }
+                    : { opacity: 0, x: 0, y: 50 };
 
-                    <PerspectiveBook
-                      size="sm"
-                      coverImage={prod.imagem}
-                      title={prod.nome}
-                      subtitle={prod.descricao}
-                      badge={prod.detalhe}
-                      isDestaque={false}
-                    />
-                  </div>
-                  
-                  {/* Product Details Area */}
-                  <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex items-center justify-between gap-2 mb-1">
-                      <h3 className="text-base font-bold text-neutral-950 group-hover:text-wine-900 transition-colors">
-                        {prod.nome}
-                      </h3>
-                    </div>
+                return (
+                  <motion.div 
+                    key={prod.id}
+                    initial={initialMotion}
+                    whileInView={{ opacity: 1, x: 0, y: 0 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.75, delay: (idx % 4) * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    className="bg-white rounded-3xl border border-neutral-200 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all duration-300 flex flex-col h-full group"
+                  >
+                    {/* 3D Book Showcase */}
+                    <div className="relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[240px]">
+                      <div 
+                        className="absolute inset-0 opacity-40 pointer-events-none"
+                        style={{
+                          backgroundImage: "radial-gradient(#e5e7eb 1px, transparent 1px)",
+                          backgroundSize: "16px 16px"
+                        }}
+                      />
 
-                    {prod.subtitulo && (
-                      <h4 className="text-[11px] font-bold text-wine-800 mb-2 uppercase tracking-wider">
-                        {prod.subtitulo}
-                      </h4>
-                    )}
-
-                    <p className="text-neutral-600 text-xs mb-5 flex-grow leading-relaxed">
-                      {prod.descricao}
-                    </p>
-
-                    <div className="mb-5 pt-3 border-t border-neutral-100 flex items-center gap-2 text-xs text-neutral-500">
-                      <CheckCircle2 size={14} className="text-wine-700 flex-shrink-0" />
-                      <span>Atividades estruturadas e prontas para uso</span>
+                      <PerspectiveBook
+                        size="sm"
+                        coverImage={prod.imagem}
+                        title={prod.nome}
+                        subtitle={prod.descricao}
+                        badge={prod.detalhe}
+                        isDestaque={false}
+                      />
                     </div>
                     
-                    <button 
-                      onClick={() => {
-                        if (prod.id.startsWith('matematica')) {
-                          onNavigateToMatematica?.();
-                        } else {
-                          onNavigateToCiencias?.();
-                        }
-                      }}
-                      className="w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-neutral-900 hover:bg-wine-800 text-white shadow-sm hover:shadow-md hover:gap-2.5 transition-all duration-200 cursor-pointer"
-                    >
-                      <span>Conhecer material</span>
-                      <ArrowRight size={14} className="transition-transform" />
-                    </button>
-                  </div>
-                </div>
-              ))}
+                    {/* Product Details Area */}
+                    <div className="p-6 flex flex-col flex-grow">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <h3 className="text-base font-bold text-neutral-950 group-hover:text-wine-900 transition-colors">
+                          {prod.nome}
+                        </h3>
+                      </div>
+
+                      {prod.subtitulo && (
+                        <h4 className="text-[11px] font-bold text-wine-800 mb-2 uppercase tracking-wider">
+                          {prod.subtitulo}
+                        </h4>
+                      )}
+
+                      <p className="text-neutral-600 text-xs mb-5 flex-grow leading-relaxed">
+                        {prod.descricao}
+                      </p>
+
+                      <div className="mb-5 pt-3 border-t border-neutral-100 flex items-center gap-2 text-xs text-neutral-500">
+                        <CheckCircle2 size={14} className="text-wine-700 flex-shrink-0" />
+                        <span>Atividades estruturadas e prontas para uso</span>
+                      </div>
+                      
+                      <button 
+                        onClick={() => {
+                          if (prod.id.startsWith('matematica')) {
+                            onNavigateToMatematica?.();
+                          } else {
+                            onNavigateToCiencias?.();
+                          }
+                        }}
+                        className="w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-neutral-900 hover:bg-wine-800 text-white shadow-sm hover:shadow-md hover:gap-2.5 transition-all duration-200 cursor-pointer"
+                      >
+                        <span>Conhecer material</span>
+                        <ArrowRight size={14} className="transition-transform" />
+                      </button>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
@@ -584,7 +678,13 @@ export function ProfessoresPage({
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-10">
-                <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-wine-500/40 transition-all">
+                <motion.div 
+                  initial={{ opacity: 0, x: -60 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-wine-500/40 transition-all"
+                >
                   <div className="w-12 h-12 rounded-xl bg-wine-900/60 text-wine-300 flex items-center justify-center font-bold mb-4 border border-wine-700/50">
                     <Dna size={24} />
                   </div>
@@ -597,9 +697,15 @@ export function ProfessoresPage({
                   <p className="text-xs text-neutral-300 leading-relaxed">
                     Citologia, Genética, Ecologia, Fisiologia Humana e Evolução com infográficos didáticos, mapas conceituais e atividades estruturadas para diferentes ritmos de aprendizagem.
                   </p>
-                </div>
+                </motion.div>
 
-                <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-wine-500/40 transition-all">
+                <motion.div 
+                  initial={{ opacity: 0, x: 60 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-wine-500/40 transition-all"
+                >
                   <div className="w-12 h-12 rounded-xl bg-wine-900/60 text-wine-300 flex items-center justify-center font-bold mb-4 border border-wine-700/50">
                     <Atom size={24} />
                   </div>
@@ -612,7 +718,7 @@ export function ProfessoresPage({
                   <p className="text-xs text-neutral-300 leading-relaxed">
                     Mecânica, Termologia, Ondulatória, Óptica e Eletricidade básica explicadas de forma intuitiva, associando fenômenos do cotidiano a esquemas gráficos acessíveis.
                   </p>
-                </div>
+                </motion.div>
               </div>
 
               <div className="inline-flex flex-col sm:flex-row items-center gap-4">
@@ -672,20 +778,33 @@ export function ProfessoresPage({
                 descricao: 'Problemas de olimpíadas como a OBMEP para estimular o raciocínio dos alunos que querem ir além.',
                 tag: 'Raciocínio Avançado'
               }
-            ].map((bloco, idx) => (
-              <div 
-                key={idx}
-                className="p-6 rounded-3xl bg-neutral-50 border border-neutral-200/90 hover:border-wine-300 hover:shadow-md transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-wine-800 bg-wine-50 px-2.5 py-1 rounded-full border border-wine-200 inline-block mb-3">
-                    {bloco.tag}
-                  </span>
-                  <h3 className="font-bold text-neutral-950 text-base mb-2">{bloco.titulo}</h3>
-                  <p className="text-xs text-neutral-600 leading-relaxed">{bloco.descricao}</p>
-                </div>
-              </div>
-            ))}
+            ].map((bloco, idx) => {
+              const initialMotion = 
+                idx === 0 
+                  ? { opacity: 0, x: -50, y: 0 }
+                  : idx === 3 
+                  ? { opacity: 0, x: 50, y: 0 }
+                  : { opacity: 0, x: 0, y: 50 };
+
+              return (
+                <motion.div 
+                  key={idx}
+                  initial={initialMotion}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.75, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="p-6 rounded-3xl bg-neutral-50 border border-neutral-200/90 hover:border-wine-300 hover:shadow-md transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-wine-800 bg-wine-50 px-2.5 py-1 rounded-full border border-wine-200 inline-block mb-3">
+                      {bloco.tag}
+                    </span>
+                    <h3 className="font-bold text-neutral-950 text-base mb-2">{bloco.titulo}</h3>
+                    <p className="text-xs text-neutral-600 leading-relaxed">{bloco.descricao}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
           <div className="mt-14 text-center">
@@ -708,7 +827,13 @@ export function ProfessoresPage({
       {/* 6. CTA FINAL — PROFESSORES                                */}
       {/* ========================================================= */}
       <section className="py-24 bg-gradient-to-br from-neutral-950 via-wine-950 to-black text-white relative text-center">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
           <span className="text-wine-400 text-xs font-bold uppercase tracking-widest block mb-4">
             Parceria Educacional
           </span>
@@ -734,7 +859,7 @@ export function ProfessoresPage({
               <span>Acessar conteúdos gratuitos</span>
             </a>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ========================================================= */}
