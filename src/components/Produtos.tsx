@@ -4,19 +4,25 @@ import { Sparkles, ArrowRight, CheckCircle2, Calculator, Microscope, GraduationC
 
 interface ProdutosProps {
   onNavigate?: (page: 'provao-paulista' | 'obmep' | 'matematica' | 'ciencias' | 'themis' | 'atheneum') => void;
+  onOpenFlipBook?: () => void;
 }
 
 function ProductCard({ 
   produto, 
   actionText,
   bookSize = "default",
-  onSelect
+  onSelect,
+  onOpenFlipBook
 }: { 
   produto: Produto; 
   actionText: string;
   bookSize?: "sm" | "default" | "lg";
   onSelect?: () => void;
+  onOpenFlipBook?: () => void;
 }) {
+  const isMatematica = produto.id.startsWith('matematica');
+  const isCiencias = produto.id.startsWith('ciencias');
+
   return (
     <div className={`bg-white rounded-3xl border transition-all duration-300 flex flex-col h-full group ${
       produto.destaque 
@@ -24,7 +30,19 @@ function ProductCard({
         : 'border-gray-200 shadow-sm hover:shadow-xl hover:border-wine-300'
     }`}>
       {/* 3D Book Showcase Area */}
-      <div className="relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[290px]">
+      <div 
+        onClick={() => {
+          if (isMatematica && onOpenFlipBook) {
+            onOpenFlipBook();
+          } else if (isCiencias) {
+            alert("Amostra 3D de Ciências em preparação! Em breve estará disponível.");
+          }
+        }}
+        className={`relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[290px] ${
+          (isMatematica || isCiencias) ? 'cursor-pointer' : ''
+        }`}
+        title={isMatematica ? "Clique para folhear a amostra digital 3D" : undefined}
+      >
         <div 
           className="absolute inset-0 opacity-40 pointer-events-none"
           style={{
@@ -73,23 +91,53 @@ function ProductCard({
           <span>Atividades estruturadas e prontas para uso</span>
         </div>
         
-        <button 
-          onClick={onSelect}
-          className={`w-full py-3.5 px-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
-            produto.destaque
-              ? 'bg-wine-800 hover:bg-wine-900 text-white shadow-md hover:shadow-lg hover:gap-3'
-              : 'bg-gray-900 hover:bg-wine-800 text-white shadow-sm hover:shadow-md hover:gap-3'
-          }`}
-        >
-          <span>{actionText}</span>
-          <ArrowRight size={16} className="transition-transform" />
-        </button>
+        <div className="flex flex-col gap-2.5">
+          <button 
+            onClick={onSelect}
+            className={`w-full py-3.5 px-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
+              produto.destaque
+                ? 'bg-wine-800 hover:bg-wine-900 text-white shadow-md hover:shadow-lg hover:gap-3'
+                : 'bg-gray-900 hover:bg-wine-800 text-white shadow-sm hover:shadow-md hover:gap-3'
+            }`}
+          >
+            <span>{actionText}</span>
+            <ArrowRight size={16} className="transition-transform" />
+          </button>
+
+          {isMatematica && onOpenFlipBook && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenFlipBook();
+              }}
+              className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-300 transition-colors cursor-pointer"
+            >
+              <Sparkles size={13} className="text-wine-800" />
+              <span>Folhear 13 Páginas (3D)</span>
+            </button>
+          )}
+
+          {isCiencias && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                alert("Amostra 3D de Ciências em preparação! Em breve estará disponível.");
+              }}
+              className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 bg-neutral-50 hover:bg-neutral-100 text-neutral-600 border border-neutral-200 transition-colors cursor-pointer"
+            >
+              <Sparkles size={13} className="text-neutral-400" />
+              <span>Folhear Amostra (Em Breve)</span>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
-export function Produtos({ onNavigate }: ProdutosProps) {
+export function Produtos({ onNavigate, onOpenFlipBook }: ProdutosProps) {
   const handleSelectProduct = (prodId: string) => {
     if (!onNavigate) return;
     if (prodId === 'obmep-vol-1') {
@@ -193,11 +241,36 @@ export function Produtos({ onNavigate }: ProdutosProps) {
           
           {/* Apostilões em Destaque */}
           <div className="mb-14">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="w-2.5 h-2.5 rounded-full bg-wine-800" />
-              <h3 className="text-xl font-bold text-gray-900">
-                Apostilões — Anos Finais (+500 atividades)
-              </h3>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+              <div className="flex items-center gap-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-wine-800" />
+                <h3 className="text-xl font-bold text-gray-900">
+                  Apostilões — Anos Finais (+500 atividades)
+                </h3>
+              </div>
+            </div>
+
+            {/* BOTÕES ENTRE A ESCRITA E A CAIXA DOS APOSTILÕES */}
+            <div className="flex flex-wrap items-center gap-3 mb-6 max-w-4xl mx-auto">
+              {onOpenFlipBook && (
+                <button
+                  type="button"
+                  onClick={onOpenFlipBook}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
+                >
+                  <Sparkles size={15} className="text-wine-300 animate-pulse" />
+                  <span>Folhear Amostra de Matemática (13 Páginas 3D)</span>
+                </button>
+              )}
+
+              <button
+                type="button"
+                onClick={() => alert("Amostra 3D de Ciências em preparação! Em breve estará disponível.")}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-neutral-700 bg-white hover:bg-neutral-100 border border-neutral-300 shadow-sm transition-all cursor-pointer group"
+              >
+                <Sparkles size={15} className="text-neutral-400" />
+                <span>Folhear Amostra de Ciências (Em Breve)</span>
+              </button>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -208,6 +281,7 @@ export function Produtos({ onNavigate }: ProdutosProps) {
                   actionText="Conhecer apostilão completo" 
                   bookSize="default"
                   onSelect={() => handleSelectProduct(prod.id)}
+                  onOpenFlipBook={onOpenFlipBook}
                 />
               ))}
             </div>
@@ -230,6 +304,7 @@ export function Produtos({ onNavigate }: ProdutosProps) {
                   actionText="Conhecer material" 
                   bookSize="sm"
                   onSelect={() => handleSelectProduct(prod.id)}
+                  onOpenFlipBook={onOpenFlipBook}
                 />
               ))}
             </div>

@@ -187,7 +187,10 @@ function App() {
             <PerfilSelector onSelectProfile={(p) => navigateToPage(p)} />
             <Sobre />
             <Categorias />
-            <Produtos onNavigate={(p) => navigateToPage(p)} />
+            <Produtos 
+              onNavigate={(p) => navigateToPage(p)} 
+              onOpenFlipBook={() => setFlipBookOpen(true)} 
+            />
             <Solucoes 
               onOpenThemis={() => navigateToPage('themis')} 
               onOpenAtheneum={() => navigateToPage('atheneum')} 

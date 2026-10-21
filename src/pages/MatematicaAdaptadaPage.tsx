@@ -318,6 +318,20 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Ma
               </a>
             ))}
           </div>
+
+          {onOpenFlipBook && (
+            <div className="mt-12 text-center">
+              <button
+                type="button"
+                onClick={onOpenFlipBook}
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-neutral-950 via-wine-900 to-neutral-950 border border-wine-500/40 hover:border-wine-400 shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer group"
+              >
+                <Sparkles size={18} className="text-wine-400 animate-pulse" />
+                <span>Folhear Amostra Digital em 3D (13 Páginas)</span>
+                <BookOpen size={18} className="text-wine-300 group-hover:rotate-12 transition-transform" />
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -425,7 +439,11 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Ma
                     
                     {/* Imagem do Produto com PerspectiveBook */}
                     <div className="lg:col-span-5 flex justify-center mb-8 lg:mb-0">
-                      <div className="relative group">
+                      <div 
+                        onClick={onOpenFlipBook}
+                        className={`relative group ${onOpenFlipBook ? 'cursor-pointer' : ''}`}
+                        title={onOpenFlipBook ? "Clique para folhear a amostra digital em 3D" : undefined}
+                      >
                         <PerspectiveBook
                           size="default"
                           coverImage={prod.imagem}
@@ -520,13 +538,17 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Ma
                           </a>
                         )}
 
-                        {isApostilao && onOpenFlipBook && (
+                        {onOpenFlipBook && (
                           <button
                             type="button"
                             onClick={onOpenFlipBook}
-                            className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-sm sm:text-base font-bold text-wine-200 bg-white/10 hover:bg-white/15 border border-white/20 transition-all cursor-pointer"
+                            className={`inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-sm sm:text-base font-bold transition-all cursor-pointer ${
+                              isApostilao
+                                ? 'text-wine-200 bg-white/10 hover:bg-white/15 border border-white/20'
+                                : 'text-neutral-900 bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 shadow-sm hover:border-wine-500'
+                            }`}
                           >
-                            <Sparkles size={16} className="text-wine-400" />
+                            <Sparkles size={16} className={isApostilao ? "text-wine-400" : "text-wine-800"} />
                             <span>Folhear 13 Páginas (3D)</span>
                           </button>
                         )}

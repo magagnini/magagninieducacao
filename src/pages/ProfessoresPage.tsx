@@ -452,11 +452,34 @@ export function ProfessoresPage({
           
           {/* Apostilões em Destaque */}
           <div className="mb-14">
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-4">
               <span className="w-2.5 h-2.5 rounded-full bg-wine-800" />
               <h3 className="text-xl font-bold text-neutral-950">
                 Apostilões — Anos Finais (+500 atividades)
               </h3>
+            </div>
+
+            {/* Botões entre a escrita e a caixa dos apostilões */}
+            <div className="flex flex-wrap items-center gap-3 mb-6 max-w-4xl mx-auto">
+              {onOpenFlipBook && (
+                <button
+                  type="button"
+                  onClick={onOpenFlipBook}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
+                >
+                  <Sparkles size={15} className="text-wine-300 animate-pulse" />
+                  <span>Folhear Amostra de Matemática (13 Páginas 3D)</span>
+                </button>
+              )}
+
+              <button
+                type="button"
+                onClick={() => alert("Amostra 3D de Ciências em preparação! Em breve estará disponível.")}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-neutral-700 bg-white hover:bg-neutral-100 border border-neutral-300 shadow-sm transition-all cursor-pointer group"
+              >
+                <Sparkles size={15} className="text-neutral-400" />
+                <span>Folhear Amostra de Ciências (Em Breve)</span>
+              </button>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -554,7 +577,18 @@ export function ProfessoresPage({
                             className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-200 transition-colors cursor-pointer"
                           >
                             <Sparkles size={13} className="text-wine-800" />
-                            <span>Folhear amostra interativa em 3D</span>
+                            <span>Folhear 13 Páginas (3D)</span>
+                          </button>
+                        )}
+
+                        {!isMatematica && (
+                          <button
+                            type="button"
+                            onClick={() => alert("Amostra 3D de Ciências em preparação! Em breve estará disponível.")}
+                            className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 bg-neutral-50 hover:bg-neutral-100 text-neutral-500 border border-neutral-200 transition-colors cursor-pointer"
+                          >
+                            <Sparkles size={13} className="text-neutral-400" />
+                            <span>Folhear Amostra (Em Breve)</span>
                           </button>
                         )}
                       </div>
@@ -635,19 +669,49 @@ export function ProfessoresPage({
                         <span>Atividades estruturadas e prontas para uso</span>
                       </div>
                       
-                      <button 
-                        onClick={() => {
-                          if (prod.id.startsWith('matematica')) {
-                            onNavigateToMatematica?.();
-                          } else {
-                            onNavigateToCiencias?.();
-                          }
-                        }}
-                        className="w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-neutral-900 hover:bg-wine-800 text-white shadow-sm hover:shadow-md hover:gap-2.5 transition-all duration-200 cursor-pointer"
-                      >
-                        <span>Conhecer material</span>
-                        <ArrowRight size={14} className="transition-transform" />
-                      </button>
+                      <div className="flex flex-col gap-2">
+                        <button 
+                          onClick={() => {
+                            if (prod.id.startsWith('matematica')) {
+                              onNavigateToMatematica?.();
+                            } else {
+                              onNavigateToCiencias?.();
+                            }
+                          }}
+                          className="w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-neutral-900 hover:bg-wine-800 text-white shadow-sm hover:shadow-md hover:gap-2.5 transition-all duration-200 cursor-pointer"
+                        >
+                          <span>Conhecer material</span>
+                          <ArrowRight size={14} className="transition-transform" />
+                        </button>
+
+                        {prod.id.startsWith('matematica') && onOpenFlipBook && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onOpenFlipBook();
+                            }}
+                            className="w-full py-2 px-3 rounded-lg font-bold text-[11px] flex items-center justify-center gap-1.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-200 transition-colors cursor-pointer"
+                          >
+                            <Sparkles size={12} className="text-wine-800" />
+                            <span>Folhear 13 Páginas (3D)</span>
+                          </button>
+                        )}
+
+                        {prod.id.startsWith('ciencias') && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              alert("Amostra 3D de Ciências em preparação! Em breve estará disponível.");
+                            }}
+                            className="w-full py-2 px-3 rounded-lg font-medium text-[11px] flex items-center justify-center gap-1.5 bg-neutral-50 hover:bg-neutral-100 text-neutral-500 border border-neutral-200 transition-colors cursor-pointer"
+                          >
+                            <Sparkles size={12} className="text-neutral-400" />
+                            <span>Folhear Amostra (Em Breve)</span>
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </motion.div>
                 );
