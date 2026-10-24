@@ -63,7 +63,7 @@ export function AlunosPage({
       titulo: 'Matemática — Etapa I',
       descricao: 'Resoluções comentadas das questões oficiais do Provão Paulista para os alunos do 1º ano do Ensino Médio.',
       tag: 'Etapa I',
-      url: YOUTUBE_CHANNEL_URL
+      url: 'https://www.youtube.com/playlist?list=PLbpYC5UwHBZk'
     },
     {
       serie: '2ª Série do Ensino Médio',
@@ -71,7 +71,7 @@ export function AlunosPage({
       titulo: 'Matemática — Etapa II',
       descricao: 'Análise detalhada de cada questão, métodos de resolução rápida e revisão dos principais tópicos de Geometria e Álgebra.',
       tag: 'Etapa II',
-      url: YOUTUBE_CHANNEL_URL
+      url: 'https://www.youtube.com/playlist?list=PLA5SZpb119QM'
     },
     {
       serie: '3ª Série do Ensino Médio',
@@ -79,7 +79,7 @@ export function AlunosPage({
       titulo: 'Matemática — Etapa III',
       descricao: 'Treinamento completo focado na conquista direta das vagas na USP, UNICAMP, UNESP e FATEC.',
       tag: 'Etapa III • Vaga Direta',
-      url: YOUTUBE_CHANNEL_URL
+      url: 'https://www.youtube.com/playlist?list=PLN9x695LWUW0'
     }
   ];
 
