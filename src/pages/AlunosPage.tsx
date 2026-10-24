@@ -12,7 +12,8 @@ import {
   Play,
   Clock,
   Menu,
-  X
+  X,
+  CheckCircle2
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PerspectiveBook } from '../components/PerspectiveBook';
@@ -37,6 +38,7 @@ interface AlunosPageProps {
   onNavigateToGestores?: () => void;
   onNavigateToProvao?: () => void;
   onNavigateToObmep?: () => void;
+  onNavigateToProdutividade?: () => void;
 }
 
 export function AlunosPage({
@@ -44,7 +46,8 @@ export function AlunosPage({
   onNavigateToProfessores,
   onNavigateToGestores,
   onNavigateToProvao,
-  onNavigateToObmep
+  onNavigateToObmep,
+  onNavigateToProdutividade
 }: AlunosPageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -862,7 +865,129 @@ export function AlunosPage({
       </section>
 
       {/* ========================================================= */}
-      {/* 9. CTA FINAL — ALUNOS                                     */}
+      {/* 9. SEÇÃO — 1º LIVRO PUBLICADO: PRODUTIVIDADE INTELIGENTE  */}
+      {/* ========================================================= */}
+      <section id="produtividade-inteligente" className="py-24 bg-gradient-to-b from-neutral-950 via-[#0e0306] to-neutral-950 text-white relative overflow-hidden border-b border-neutral-800">
+        {/* Glows */}
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-wine-800/20 rounded-full blur-[130px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-wine-900/15 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          <div className="rounded-3xl border border-wine-500/30 bg-gradient-to-br from-neutral-900/90 via-black to-wine-950/40 p-8 sm:p-14 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+            <div className="lg:grid lg:grid-cols-12 lg:gap-14 items-center">
+              
+              {/* Left Column: Book Presentation & Copy */}
+              <div className="lg:col-span-7 text-center lg:text-left mb-12 lg:mb-0">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-900/80 border border-wine-500/40 text-wine-200 text-xs font-bold uppercase tracking-wider mb-6">
+                  <Sparkles size={14} className="text-wine-400" />
+                  <span>1º Livro Publicado • Vinícius Magagnini</span>
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+                  Produtividade Inteligente
+                </h2>
+
+                <p className="mt-2 text-lg sm:text-xl font-serif italic text-wine-300">
+                  Do estudo ao resultado
+                </p>
+
+                <p className="mt-5 text-sm sm:text-base text-neutral-300 leading-relaxed">
+                  "Este não é apenas um livro sobre estudos. É um convite à transformação. Você vai descobrir como estudar de forma eficaz, organizar sua rotina e, principalmente, cultivar uma mentalidade poderosa para vencer o desânimo, a procrastinação e o medo de não ser capaz."
+                </p>
+
+                <div className="mt-6 p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-xs sm:text-sm text-neutral-300 italic">
+                  "Em um mundo de distrações, quem se supera se torna rei! Não perca mais para si mesmo: organize-se, aprenda a estudar e vença."
+                </div>
+
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-neutral-300">
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 size={16} className="text-wine-400 flex-shrink-0" />
+                    <span>Aprovado em +8 Federais e na USP</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 size={16} className="text-wine-400 flex-shrink-0" />
+                    <span>Exatas, autoconhecimento e método</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 size={16} className="text-wine-400 flex-shrink-0" />
+                    <span>Elimine o desânimo e a procrastinação</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 size={16} className="text-wine-400 flex-shrink-0" />
+                    <span>Formato digital para ler em qualquer lugar</span>
+                  </div>
+                </div>
+
+                <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+                  <button
+                    onClick={() => {
+                      if (onNavigateToProdutividade) {
+                        onNavigateToProdutividade();
+                      } else {
+                        window.open('/#produtividade-inteligente', '_blank');
+                      }
+                    }}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-wine-800 to-wine-600 hover:from-wine-700 hover:to-wine-500 shadow-3d-wine hover:shadow-3d-wine-hover hover:-translate-y-0.5 transition-all cursor-pointer group"
+                  >
+                    <span>Conhecer o livro e a história</span>
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </button>
+
+                  <a
+                    href="https://produtividadeinteligente.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-xs sm:text-sm font-semibold text-neutral-300 bg-white/5 hover:bg-white/10 border border-white/15 transition-all"
+                  >
+                    <span>Comprar no Checkout</span>
+                    <ExternalLink size={14} />
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Column: 3D Book Cover (Clicking redirects to the new tab / landing page!) */}
+              <div className="lg:col-span-5 flex flex-col items-center justify-center">
+                <div 
+                  onClick={() => {
+                    if (onNavigateToProdutividade) {
+                      onNavigateToProdutividade();
+                    } else {
+                      window.open('/#produtividade-inteligente', '_blank');
+                    }
+                  }}
+                  className="relative group cursor-pointer flex flex-col items-center"
+                  title="Clique para abrir a página oficial do livro"
+                >
+                  <div className="absolute -inset-4 bg-wine-800/25 rounded-3xl blur-2xl opacity-75 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                  
+                  {/* Perspective 3D Book */}
+                  <div className="py-2 transition-transform duration-300 group-hover:scale-105">
+                    <PerspectiveBook
+                      size="lg"
+                      coverImage="/assets/produtos/livros/produtividade-inteligente-capa.png"
+                      title="Produtividade Inteligente"
+                      subtitle="Do estudo ao resultado"
+                      badge="1º Livro Publicado"
+                      isDestaque={true}
+                    />
+                  </div>
+
+                  <span className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-wine-200 bg-white/10 group-hover:bg-wine-800 border border-white/20 transition-all shadow-md">
+                    <Sparkles size={13} className="text-wine-400" />
+                    <span>Clique para ver detalhes do livro →</span>
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 10. CTA FINAL — ALUNOS                                    */}
       {/* ========================================================= */}
       <section className="py-24 bg-gradient-to-br from-neutral-950 via-wine-950 to-black text-white relative text-center">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

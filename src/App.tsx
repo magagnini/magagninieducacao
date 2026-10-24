@@ -18,6 +18,7 @@ import { AlunosPage } from './pages/AlunosPage';
 import { ProfessoresPage } from './pages/ProfessoresPage';
 import { GestoresPage } from './pages/GestoresPage';
 import { FlipBookModal } from './components/FlipBookModal';
+import { ProdutividadeInteligentePage } from './pages/ProdutividadeInteligentePage';
 
 export type AppPage = 
   | 'magagnini' 
@@ -29,7 +30,8 @@ export type AppPage =
   | 'obmep' 
   | 'provao-paulista' 
   | 'matematica' 
-  | 'ciencias';
+  | 'ciencias'
+  | 'produtividade-inteligente';
 
 function App() {
   const [flipBookOpen, setFlipBookOpen] = useState(false);
@@ -50,6 +52,7 @@ function App() {
       if (path === '/materiais/provao-paulista' || hash === '#provao-paulista') return 'provao-paulista';
       if (path === '/materiais/matematica' || hash === '#matematica-adaptada') return 'matematica';
       if (path === '/materiais/ciencias' || hash === '#ciencias-adaptadas') return 'ciencias';
+      if (path === '/livros/produtividade-inteligente' || path === '/produtividade-inteligente' || hash === '#produtividade-inteligente') return 'produtividade-inteligente';
     }
     return 'magagnini';
   });
@@ -77,6 +80,8 @@ function App() {
         setCurrentPage('matematica');
       } else if (path === '/materiais/ciencias' || hash === '#ciencias-adaptadas') {
         setCurrentPage('ciencias');
+      } else if (path === '/livros/produtividade-inteligente' || path === '/produtividade-inteligente' || hash === '#produtividade-inteligente') {
+        setCurrentPage('produtividade-inteligente');
       } else {
         setCurrentPage('magagnini');
       }
@@ -103,6 +108,7 @@ function App() {
     else if (page === 'provao-paulista') targetUrl = '#provao-paulista';
     else if (page === 'matematica') targetUrl = '#matematica-adaptada';
     else if (page === 'ciencias') targetUrl = '#ciencias-adaptadas';
+    else if (page === 'produtividade-inteligente') targetUrl = '#produtividade-inteligente';
 
     try {
       window.history.pushState({}, '', targetUrl);
@@ -155,6 +161,14 @@ function App() {
           onNavigateToGestores={() => navigateToPage('gestores')}
           onNavigateToProvao={() => navigateToPage('provao-paulista')}
           onNavigateToObmep={() => navigateToPage('obmep')}
+          onNavigateToProdutividade={() => navigateToPage('produtividade-inteligente')}
+        />
+      )}
+
+      {currentPage === 'produtividade-inteligente' && (
+        <ProdutividadeInteligentePage
+          onBackToMagagnini={navigateToMagagnini}
+          onNavigateToAlunos={() => navigateToPage('alunos')}
         />
       )}
       

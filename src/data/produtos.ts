@@ -274,6 +274,28 @@ export const produtos = {
     }
   ],
 
+  livros: [
+    {
+      id: 'produtividade-inteligente',
+      nome: 'Produtividade Inteligente',
+      subtitulo: 'Do estudo ao resultado',
+      descricao: 'O primeiro livro de Vinícius Magagnini. Uma obra transformadora que une exatas, autoconhecimento e mentalidade poderosa para vencer o desânimo, a procrastinação e conquistar grandes aprovações.',
+      imagem: '/assets/produtos/livros/produtividade-inteligente-capa.png',
+      mockup: '/assets/produtos/livros/produtividade-inteligente.png',
+      categoria: 'academica' as const,
+      detalhe: '1º Livro Publicado',
+      destaque: true,
+      vantagens: [
+        'Como estudar com foco profundo em um mundo cheio de distrações',
+        'Métodos para vencer o desânimo, a procrastinação e o medo de falhar',
+        'Organização de rotina de estudos sem sobrecarga e sem frustração',
+        'A trajetória real de aprovação em mais de 8 federais e na USP'
+      ],
+      linkCompra: 'https://produtividadeinteligente.vercel.app/',
+      ativo: true
+    }
+  ],
+
   // Compatibility getter: returns all adapted activities combined
   get atividadesAdaptadas(): Produto[] {
     return [...this.matematicaAdaptada, ...this.cienciasAdaptadas];

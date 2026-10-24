@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight, Sparkles, GraduationCap, Users, Building2 } from 'lucide-react';
 
 interface HeaderProps {
-  onNavigate?: (page: 'magagnini' | 'alunos' | 'professores' | 'gestores' | 'themis' | 'atheneum' | 'obmep' | 'provao-paulista' | 'matematica' | 'ciencias') => void;
+  onNavigate?: (page: 'magagnini' | 'alunos' | 'professores' | 'gestores' | 'themis' | 'atheneum' | 'obmep' | 'provao-paulista' | 'matematica' | 'ciencias' | 'produtividade-inteligente') => void;
   currentPage?: string;
 }
 
