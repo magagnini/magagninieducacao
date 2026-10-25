@@ -238,7 +238,14 @@ export function ThemisPage({ onBackToMagagnini }: ThemisPageProps) {
 
                 <a
                   href="#demonstracao-video"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-800 bg-white border border-neutral-300 hover:border-wine-800 hover:text-wine-800 shadow-sm transition-all group"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.getElementById('demonstracao-video');
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-800 bg-white border border-neutral-300 hover:border-wine-800 hover:text-wine-800 shadow-sm transition-all group cursor-pointer"
                 >
                   <Play size={16} className="text-wine-800 fill-wine-800 group-hover:scale-110 transition-transform" />
                   <span>Assistir Demonstração</span>
@@ -431,7 +438,7 @@ export function ThemisPage({ onBackToMagagnini }: ThemisPageProps) {
       {/* ========================================================= */}
       {/* SEÇÃO — DEMONSTRAÇÃO EM VÍDEO (POSIÇÃO ESTRATÉGICA)      */}
       {/* ========================================================= */}
-      <section id="demonstracao-video" className="py-24 bg-neutral-950 text-white relative overflow-hidden">
+      <section id="demonstracao-video" className="scroll-mt-24 py-24 bg-neutral-950 text-white relative overflow-hidden">
         {/* Glow backdrop */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-wine-900/25 rounded-full blur-[160px] pointer-events-none" />
 

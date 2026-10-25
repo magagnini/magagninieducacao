@@ -84,7 +84,7 @@ export function AlunosPage({
   ];
 
   return (
-    <div className="min-h-screen bg-white font-sans text-neutral-900 selection:bg-wine-800 selection:text-white">
+    <div className="min-h-screen bg-white font-sans text-neutral-900 selection:bg-wine-800 selection:text-white overflow-x-hidden w-full max-w-full">
       
       {/* ========================================================= */}
       {/* 1. HEADER NAVEGAÇÃO ALUNOS                                */}
@@ -874,7 +874,7 @@ export function AlunosPage({
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
-          <div className="rounded-3xl border border-wine-500/30 bg-gradient-to-br from-neutral-900/90 via-black to-wine-950/40 p-8 sm:p-14 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+          <div className="rounded-3xl border border-wine-500/30 bg-gradient-to-br from-neutral-900/90 via-black to-wine-950/40 p-5 sm:p-10 md:p-14 shadow-2xl backdrop-blur-xl relative overflow-hidden">
             <div className="lg:grid lg:grid-cols-12 lg:gap-14 items-center">
               
               {/* Left Column: Book Presentation & Copy */}
@@ -935,7 +935,7 @@ export function AlunosPage({
                   </button>
 
                   <a
-                    href="https://produtividadeinteligente.vercel.app/"
+                    href="https://pay.cakto.com.br/un24g4z_1240721"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-xs sm:text-sm font-semibold text-neutral-300 bg-white/5 hover:bg-white/10 border border-white/15 transition-all"

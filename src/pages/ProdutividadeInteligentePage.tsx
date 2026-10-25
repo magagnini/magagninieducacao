@@ -31,8 +31,8 @@ export function ProdutividadeInteligentePage({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
-  // Link oficial / Kiwify provisório conforme solicitado pelo usuário
-  const KIWIFY_CHECKOUT_URL = "https://produtividadeinteligente.vercel.app/";
+  // Link oficial direto no checkout da Cakto
+  const CHECKOUT_URL = "https://pay.cakto.com.br/un24g4z_1240721";
 
   const faqs = [
     {
@@ -45,7 +45,7 @@ export function ProdutividadeInteligentePage({
     },
     {
       q: 'Como vou receber meu acesso após a compra?',
-      a: 'Assim que a compra for confirmada pela plataforma (Kiwify), você receberá imediatamente no seu e-mail o link de acesso com o material completo pronto para leitura.'
+      a: 'Assim que a compra for confirmada no checkout seguro, você receberá imediatamente no seu e-mail o link de acesso com o material completo pronto para leitura.'
     },
     {
       q: 'Possui garantia?',
@@ -106,7 +106,7 @@ export function ProdutividadeInteligentePage({
 
             <div className="flex items-center gap-3 flex-shrink-0">
               <a
-                href={KIWIFY_CHECKOUT_URL}
+                href={CHECKOUT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-wine-800 to-wine-600 hover:from-wine-700 hover:to-wine-500 shadow-3d-wine hover:shadow-3d-wine-hover transition-all whitespace-nowrap"
@@ -226,7 +226,7 @@ export function ProdutividadeInteligentePage({
               {/* CTAs */}
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
                 <a
-                  href={KIWIFY_CHECKOUT_URL}
+                  href={CHECKOUT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-wine-800 via-wine-700 to-wine-600 shadow-3d-wine hover:shadow-3d-wine-hover hover:-translate-y-0.5 transition-all group"
@@ -594,12 +594,12 @@ export function ProdutividadeInteligentePage({
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle2 size={18} className="text-wine-400 flex-shrink-0" />
-                <span>Garantia incondicional de 7 dias pela Kiwify</span>
+                <span>Garantia incondicional de 7 dias</span>
               </div>
             </div>
 
             <a
-              href={KIWIFY_CHECKOUT_URL}
+              href={CHECKOUT_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full inline-flex items-center justify-center gap-3 py-4 px-8 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-wine-800 via-wine-700 to-wine-600 shadow-3d-wine hover:shadow-3d-wine-hover hover:scale-[1.02] active:scale-[0.98] transition-all group"
@@ -692,7 +692,7 @@ export function ProdutividadeInteligentePage({
                 Área do Aluno
               </button>
               <a 
-                href={KIWIFY_CHECKOUT_URL}
+                href={CHECKOUT_URL}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-wine-400 hover:text-wine-300 font-bold transition-colors"

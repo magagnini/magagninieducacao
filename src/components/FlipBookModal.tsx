@@ -174,7 +174,7 @@ export function FlipBookModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#070204]/95 backdrop-blur-2xl flex flex-col justify-between select-none animate-fadeIn text-white">
+    <div className={`fixed inset-x-0 bottom-0 ${isFullscreen ? 'top-0 z-50' : 'top-20 z-40'} bg-[#070204]/95 backdrop-blur-2xl flex flex-col justify-between select-none animate-fadeIn text-white`}>
       
       {/* 1. TOP BAR */}
       <header className="w-full px-4 sm:px-8 py-4 border-b border-white/10 flex items-center justify-between gap-4 z-20 bg-black/40 backdrop-blur-md">

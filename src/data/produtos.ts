@@ -291,7 +291,7 @@ export const produtos = {
         'Organização de rotina de estudos sem sobrecarga e sem frustração',
         'A trajetória real de aprovação em mais de 8 federais e na USP'
       ],
-      linkCompra: 'https://produtividadeinteligente.vercel.app/',
+      linkCompra: 'https://pay.cakto.com.br/un24g4z_1240721',
       ativo: true
     }
   ],

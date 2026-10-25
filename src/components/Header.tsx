@@ -4,9 +4,10 @@ import { Menu, X, ArrowRight, Sparkles, GraduationCap, Users, Building2 } from '
 interface HeaderProps {
   onNavigate?: (page: 'magagnini' | 'alunos' | 'professores' | 'gestores' | 'themis' | 'atheneum' | 'obmep' | 'provao-paulista' | 'matematica' | 'ciencias' | 'produtividade-inteligente') => void;
   currentPage?: string;
+  onCloseFlipBook?: () => void;
 }
 
-export function Header({ onNavigate, currentPage = 'magagnini' }: HeaderProps) {
+export function Header({ onNavigate, currentPage = 'magagnini', onCloseFlipBook }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -20,6 +21,7 @@ export function Header({ onNavigate, currentPage = 'magagnini' }: HeaderProps) {
 
   const handleLinkClick = (href: string, pageTarget?: 'alunos' | 'professores' | 'gestores') => {
     setIsOpen(false);
+    onCloseFlipBook?.();
     if (pageTarget && onNavigate) {
       onNavigate(pageTarget);
       return;
@@ -52,7 +54,11 @@ export function Header({ onNavigate, currentPage = 'magagnini' }: HeaderProps) {
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <button 
-              onClick={() => onNavigate ? onNavigate('magagnini') : window.location.href = '/'}
+              onClick={() => {
+                onCloseFlipBook?.();
+                if (onNavigate) onNavigate('magagnini');
+                else window.location.href = '/';
+              }}
               className="flex items-center gap-3 group text-left cursor-pointer"
             >
               <img
@@ -69,7 +75,11 @@ export function Header({ onNavigate, currentPage = 'magagnini' }: HeaderProps) {
           {/* Desktop Navigation Links */}
           <nav className="hidden xl:flex items-center space-x-1">
             <button
-              onClick={() => onNavigate ? onNavigate('magagnini') : window.location.href = '/'}
+              onClick={() => {
+                onCloseFlipBook?.();
+                if (onNavigate) onNavigate('magagnini');
+                else window.location.href = '/';
+              }}
               className={`px-3.5 py-2 text-sm font-sans font-semibold rounded-lg transition-colors cursor-pointer ${
                 currentPage === 'magagnini' ? 'text-wine-800 font-bold' : 'text-neutral-700 hover:text-wine-800'
               }`}

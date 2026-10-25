@@ -103,6 +103,7 @@ function App() {
   }, []);
 
   const navigateToPage = (page: AppPage) => {
+    setFlipBookOpen(false);
     setCurrentPage(page);
     let targetUrl = '/';
     
@@ -131,6 +132,7 @@ function App() {
   };
 
   const navigateToMagagnini = () => {
+    setFlipBookOpen(false);
     setCurrentPage('magagnini');
     try {
       window.history.pushState({}, '', '/');
@@ -211,7 +213,11 @@ function App() {
       
       {currentPage === 'magagnini' && (
         <div className="min-h-screen bg-white">
-          <Header onNavigate={navigateToPage} currentPage={currentPage} />
+          <Header 
+            onNavigate={navigateToPage} 
+            currentPage={currentPage} 
+            onCloseFlipBook={() => setFlipBookOpen(false)}
+          />
           <main>
             <Hero onOpenFlipBook={() => handleOpenFlipBook('matematica')} />
             <PerfilSelector onSelectProfile={(p) => navigateToPage(p)} />
