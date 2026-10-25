@@ -1,10 +1,11 @@
 import { produtos, type Produto } from '../data/produtos';
 import { PerspectiveBook } from './PerspectiveBook';
+import { ApostilasCarousel } from './ApostilasCarousel';
 import { Sparkles, ArrowRight, CheckCircle2, Calculator, Microscope, GraduationCap, Users } from 'lucide-react';
 
 interface ProdutosProps {
   onNavigate?: (page: 'provao-paulista' | 'obmep' | 'matematica' | 'ciencias' | 'themis' | 'atheneum') => void;
-  onOpenFlipBook?: () => void;
+  onOpenFlipBook?: (type: 'matematica' | 'ciencias') => void;
 }
 
 function ProductCard({ 
@@ -18,7 +19,7 @@ function ProductCard({
   actionText: string;
   bookSize?: "sm" | "default" | "lg";
   onSelect?: () => void;
-  onOpenFlipBook?: () => void;
+  onOpenFlipBook?: (type: 'matematica' | 'ciencias') => void;
 }) {
   const isMatematica = produto.id.startsWith('matematica');
   const isCiencias = produto.id.startsWith('ciencias');
@@ -33,15 +34,15 @@ function ProductCard({
       <div 
         onClick={() => {
           if (isMatematica && onOpenFlipBook) {
-            onOpenFlipBook();
-          } else if (isCiencias) {
-            alert("Amostra 3D de Ciências em preparação! Em breve estará disponível.");
+            onOpenFlipBook('matematica');
+          } else if (isCiencias && onOpenFlipBook) {
+            onOpenFlipBook('ciencias');
           }
         }}
         className={`relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[290px] ${
           (isMatematica || isCiencias) ? 'cursor-pointer' : ''
         }`}
-        title={isMatematica ? "Clique para folhear a amostra digital 3D" : undefined}
+        title={`Clique para folhear a amostra 3D de ${isMatematica ? 'Matemática' : 'Ciências'}`}
       >
         <div 
           className="absolute inset-0 opacity-40 pointer-events-none"
@@ -82,7 +83,7 @@ function ProductCard({
           </h4>
         )}
 
-        <p className="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">
+        <p className="text-gray-600 text-sm mb-6 flex-grow leading-relaxed min-h-[44px]">
           {produto.descricao}
         </p>
 
@@ -91,7 +92,7 @@ function ProductCard({
           <span>Atividades estruturadas e prontas para uso</span>
         </div>
         
-        <div className="flex flex-col gap-2.5">
+        <div className="mt-auto flex flex-col gap-2.5">
           <button 
             onClick={onSelect}
             className={`w-full py-3.5 px-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
@@ -109,7 +110,7 @@ function ProductCard({
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                onOpenFlipBook();
+                onOpenFlipBook('matematica');
               }}
               className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-300 transition-colors cursor-pointer"
             >
@@ -118,17 +119,17 @@ function ProductCard({
             </button>
           )}
 
-          {isCiencias && (
+          {isCiencias && onOpenFlipBook && (
             <button
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                alert("Amostra 3D de Ciências em preparação! Em breve estará disponível.");
+                onOpenFlipBook('ciencias');
               }}
-              className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 bg-neutral-50 hover:bg-neutral-100 text-neutral-600 border border-neutral-200 transition-colors cursor-pointer"
+              className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-300 transition-colors cursor-pointer"
             >
-              <Sparkles size={13} className="text-neutral-400" />
-              <span>Folhear Amostra (Em Breve)</span>
+              <Sparkles size={13} className="text-wine-800" />
+              <span>Folhear 14 Páginas (3D)</span>
             </button>
           )}
         </div>
@@ -240,7 +241,7 @@ export function Produtos({ onNavigate, onOpenFlipBook }: ProdutosProps) {
           </div>
           
           {/* Apostilões em Destaque */}
-          <div className="mb-14">
+          <div className="mb-16 max-w-4xl mx-auto">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
               <div className="flex items-center gap-3">
                 <span className="w-2.5 h-2.5 rounded-full bg-wine-800" />
@@ -250,30 +251,32 @@ export function Produtos({ onNavigate, onOpenFlipBook }: ProdutosProps) {
               </div>
             </div>
 
-            {/* BOTÕES ENTRE A ESCRITA E A CAIXA DOS APOSTILÕES */}
-            <div className="flex flex-wrap items-center gap-3 mb-6 max-w-4xl mx-auto">
+            {/* BOTÕES ENTRE A ESCRITA E A CAIXA DOS APOSTILÕES - ALINHADOS COM OS CARDS */}
+            <div className="flex flex-wrap items-center gap-3 mb-6">
               {onOpenFlipBook && (
-                <button
-                  type="button"
-                  onClick={onOpenFlipBook}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
-                >
-                  <Sparkles size={15} className="text-wine-300 animate-pulse" />
-                  <span>Folhear Amostra de Matemática (13 Páginas 3D)</span>
-                </button>
-              )}
+                <>
+                  <button
+                    type="button"
+                    onClick={() => onOpenFlipBook('matematica')}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
+                  >
+                    <Sparkles size={15} className="text-wine-300 animate-pulse" />
+                    <span>Folhear Amostra de Matemática (13 Páginas 3D)</span>
+                  </button>
 
-              <button
-                type="button"
-                onClick={() => alert("Amostra 3D de Ciências em preparação! Em breve estará disponível.")}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-neutral-700 bg-white hover:bg-neutral-100 border border-neutral-300 shadow-sm transition-all cursor-pointer group"
-              >
-                <Sparkles size={15} className="text-neutral-400" />
-                <span>Folhear Amostra de Ciências (Em Breve)</span>
-              </button>
+                  <button
+                    type="button"
+                    onClick={() => onOpenFlipBook('ciencias')}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
+                  >
+                    <Sparkles size={15} className="text-wine-300 animate-pulse" />
+                    <span>Folhear Amostra de Ciências (14 Páginas 3D)</span>
+                  </button>
+                </>
+              )}
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {produtos.atividadesAdaptadas.filter(p => p.destaque).map((prod) => (
                 <ProductCard 
                   key={prod.id} 
@@ -287,26 +290,43 @@ export function Produtos({ onNavigate, onOpenFlipBook }: ProdutosProps) {
             </div>
           </div>
 
-          {/* Grid de Apostilas por Ano Escolar */}
-          <div>
-            <div className="flex items-center gap-3 mb-6">
+          {/* Seções de Apostilas por Ano Escolar (Carrossel no Mobile / Grade no Desktop) */}
+          <div className="space-y-12">
+            <div className="flex items-center gap-3">
               <span className="w-2.5 h-2.5 rounded-full bg-gray-900" />
               <h3 className="text-xl font-bold text-gray-900">
                 Apostilas por Ano Escolar (~100 atividades cada)
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {produtos.atividadesAdaptadas.filter(p => !p.destaque).map((prod) => (
-                <ProductCard 
-                  key={prod.id} 
-                  produto={prod} 
-                  actionText="Conhecer material" 
-                  bookSize="sm"
-                  onSelect={() => handleSelectProduct(prod.id)}
-                  onOpenFlipBook={onOpenFlipBook}
-                />
-              ))}
+            {/* 1. Matemática Adaptada (6º ao 9º Ano) */}
+            <div>
+              <div className="hidden lg:flex items-center gap-2 mb-4 text-sm font-bold text-neutral-800">
+                <Calculator size={18} className="text-wine-800" />
+                <span>Matemática Adaptada (6º ao 9º Ano)</span>
+              </div>
+              <ApostilasCarousel
+                disciplina="matematica"
+                produtos={produtos.matematicaAdaptada.filter(p => !p.destaque)}
+                actionText="Conhecer material"
+                onSelectProduct={handleSelectProduct}
+                onOpenFlipBook={onOpenFlipBook}
+              />
+            </div>
+
+            {/* 2. Ciências Adaptadas (6º ao 9º Ano) */}
+            <div className="pt-6 border-t border-neutral-200/60 lg:border-none lg:pt-0">
+              <div className="hidden lg:flex items-center gap-2 mb-4 text-sm font-bold text-neutral-800">
+                <Microscope size={18} className="text-wine-800" />
+                <span>Ciências Adaptadas (6º ao 9º Ano)</span>
+              </div>
+              <ApostilasCarousel
+                disciplina="ciencias"
+                produtos={produtos.cienciasAdaptadas.filter(p => !p.destaque)}
+                actionText="Conhecer material"
+                onSelectProduct={handleSelectProduct}
+                onOpenFlipBook={onOpenFlipBook}
+              />
             </div>
           </div>
         </div>

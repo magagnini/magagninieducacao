@@ -35,6 +35,13 @@ export type AppPage =
 
 function App() {
   const [flipBookOpen, setFlipBookOpen] = useState(false);
+  const [flipBookType, setFlipBookType] = useState<'matematica' | 'ciencias'>('matematica');
+
+  const handleOpenFlipBook = (type: 'matematica' | 'ciencias' = 'matematica') => {
+    setFlipBookType(type);
+    setFlipBookOpen(true);
+  };
+
   const [currentPage, setCurrentPage] = useState<AppPage>(() => {
     if (typeof window !== 'undefined') {
       const path = window.location.pathname;
@@ -135,7 +142,11 @@ function App() {
 
   return (
     <>
-      <FlipBookModal isOpen={flipBookOpen} onClose={() => setFlipBookOpen(false)} />
+      <FlipBookModal 
+        isOpen={flipBookOpen} 
+        onClose={() => setFlipBookOpen(false)} 
+        bookType={flipBookType}
+      />
       
       {currentPage === 'themis' && <ThemisPage onBackToMagagnini={navigateToMagagnini} />}
       
@@ -148,11 +159,16 @@ function App() {
       {currentPage === 'matematica' && (
         <MatematicaAdaptadaPage 
           onBackToMagagnini={navigateToMagagnini} 
-          onOpenFlipBook={() => setFlipBookOpen(true)}
+          onOpenFlipBook={() => handleOpenFlipBook('matematica')}
         />
       )}
       
-      {currentPage === 'ciencias' && <CienciasAdaptadaPage onBackToMagagnini={navigateToMagagnini} />}
+      {currentPage === 'ciencias' && (
+        <CienciasAdaptadaPage 
+          onBackToMagagnini={navigateToMagagnini} 
+          onOpenFlipBook={() => handleOpenFlipBook('ciencias')}
+        />
+      )}
       
       {currentPage === 'alunos' && (
         <AlunosPage 
@@ -179,7 +195,7 @@ function App() {
           onNavigateToGestores={() => navigateToPage('gestores')}
           onNavigateToMatematica={() => navigateToPage('matematica')}
           onNavigateToCiencias={() => navigateToPage('ciencias')}
-          onOpenFlipBook={() => setFlipBookOpen(true)}
+          onOpenFlipBook={handleOpenFlipBook}
         />
       )}
       
@@ -197,13 +213,13 @@ function App() {
         <div className="min-h-screen bg-white">
           <Header onNavigate={navigateToPage} currentPage={currentPage} />
           <main>
-            <Hero onOpenFlipBook={() => setFlipBookOpen(true)} />
+            <Hero onOpenFlipBook={() => handleOpenFlipBook('matematica')} />
             <PerfilSelector onSelectProfile={(p) => navigateToPage(p)} />
             <Sobre />
             <Categorias />
             <Produtos 
               onNavigate={(p) => navigateToPage(p)} 
-              onOpenFlipBook={() => setFlipBookOpen(true)} 
+              onOpenFlipBook={handleOpenFlipBook} 
             />
             <Solucoes 
               onOpenThemis={() => navigateToPage('themis')} 

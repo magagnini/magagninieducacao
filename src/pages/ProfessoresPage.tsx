@@ -19,6 +19,7 @@ import {
   Atom
 } from 'lucide-react';
 import { PerspectiveBook } from '../components/PerspectiveBook';
+import { ApostilasCarousel } from '../components/ApostilasCarousel';
 import { produtos } from '../data/produtos';
 import { motion } from 'framer-motion';
 
@@ -42,7 +43,7 @@ interface ProfessoresPageProps {
   onNavigateToGestores?: () => void;
   onNavigateToMatematica?: () => void;
   onNavigateToCiencias?: () => void;
-  onOpenFlipBook?: () => void;
+  onOpenFlipBook?: (type?: 'matematica' | 'ciencias') => void;
 }
 
 export function ProfessoresPage({
@@ -274,7 +275,7 @@ export function ProfessoresPage({
               className="mt-14 lg:mt-0 lg:col-span-5 flex flex-col items-center justify-center relative"
             >
               <div 
-                onClick={onOpenFlipBook}
+                onClick={() => onOpenFlipBook?.('matematica')}
                 className="relative group cursor-pointer"
                 title="Clique para folhear a amostra digital 3D"
               >
@@ -291,7 +292,7 @@ export function ProfessoresPage({
 
               {onOpenFlipBook && (
                 <button
-                  onClick={onOpenFlipBook}
+                  onClick={() => onOpenFlipBook?.('matematica')}
                   className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-wine-200 bg-white/10 hover:bg-white/15 border border-white/20 shadow-md backdrop-blur-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
                 >
                   <Sparkles size={13} className="text-wine-400" />
@@ -451,7 +452,7 @@ export function ProfessoresPage({
           </div>
           
           {/* Apostilões em Destaque */}
-          <div className="mb-14">
+          <div className="mb-16 max-w-4xl mx-auto">
             <div className="flex items-center gap-3 mb-4">
               <span className="w-2.5 h-2.5 rounded-full bg-wine-800" />
               <h3 className="text-xl font-bold text-neutral-950">
@@ -459,30 +460,32 @@ export function ProfessoresPage({
               </h3>
             </div>
 
-            {/* Botões entre a escrita e a caixa dos apostilões */}
-            <div className="flex flex-wrap items-center gap-3 mb-6 max-w-4xl mx-auto">
+            {/* Botões entre a escrita e a caixa dos apostilões - Alinhados com os cards */}
+            <div className="flex flex-wrap items-center gap-3 mb-6">
               {onOpenFlipBook && (
-                <button
-                  type="button"
-                  onClick={onOpenFlipBook}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
-                >
-                  <Sparkles size={15} className="text-wine-300 animate-pulse" />
-                  <span>Folhear Amostra de Matemática (13 Páginas 3D)</span>
-                </button>
-              )}
+                <>
+                  <button
+                    type="button"
+                    onClick={() => onOpenFlipBook('matematica')}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
+                  >
+                    <Sparkles size={15} className="text-wine-300 animate-pulse" />
+                    <span>Folhear Amostra de Matemática (13 Páginas 3D)</span>
+                  </button>
 
-              <button
-                type="button"
-                onClick={() => alert("Amostra 3D de Ciências em preparação! Em breve estará disponível.")}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-neutral-700 bg-white hover:bg-neutral-100 border border-neutral-300 shadow-sm transition-all cursor-pointer group"
-              >
-                <Sparkles size={15} className="text-neutral-400" />
-                <span>Folhear Amostra de Ciências (Em Breve)</span>
-              </button>
+                  <button
+                    type="button"
+                    onClick={() => onOpenFlipBook('ciencias')}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
+                  >
+                    <Sparkles size={15} className="text-wine-300 animate-pulse" />
+                    <span>Folhear Amostra de Ciências (14 Páginas 3D)</span>
+                  </button>
+                </>
+              )}
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {produtos.atividadesAdaptadas.filter(p => p.destaque).map((prod, idx) => {
                 const isMatematica = prod.id.startsWith('matematica');
                 return (
@@ -497,11 +500,12 @@ export function ProfessoresPage({
                     {/* 3D Book Showcase */}
                     <div 
                       onClick={() => {
-                        if (isMatematica && onOpenFlipBook) {
-                          onOpenFlipBook();
+                        if (onOpenFlipBook) {
+                          onOpenFlipBook(isMatematica ? 'matematica' : 'ciencias');
                         }
                       }}
-                      className={`relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[290px] ${isMatematica && onOpenFlipBook ? 'cursor-pointer' : ''}`}
+                      className={`relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[290px] ${onOpenFlipBook ? 'cursor-pointer' : ''}`}
+                      title={`Clique para folhear a amostra 3D de ${isMatematica ? 'Matemática' : 'Ciências'}`}
                     >
                       <div 
                         className="absolute inset-0 opacity-40 pointer-events-none"
@@ -525,10 +529,10 @@ export function ProfessoresPage({
                         <span>Edição Especial</span>
                       </div>
 
-                      {isMatematica && onOpenFlipBook && (
+                      {onOpenFlipBook && (
                         <div className="absolute bottom-3 right-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-neutral-900/90 text-white backdrop-blur shadow-md hover:bg-wine-800 transition-colors">
                           <Sparkles size={12} className="text-wine-300" />
-                          <span>Folhear 13 Páginas</span>
+                          <span>{isMatematica ? 'Folhear 13 Páginas' : 'Folhear 14 Páginas'}</span>
                         </div>
                       )}
                     </div>
@@ -547,7 +551,7 @@ export function ProfessoresPage({
                         </h4>
                       )}
 
-                      <p className="text-neutral-600 text-sm mb-6 flex-grow leading-relaxed">
+                      <p className="text-neutral-600 text-sm mb-6 flex-grow leading-relaxed min-h-[44px]">
                         {prod.descricao}
                       </p>
 
@@ -556,7 +560,7 @@ export function ProfessoresPage({
                         <span>Atividades estruturadas e prontas para uso</span>
                       </div>
                       
-                      <div className="flex flex-col gap-2.5">
+                      <div className="mt-auto flex flex-col gap-2.5">
                         <button 
                           onClick={() => {
                             if (prod.id.startsWith('matematica')) {
@@ -571,24 +575,17 @@ export function ProfessoresPage({
                           <ArrowRight size={16} className="transition-transform" />
                         </button>
 
-                        {isMatematica && onOpenFlipBook && (
+                        {onOpenFlipBook && (
                           <button
-                            onClick={onOpenFlipBook}
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onOpenFlipBook(isMatematica ? 'matematica' : 'ciencias');
+                            }}
                             className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-200 transition-colors cursor-pointer"
                           >
                             <Sparkles size={13} className="text-wine-800" />
-                            <span>Folhear 13 Páginas (3D)</span>
-                          </button>
-                        )}
-
-                        {!isMatematica && (
-                          <button
-                            type="button"
-                            onClick={() => alert("Amostra 3D de Ciências em preparação! Em breve estará disponível.")}
-                            className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 bg-neutral-50 hover:bg-neutral-100 text-neutral-500 border border-neutral-200 transition-colors cursor-pointer"
-                          >
-                            <Sparkles size={13} className="text-neutral-400" />
-                            <span>Folhear Amostra (Em Breve)</span>
+                            <span>{isMatematica ? 'Folhear 13 Páginas (3D)' : 'Folhear 14 Páginas (3D)'}</span>
                           </button>
                         )}
                       </div>
@@ -599,123 +596,43 @@ export function ProfessoresPage({
             </div>
           </div>
 
-          {/* Grid de Apostilas por Ano Escolar */}
-          <div className="mb-16">
-            <div className="flex items-center gap-3 mb-6">
+          {/* Seções de Apostilas por Ano Escolar (Carrossel no Mobile / Grade no Desktop) */}
+          <div className="mb-16 space-y-12">
+            <div className="flex items-center gap-3">
               <span className="w-2.5 h-2.5 rounded-full bg-neutral-900" />
               <h3 className="text-xl font-bold text-neutral-950">
                 Apostilas por Ano Escolar (~100 atividades cada)
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {produtos.atividadesAdaptadas.filter(p => !p.destaque).map((prod, idx) => {
-                const initialMotion = 
-                  idx % 4 === 0 
-                    ? { opacity: 0, x: -50, y: 0 }
-                    : idx % 4 === 3 
-                    ? { opacity: 0, x: 50, y: 0 }
-                    : { opacity: 0, x: 0, y: 50 };
+            {/* 1. Matemática Adaptada (6º ao 9º Ano) */}
+            <div>
+              <div className="hidden lg:flex items-center gap-2 mb-4 text-sm font-bold text-neutral-800">
+                <Calculator size={18} className="text-wine-800" />
+                <span>Matemática Adaptada (6º ao 9º Ano)</span>
+              </div>
+              <ApostilasCarousel
+                disciplina="matematica"
+                produtos={produtos.matematicaAdaptada.filter(p => !p.destaque)}
+                actionText="Conhecer material"
+                onSelectProduct={() => onNavigateToMatematica?.()}
+                onOpenFlipBook={onOpenFlipBook}
+              />
+            </div>
 
-                return (
-                  <motion.div 
-                    key={prod.id}
-                    initial={initialMotion}
-                    whileInView={{ opacity: 1, x: 0, y: 0 }}
-                    viewport={{ once: true, amount: 0.15 }}
-                    transition={{ duration: 0.75, delay: (idx % 4) * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="bg-white rounded-3xl border border-neutral-200 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all duration-300 flex flex-col h-full group"
-                  >
-                    {/* 3D Book Showcase */}
-                    <div className="relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[240px]">
-                      <div 
-                        className="absolute inset-0 opacity-40 pointer-events-none"
-                        style={{
-                          backgroundImage: "radial-gradient(#e5e7eb 1px, transparent 1px)",
-                          backgroundSize: "16px 16px"
-                        }}
-                      />
-
-                      <PerspectiveBook
-                        size="sm"
-                        coverImage={prod.imagem}
-                        title={prod.nome}
-                        subtitle={prod.descricao}
-                        badge={prod.detalhe}
-                        isDestaque={false}
-                      />
-                    </div>
-                    
-                    {/* Product Details Area */}
-                    <div className="p-6 flex flex-col flex-grow">
-                      <div className="flex items-center justify-between gap-2 mb-1">
-                        <h3 className="text-base font-bold text-neutral-950 group-hover:text-wine-900 transition-colors">
-                          {prod.nome}
-                        </h3>
-                      </div>
-
-                      {prod.subtitulo && (
-                        <h4 className="text-[11px] font-bold text-wine-800 mb-2 uppercase tracking-wider">
-                          {prod.subtitulo}
-                        </h4>
-                      )}
-
-                      <p className="text-neutral-600 text-xs mb-5 flex-grow leading-relaxed">
-                        {prod.descricao}
-                      </p>
-
-                      <div className="mb-5 pt-3 border-t border-neutral-100 flex items-center gap-2 text-xs text-neutral-500">
-                        <CheckCircle2 size={14} className="text-wine-700 flex-shrink-0" />
-                        <span>Atividades estruturadas e prontas para uso</span>
-                      </div>
-                      
-                      <div className="flex flex-col gap-2">
-                        <button 
-                          onClick={() => {
-                            if (prod.id.startsWith('matematica')) {
-                              onNavigateToMatematica?.();
-                            } else {
-                              onNavigateToCiencias?.();
-                            }
-                          }}
-                          className="w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-neutral-900 hover:bg-wine-800 text-white shadow-sm hover:shadow-md hover:gap-2.5 transition-all duration-200 cursor-pointer"
-                        >
-                          <span>Conhecer material</span>
-                          <ArrowRight size={14} className="transition-transform" />
-                        </button>
-
-                        {prod.id.startsWith('matematica') && onOpenFlipBook && (
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onOpenFlipBook();
-                            }}
-                            className="w-full py-2 px-3 rounded-lg font-bold text-[11px] flex items-center justify-center gap-1.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-200 transition-colors cursor-pointer"
-                          >
-                            <Sparkles size={12} className="text-wine-800" />
-                            <span>Folhear 13 Páginas (3D)</span>
-                          </button>
-                        )}
-
-                        {prod.id.startsWith('ciencias') && (
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              alert("Amostra 3D de Ciências em preparação! Em breve estará disponível.");
-                            }}
-                            className="w-full py-2 px-3 rounded-lg font-medium text-[11px] flex items-center justify-center gap-1.5 bg-neutral-50 hover:bg-neutral-100 text-neutral-500 border border-neutral-200 transition-colors cursor-pointer"
-                          >
-                            <Sparkles size={12} className="text-neutral-400" />
-                            <span>Folhear Amostra (Em Breve)</span>
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
+            {/* 2. Ciências Adaptadas (6º ao 9º Ano) */}
+            <div className="pt-6 border-t border-neutral-200/60 lg:border-none lg:pt-0">
+              <div className="hidden lg:flex items-center gap-2 mb-4 text-sm font-bold text-neutral-800">
+                <Microscope size={18} className="text-wine-800" />
+                <span>Ciências Adaptadas (6º ao 9º Ano)</span>
+              </div>
+              <ApostilasCarousel
+                disciplina="ciencias"
+                produtos={produtos.cienciasAdaptadas.filter(p => !p.destaque)}
+                actionText="Conhecer material"
+                onSelectProduct={() => onNavigateToCiencias?.()}
+                onOpenFlipBook={onOpenFlipBook}
+              />
             </div>
           </div>
 

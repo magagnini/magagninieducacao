@@ -13,7 +13,8 @@ import {
   Menu, 
   X,
   ExternalLink,
-  Atom
+  Atom,
+  BookOpen
 } from 'lucide-react';
 import { produtos } from '../data/produtos';
 import { PerspectiveBook } from '../components/PerspectiveBook';
@@ -23,9 +24,10 @@ const WHATSAPP_URL = "https://wa.me/5511998713683?text=Ol%C3%A1!%20Quero%20saber
 
 interface CienciasAdaptadaPageProps {
   onBackToMagagnini?: () => void;
+  onOpenFlipBook?: () => void;
 }
 
-export function CienciasAdaptadaPage({ onBackToMagagnini }: CienciasAdaptadaPageProps) {
+export function CienciasAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: CienciasAdaptadaPageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
@@ -312,6 +314,20 @@ export function CienciasAdaptadaPage({ onBackToMagagnini }: CienciasAdaptadaPage
               </a>
             ))}
           </div>
+
+          {onOpenFlipBook && (
+            <div className="mt-12 text-center">
+              <button
+                type="button"
+                onClick={onOpenFlipBook}
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-neutral-950 via-wine-900 to-neutral-950 border border-wine-500/40 hover:border-wine-400 shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer group"
+              >
+                <Sparkles size={18} className="text-wine-400 animate-pulse" />
+                <span>Folhear Amostra Digital em 3D (14 Páginas)</span>
+                <BookOpen size={18} className="text-wine-300 group-hover:rotate-12 transition-transform" />
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -418,7 +434,11 @@ export function CienciasAdaptadaPage({ onBackToMagagnini }: CienciasAdaptadaPage
                   <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center relative z-10">
                     
                     <div className="lg:col-span-5 flex justify-center mb-8 lg:mb-0">
-                      <div className="relative group">
+                      <div 
+                        onClick={isApostilao ? onOpenFlipBook : undefined}
+                        className={`relative group ${isApostilao && onOpenFlipBook ? 'cursor-pointer' : ''}`}
+                        title={isApostilao && onOpenFlipBook ? "Clique para folhear a amostra digital em 3D" : undefined}
+                      >
                         <PerspectiveBook
                           size="default"
                           coverImage={prod.imagem}

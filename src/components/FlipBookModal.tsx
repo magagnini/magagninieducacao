@@ -17,6 +17,7 @@ import {
 interface FlipBookModalProps {
   isOpen: boolean;
   onClose: () => void;
+  bookType?: 'matematica' | 'ciencias';
   title?: string;
   subtitle?: string;
   buyUrl?: string;
@@ -25,32 +26,44 @@ interface FlipBookModalProps {
 export function FlipBookModal({
   isOpen,
   onClose,
-  title = "Apostila Adaptada de Matemática — Anos Finais",
-  subtitle = "Amostra Pedagógica • 13 Primeiras Páginas",
-  buyUrl = "https://pay.cakto.com.br/zc6nce7_1123320"
+  bookType = 'matematica',
+  title,
+  subtitle,
+  buyUrl
 }: FlipBookModalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const pageFlipRef = useRef<PageFlip | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(13);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const pages = [
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/1.png',
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/2.png',
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/3.png',
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/4.png',
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/5.png',
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/6.png',
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/7.png',
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/8.png',
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/9.png',
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/10.png',
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/11.png',
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/12.png',
-    '/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/13.png',
-  ];
+  const isCiencias = bookType === 'ciencias';
+
+  const defaultTitle = isCiencias
+    ? "Apostila Adaptada de Ciências — Anos Finais"
+    : "Apostila Adaptada de Matemática — Anos Finais";
+
+  const defaultSubtitle = isCiencias
+    ? "Amostra Pedagógica • 14 Primeiras Páginas"
+    : "Amostra Pedagógica • 13 Primeiras Páginas";
+
+  const defaultBuyUrl = isCiencias
+    ? "https://pay.cakto.com.br/k4zqo3a_1165309"
+    : "https://pay.cakto.com.br/zc6nce7_1123320";
+
+  const finalTitle = title || defaultTitle;
+  const finalSubtitle = subtitle || defaultSubtitle;
+  const finalBuyUrl = buyUrl || defaultBuyUrl;
+
+  const pages = isCiencias
+    ? Array.from({ length: 14 }, (_, i) => `/assets/amostras/livro-3d/APOSTILA ADAPTADA DE CIENCIAS/${i + 1}.png`)
+    : Array.from({ length: 13 }, (_, i) => `/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/${i + 1}.png`);
+
+  const [totalPages, setTotalPages] = useState(pages.length);
+
+  useEffect(() => {
+    setTotalPages(pages.length);
+  }, [pages.length]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -123,7 +136,7 @@ export function FlipBookModal({
         pageFlipRef.current = null;
       }
     };
-  }, [isOpen]);
+  }, [isOpen, bookType]);
 
   // Keyboard navigation & Escape key listener
   useEffect(() => {
