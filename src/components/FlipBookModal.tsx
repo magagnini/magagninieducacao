@@ -194,20 +194,20 @@ export function FlipBookModal({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-sm font-bold text-white tracking-tight">{title}</h2>
+                <h2 className="text-sm font-bold text-white tracking-tight">{finalTitle}</h2>
                 <span className="text-[10px] font-bold uppercase tracking-wider bg-wine-900/80 text-wine-200 px-2 py-0.5 rounded-full border border-wine-500/40">
                   Degustação 3D
                 </span>
               </div>
-              <p className="text-xs text-neutral-400">{subtitle}</p>
+              <p className="text-xs text-neutral-400">{finalSubtitle}</p>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          {buyUrl && (
+          {finalBuyUrl && (
             <a
-              href={buyUrl}
+              href={finalBuyUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-wine-800 to-wine-700 hover:from-wine-700 hover:to-wine-600 shadow-3d-wine hover:shadow-3d-wine-hover transition-all whitespace-nowrap"
