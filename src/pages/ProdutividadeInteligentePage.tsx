@@ -33,6 +33,7 @@ export function ProdutividadeInteligentePage({
 
   // Link oficial direto no checkout da Cakto
   const CHECKOUT_URL = "https://pay.cakto.com.br/un24g4z_1240721";
+  const KIWIFY_CHECKOUT_URL = CHECKOUT_URL; // Fallback alias
 
   const faqs = [
     {
@@ -383,7 +384,7 @@ export function ProdutividadeInteligentePage({
                 </div>
 
                 <a
-                  href={KIWIFY_CHECKOUT_URL}
+                  href={CHECKOUT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-bold text-white bg-wine-800 hover:bg-wine-700 shadow-md transition-all"
