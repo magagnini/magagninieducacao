@@ -21,9 +21,10 @@ const WHATSAPP_PROVAO = "https://wa.me/5511998713683?text=Ol%C3%A1!%20Gostaria%2
 
 interface ProvaoPaulistaPageProps {
   onBackToMagagnini?: () => void;
+  onOpenFlipBook?: () => void;
 }
 
-export function ProvaoPaulistaPage({ onBackToMagagnini }: ProvaoPaulistaPageProps) {
+export function ProvaoPaulistaPage({ onBackToMagagnini, onOpenFlipBook }: ProvaoPaulistaPageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
@@ -223,7 +224,7 @@ export function ProvaoPaulistaPage({ onBackToMagagnini }: ProvaoPaulistaPageProp
                 ))}
               </div>
 
-              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+              <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start items-center">
                 <a
                   href={CHECKOUT_PROVAO}
                   target="_blank"
@@ -233,6 +234,17 @@ export function ProvaoPaulistaPage({ onBackToMagagnini }: ProvaoPaulistaPageProp
                   <span>QUERO MINHA APOSTILA</span>
                   <ArrowRight size={18} />
                 </a>
+
+                {onOpenFlipBook && (
+                  <button
+                    type="button"
+                    onClick={onOpenFlipBook}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-base font-bold text-wine-900 bg-wine-50 hover:bg-wine-100 border border-wine-300 shadow-sm transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <Sparkles size={18} className="text-wine-800" />
+                    <span>Folhear Amostra (9 Pág. 3D)</span>
+                  </button>
+                )}
 
                 <a
                   href="#sobre-o-material"
@@ -244,8 +256,12 @@ export function ProvaoPaulistaPage({ onBackToMagagnini }: ProvaoPaulistaPageProp
             </div>
 
             {/* Right: Book in 3D */}
-            <div className="mt-12 lg:mt-0 lg:col-span-5 flex justify-center relative">
-              <div className="relative group">
+            <div className="mt-12 lg:mt-0 lg:col-span-5 flex flex-col items-center justify-center relative">
+              <div 
+                onClick={onOpenFlipBook}
+                className={`relative group flex flex-col items-center ${onOpenFlipBook ? 'cursor-pointer' : ''}`}
+                title={onOpenFlipBook ? "Clique para folhear a amostra digital em 3D (9 páginas)" : undefined}
+              >
                 <div className="absolute -inset-4 bg-gradient-to-tr from-wine-800/20 to-transparent rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none" />
                 <PerspectiveBook
                   size="lg"
@@ -255,6 +271,19 @@ export function ProvaoPaulistaPage({ onBackToMagagnini }: ProvaoPaulistaPageProp
                   badge="Ensino Médio • Resolvida"
                   isDestaque={true}
                 />
+                {onOpenFlipBook && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenFlipBook();
+                    }}
+                    className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-wine-900 bg-wine-50 hover:bg-wine-100 border border-wine-300 shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                  >
+                    <Sparkles size={13} className="text-wine-800" />
+                    <span>Folhear amostra interativa (9 pág. 3D)</span>
+                  </button>
+                )}
               </div>
             </div>
 
@@ -341,6 +370,21 @@ export function ProvaoPaulistaPage({ onBackToMagagnini }: ProvaoPaulistaPageProp
               </p>
             </div>
           </div>
+
+          {onOpenFlipBook && (
+            <div className="mt-12 text-center">
+              <button
+                type="button"
+                onClick={onOpenFlipBook}
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-neutral-950 via-wine-900 to-neutral-950 border border-wine-500/40 hover:border-wine-400 shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer group"
+              >
+                <Sparkles size={18} className="text-wine-400 animate-pulse" />
+                <span>Folhear Amostra Digital em 3D (9 Páginas)</span>
+                <BookOpen size={18} className="text-wine-300 group-hover:rotate-12 transition-transform" />
+              </button>
+            </div>
+          )}
+
         </div>
       </section>
 

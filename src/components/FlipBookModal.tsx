@@ -14,10 +14,12 @@ import {
   Sparkles
 } from 'lucide-react';
 
+export type FlipBookType = 'matematica' | 'ciencias' | 'obmep' | 'provao-paulista';
+
 interface FlipBookModalProps {
   isOpen: boolean;
   onClose: () => void;
-  bookType?: 'matematica' | 'ciencias';
+  bookType?: FlipBookType;
   title?: string;
   subtitle?: string;
   buyUrl?: string;
@@ -37,27 +39,36 @@ export function FlipBookModal({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const isCiencias = bookType === 'ciencias';
+  let defaultTitle = "Apostila Adaptada de Matemática — Anos Finais";
+  let defaultSubtitle = "Amostra Pedagógica • 13 Primeiras Páginas";
+  let defaultBuyUrl = "https://pay.cakto.com.br/zc6nce7_1123320";
+  let pages: string[] = [];
 
-  const defaultTitle = isCiencias
-    ? "Apostila Adaptada de Ciências — Anos Finais"
-    : "Apostila Adaptada de Matemática — Anos Finais";
-
-  const defaultSubtitle = isCiencias
-    ? "Amostra Pedagógica • 14 Primeiras Páginas"
-    : "Amostra Pedagógica • 13 Primeiras Páginas";
-
-  const defaultBuyUrl = isCiencias
-    ? "https://pay.cakto.com.br/k4zqo3a_1165309"
-    : "https://pay.cakto.com.br/zc6nce7_1123320";
+  if (bookType === 'ciencias') {
+    defaultTitle = "Apostila Adaptada de Ciências — Anos Finais";
+    defaultSubtitle = "Amostra Pedagógica • 14 Primeiras Páginas";
+    defaultBuyUrl = "https://pay.cakto.com.br/k4zqo3a_1165309";
+    pages = Array.from({ length: 14 }, (_, i) => `/assets/amostras/livro-3d/APOSTILA ADAPTADA DE CIENCIAS/${i + 1}.png`);
+  } else if (bookType === 'obmep') {
+    defaultTitle = "Apostila da OBMEP — Volume 1";
+    defaultSubtitle = "Amostra Pedagógica • 10 Primeiras Páginas";
+    defaultBuyUrl = "https://obmep-1-edicao.vercel.app/#comprar";
+    pages = Array.from({ length: 10 }, (_, i) => `/assets/amostras/livro-3d/AMOSTRA APOSTILA OBMEP/${i + 1}.png`);
+  } else if (bookType === 'provao-paulista') {
+    defaultTitle = "Apostila Preparatória • Provão Paulista";
+    defaultSubtitle = "Amostra Pedagógica • 9 Primeiras Páginas";
+    defaultBuyUrl = "https://pay.cakto.com.br/ypkhicy_752822";
+    pages = Array.from({ length: 9 }, (_, i) => `/assets/amostras/livro-3d/APOSTILA PROVAO PAULISTA/${i + 1}.png`);
+  } else {
+    defaultTitle = "Apostila Adaptada de Matemática — Anos Finais";
+    defaultSubtitle = "Amostra Pedagógica • 13 Primeiras Páginas";
+    defaultBuyUrl = "https://pay.cakto.com.br/zc6nce7_1123320";
+    pages = Array.from({ length: 13 }, (_, i) => `/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/${i + 1}.png`);
+  }
 
   const finalTitle = title || defaultTitle;
   const finalSubtitle = subtitle || defaultSubtitle;
   const finalBuyUrl = buyUrl || defaultBuyUrl;
-
-  const pages = isCiencias
-    ? Array.from({ length: 14 }, (_, i) => `/assets/amostras/livro-3d/APOSTILA ADAPTADA DE CIENCIAS/${i + 1}.png`)
-    : Array.from({ length: 13 }, (_, i) => `/assets/amostras/livro-3d/APOSTILA ADAPTADA DE MATEMATICA/${i + 1}.png`);
 
   const [totalPages, setTotalPages] = useState(pages.length);
 

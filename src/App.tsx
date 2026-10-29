@@ -17,7 +17,7 @@ import { CienciasAdaptadaPage } from './pages/CienciasAdaptadaPage';
 import { AlunosPage } from './pages/AlunosPage';
 import { ProfessoresPage } from './pages/ProfessoresPage';
 import { GestoresPage } from './pages/GestoresPage';
-import { FlipBookModal } from './components/FlipBookModal';
+import { FlipBookModal, type FlipBookType } from './components/FlipBookModal';
 import { ProdutividadeInteligentePage } from './pages/ProdutividadeInteligentePage';
 
 export type AppPage = 
@@ -35,9 +35,9 @@ export type AppPage =
 
 function App() {
   const [flipBookOpen, setFlipBookOpen] = useState(false);
-  const [flipBookType, setFlipBookType] = useState<'matematica' | 'ciencias'>('matematica');
+  const [flipBookType, setFlipBookType] = useState<FlipBookType>('matematica');
 
-  const handleOpenFlipBook = (type: 'matematica' | 'ciencias' = 'matematica') => {
+  const handleOpenFlipBook = (type: FlipBookType = 'matematica') => {
     setFlipBookType(type);
     setFlipBookOpen(true);
   };
@@ -154,9 +154,19 @@ function App() {
       
       {currentPage === 'atheneum' && <AtheneumPage onBackToMagagnini={navigateToMagagnini} />}
       
-      {currentPage === 'obmep' && <ObmepPage onBackToMagagnini={navigateToMagagnini} />}
+      {currentPage === 'obmep' && (
+        <ObmepPage 
+          onBackToMagagnini={navigateToMagagnini} 
+          onOpenFlipBook={() => handleOpenFlipBook('obmep')}
+        />
+      )}
       
-      {currentPage === 'provao-paulista' && <ProvaoPaulistaPage onBackToMagagnini={navigateToMagagnini} />}
+      {currentPage === 'provao-paulista' && (
+        <ProvaoPaulistaPage 
+          onBackToMagagnini={navigateToMagagnini} 
+          onOpenFlipBook={() => handleOpenFlipBook('provao-paulista')}
+        />
+      )}
       
       {currentPage === 'matematica' && (
         <MatematicaAdaptadaPage 
@@ -180,6 +190,7 @@ function App() {
           onNavigateToProvao={() => navigateToPage('provao-paulista')}
           onNavigateToObmep={() => navigateToPage('obmep')}
           onNavigateToProdutividade={() => navigateToPage('produtividade-inteligente')}
+          onOpenFlipBook={handleOpenFlipBook}
         />
       )}
 

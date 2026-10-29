@@ -5,7 +5,7 @@ import { Sparkles, ArrowRight, CheckCircle2, Calculator, Microscope, GraduationC
 
 interface ProdutosProps {
   onNavigate?: (page: 'provao-paulista' | 'obmep' | 'matematica' | 'ciencias' | 'themis' | 'atheneum') => void;
-  onOpenFlipBook?: (type: 'matematica' | 'ciencias') => void;
+  onOpenFlipBook?: (type: 'matematica' | 'ciencias' | 'obmep' | 'provao-paulista') => void;
 }
 
 function ProductCard({ 
@@ -19,10 +19,23 @@ function ProductCard({
   actionText: string;
   bookSize?: "sm" | "default" | "lg";
   onSelect?: () => void;
-  onOpenFlipBook?: (type: 'matematica' | 'ciencias') => void;
+  onOpenFlipBook?: (type: 'matematica' | 'ciencias' | 'obmep' | 'provao-paulista') => void;
 }) {
   const isMatematica = produto.id.startsWith('matematica');
   const isCiencias = produto.id.startsWith('ciencias');
+  const isObmep = produto.id === 'obmep-vol-1';
+  const isProvao = produto.id === 'provao-paulista';
+  const hasFlipBook = isMatematica || isCiencias || isObmep || isProvao;
+
+  const tooltipText = isMatematica 
+    ? 'Clique para folhear a amostra 3D de Matemática'
+    : isCiencias
+    ? 'Clique para folhear a amostra 3D de Ciências'
+    : isObmep
+    ? 'Clique para folhear a amostra 3D da OBMEP'
+    : isProvao
+    ? 'Clique para folhear a amostra 3D do Provão Paulista'
+    : undefined;
 
   return (
     <div className={`bg-white rounded-3xl border transition-all duration-300 flex flex-col h-full group ${
@@ -33,16 +46,16 @@ function ProductCard({
       {/* 3D Book Showcase Area */}
       <div 
         onClick={() => {
-          if (isMatematica && onOpenFlipBook) {
-            onOpenFlipBook('matematica');
-          } else if (isCiencias && onOpenFlipBook) {
-            onOpenFlipBook('ciencias');
-          }
+          if (!onOpenFlipBook) return;
+          if (isMatematica) onOpenFlipBook('matematica');
+          else if (isCiencias) onOpenFlipBook('ciencias');
+          else if (isObmep) onOpenFlipBook('obmep');
+          else if (isProvao) onOpenFlipBook('provao-paulista');
         }}
         className={`relative pt-6 pb-2 px-4 flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50/80 to-transparent rounded-t-3xl min-h-[290px] ${
-          (isMatematica || isCiencias) ? 'cursor-pointer' : ''
+          hasFlipBook ? 'cursor-pointer' : ''
         }`}
-        title={`Clique para folhear a amostra 3D de ${isMatematica ? 'Matemática' : 'Ciências'}`}
+        title={tooltipText}
       >
         <div 
           className="absolute inset-0 opacity-40 pointer-events-none"
@@ -130,6 +143,34 @@ function ProductCard({
             >
               <Sparkles size={13} className="text-wine-800" />
               <span>Folhear 14 Páginas (3D)</span>
+            </button>
+          )}
+
+          {isObmep && onOpenFlipBook && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenFlipBook('obmep');
+              }}
+              className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-300 transition-colors cursor-pointer"
+            >
+              <Sparkles size={13} className="text-wine-800" />
+              <span>Folhear 10 Páginas (3D)</span>
+            </button>
+          )}
+
+          {isProvao && onOpenFlipBook && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenFlipBook('provao-paulista');
+              }}
+              className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-300 transition-colors cursor-pointer"
+            >
+              <Sparkles size={13} className="text-wine-800" />
+              <span>Folhear 9 Páginas (3D)</span>
             </button>
           )}
         </div>
