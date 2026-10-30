@@ -32,7 +32,7 @@ export const produtos = {
         'Estratégias de raciocínio passo a passo',
         'Mais de 100 novos QR Codes em atualizações futuras inclusas'
       ],
-      linkCompra: 'https://obmep-1-edicao.vercel.app/#comprar',
+      linkCompra: 'https://pay.cakto.com.br/oiqigca_1260017',
       ativo: true
     },
     {
@@ -280,8 +280,8 @@ export const produtos = {
       nome: 'Produtividade Inteligente',
       subtitulo: 'Do estudo ao resultado',
       descricao: 'O primeiro livro de Vinícius Magagnini. Uma obra transformadora que une exatas, autoconhecimento e mentalidade poderosa para vencer o desânimo, a procrastinação e conquistar grandes aprovações.',
-      imagem: '/assets/produtos/livros/produtividade-inteligente-capa.png',
-      mockup: '/assets/produtos/livros/produtividade-inteligente.png',
+      imagem: '/assets/produtos/apostilas-academicas/PRODUTIVIDADE INTELIGENTE CAPA.jpeg',
+      mockup: '/assets/produtos/apostilas-academicas/PRODUTIVIDADE INTELIGENTE CAPA.jpeg',
       categoria: 'academica' as const,
       detalhe: '1º Livro Publicado',
       destaque: true,

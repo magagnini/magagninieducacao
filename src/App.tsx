@@ -198,6 +198,7 @@ function App() {
         <ProdutividadeInteligentePage
           onBackToMagagnini={navigateToMagagnini}
           onNavigateToAlunos={() => navigateToPage('alunos')}
+          onOpenFlipBook={() => handleOpenFlipBook('produtividade-inteligente')}
         />
       )}
       

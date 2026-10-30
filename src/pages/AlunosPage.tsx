@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PerspectiveBook } from '../components/PerspectiveBook';
+import type { FlipBookType } from '../components/FlipBookModal';
 
 function YoutubeIcon({ className = "w-5 h-5", size = 20 }: { className?: string; size?: number }) {
   return (
@@ -39,7 +40,7 @@ interface AlunosPageProps {
   onNavigateToProvao?: () => void;
   onNavigateToObmep?: () => void;
   onNavigateToProdutividade?: () => void;
-  onOpenFlipBook?: (type: 'matematica' | 'ciencias' | 'obmep' | 'provao-paulista') => void;
+  onOpenFlipBook?: (type: FlipBookType) => void;
 }
 
 export function AlunosPage({
@@ -55,8 +56,8 @@ export function AlunosPage({
 
   const YOUTUBE_VIDEO_URL = "https://youtu.be/6ZkrOkYGJfs?si=vTouxsbDkI3g6RHL";
   const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@matcomvini";
-  const KIWIFY_PROVAO_URL = "https://pay.kiwify.com.br/1KuGx2E";
-  const OBMEP_BUY_URL = "https://obmep-1-edicao.vercel.app/#comprar";
+  const CAKTO_PROVAO_URL = "https://pay.cakto.com.br/ypkhicy_752822";
+  const OBMEP_BUY_URL = "https://pay.cakto.com.br/oiqigca_1260017";
 
   const playlists = [
     {
@@ -112,11 +113,11 @@ export function AlunosPage({
                 className="flex items-center gap-3 group text-left cursor-pointer flex-shrink-0"
               >
                 <img
-                  src="/assets/logo/magagnini-mista-branca.png"
+                  src="/assets/logo/logo-preta.png"
                   alt="Magagnini Educação"
                   className="h-9 sm:h-10 w-auto object-contain flex-shrink-0"
                   onError={(e) => {
-                    e.currentTarget.src = "/assets/logo/MISTA BRANCA - 1920X800.png";
+                    e.currentTarget.src = "/assets/logo/LOGO PRETA PNG.png";
                   }}
                 />
                 <span className="hidden md:inline-block border-l border-neutral-300 pl-3 text-xs font-bold text-wine-800 uppercase tracking-widest whitespace-nowrap">
@@ -801,12 +802,12 @@ export function AlunosPage({
                 )}
 
                 <a
-                  href={KIWIFY_PROVAO_URL}
+                  href={CAKTO_PROVAO_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-2xl text-xs font-semibold text-neutral-700 bg-neutral-100 hover:bg-neutral-200 transition-colors"
                 >
-                  <span>Adquirir no Checkout Oficial</span>
+                  <span>Adquirir Agora</span>
                   <ExternalLink size={13} />
                 </a>
               </div>
@@ -902,7 +903,7 @@ export function AlunosPage({
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-2xl text-xs font-semibold text-neutral-700 bg-neutral-100 hover:bg-neutral-200 transition-colors"
                 >
-                  <span>Adquirir no Checkout Oficial</span>
+                  <span>Adquirir Agora</span>
                   <ExternalLink size={13} />
                 </a>
               </div>
@@ -968,7 +969,7 @@ export function AlunosPage({
                   </div>
                 </div>
 
-                <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+                <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start items-center">
                   <button
                     onClick={() => {
                       if (onNavigateToProdutividade) {
@@ -983,13 +984,24 @@ export function AlunosPage({
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </button>
 
+                  {onOpenFlipBook && (
+                    <button
+                      type="button"
+                      onClick={() => onOpenFlipBook('produtividade-inteligente')}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-xs sm:text-sm font-bold text-white bg-white/10 hover:bg-white/15 border border-white/20 transition-all cursor-pointer"
+                    >
+                      <Sparkles size={16} className="text-wine-400" />
+                      <span>Folhear Amostra (18 Pág. 3D)</span>
+                    </button>
+                  )}
+
                   <a
                     href="https://pay.cakto.com.br/un24g4z_1240721"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-xs sm:text-sm font-semibold text-neutral-300 bg-white/5 hover:bg-white/10 border border-white/15 transition-all"
                   >
-                    <span>Comprar no Checkout</span>
+                    <span>Adquirir Agora</span>
                     <ExternalLink size={14} />
                   </a>
                 </div>
@@ -1014,7 +1026,7 @@ export function AlunosPage({
                   <div className="py-2 transition-transform duration-300 group-hover:scale-105">
                     <PerspectiveBook
                       size="lg"
-                      coverImage="/assets/produtos/livros/produtividade-inteligente-capa.png"
+                      coverImage="/assets/produtos/apostilas-academicas/PRODUTIVIDADE INTELIGENTE CAPA.jpeg"
                       title="Produtividade Inteligente"
                       subtitle="Do estudo ao resultado"
                       badge="1º Livro Publicado"
@@ -1076,11 +1088,11 @@ export function AlunosPage({
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-10 border-b border-neutral-900">
             <div className="flex items-center gap-3">
               <img
-                src="/assets/logo/magagnini-mista-preta.png"
+                src="/assets/logo/logo-branca.png"
                 alt="Magagnini Educação"
-                className="h-10 w-auto object-contain rounded"
+                className="h-10 w-auto object-contain"
                 onError={(e) => {
-                  e.currentTarget.src = "/assets/logo/MISTA PRETA - 1920X800.png";
+                  e.currentTarget.src = "/assets/logo/LOGO BRANCA PNG.png";
                 }}
               />
               <span className="text-xs text-neutral-400">

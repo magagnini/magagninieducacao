@@ -1081,11 +1081,11 @@ export function AtheneumPage({ onBackToMagagnini }: AtheneumPageProps) {
               </p>
               <div className="mt-6 flex items-center gap-3">
                 <img 
-                  src="/assets/logo/magagnini-mista-preta.png" 
+                  src="/assets/logo/logo-branca.png" 
                   alt="Magagnini Educação" 
-                  className="h-9 w-auto object-contain rounded"
+                  className="h-9 w-auto object-contain"
                   onError={(e) => {
-                    e.currentTarget.src = "/assets/logo/MISTA PRETA - 1920X800.png";
+                    e.currentTarget.src = "/assets/logo/LOGO BRANCA PNG.png";
                   }}
                 />
               </div>

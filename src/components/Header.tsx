@@ -62,11 +62,11 @@ export function Header({ onNavigate, currentPage = 'magagnini', onCloseFlipBook 
               className="flex items-center gap-3 group text-left cursor-pointer"
             >
               <img
-                src="/assets/logo/magagnini-mista-branca.png"
+                src="/assets/logo/logo-preta.png"
                 alt="Magagnini Educação"
                 className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                 onError={(e) => {
-                  e.currentTarget.src = "/assets/logo/MISTA BRANCA - 1920X800.png";
+                  e.currentTarget.src = "/assets/logo/LOGO PRETA PNG.png";
                 }}
               />
             </button>

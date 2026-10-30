@@ -85,11 +85,11 @@ export function ProfessoresPage({
                 className="flex items-center gap-3 group text-left cursor-pointer flex-shrink-0"
               >
                 <img
-                  src="/assets/logo/magagnini-mista-branca.png"
+                  src="/assets/logo/logo-preta.png"
                   alt="Magagnini Educação"
                   className="h-9 sm:h-10 w-auto object-contain flex-shrink-0"
                   onError={(e) => {
-                    e.currentTarget.src = "/assets/logo/MISTA BRANCA - 1920X800.png";
+                    e.currentTarget.src = "/assets/logo/LOGO PRETA PNG.png";
                   }}
                 />
                 <span className="hidden md:inline-block border-l border-neutral-300 pl-3 text-xs font-bold text-wine-800 uppercase tracking-widest whitespace-nowrap">
@@ -460,30 +460,32 @@ export function ProfessoresPage({
               </h3>
             </div>
 
-            {/* Botões entre a escrita e a caixa dos apostilões - Alinhados com os cards */}
-            <div className="flex flex-wrap items-center gap-3 mb-6">
-              {onOpenFlipBook && (
-                <>
+            {/* Botões centralizados acima de cada caixa dos apostilões */}
+            {onOpenFlipBook && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                <div className="flex justify-center">
                   <button
                     type="button"
                     onClick={() => onOpenFlipBook('matematica')}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
                   >
                     <Sparkles size={15} className="text-wine-300 animate-pulse" />
                     <span>Folhear Amostra de Matemática (13 Páginas 3D)</span>
                   </button>
+                </div>
 
+                <div className="flex justify-center">
                   <button
                     type="button"
                     onClick={() => onOpenFlipBook('ciencias')}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
                   >
                     <Sparkles size={15} className="text-wine-300 animate-pulse" />
                     <span>Folhear Amostra de Ciências (14 Páginas 3D)</span>
                   </button>
-                </>
-              )}
-            </div>
+                </div>
+              </div>
+            )}
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {produtos.atividadesAdaptadas.filter(p => p.destaque).map((prod, idx) => {
@@ -851,11 +853,11 @@ export function ProfessoresPage({
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-10 border-b border-neutral-900">
             <div className="flex items-center gap-3">
               <img
-                src="/assets/logo/magagnini-mista-preta.png"
+                src="/assets/logo/logo-branca.png"
                 alt="Magagnini Educação"
-                className="h-10 w-auto object-contain rounded"
+                className="h-10 w-auto object-contain"
                 onError={(e) => {
-                  e.currentTarget.src = "/assets/logo/MISTA PRETA - 1920X800.png";
+                  e.currentTarget.src = "/assets/logo/LOGO BRANCA PNG.png";
                 }}
               />
               <span className="text-xs text-neutral-400">

@@ -2,10 +2,11 @@ import { produtos, type Produto } from '../data/produtos';
 import { PerspectiveBook } from './PerspectiveBook';
 import { ApostilasCarousel } from './ApostilasCarousel';
 import { Sparkles, ArrowRight, CheckCircle2, Calculator, Microscope, GraduationCap, Users } from 'lucide-react';
+import type { FlipBookType } from './FlipBookModal';
 
 interface ProdutosProps {
   onNavigate?: (page: 'provao-paulista' | 'obmep' | 'matematica' | 'ciencias' | 'themis' | 'atheneum') => void;
-  onOpenFlipBook?: (type: 'matematica' | 'ciencias' | 'obmep' | 'provao-paulista') => void;
+  onOpenFlipBook?: (type: FlipBookType) => void;
 }
 
 function ProductCard({ 
@@ -19,7 +20,7 @@ function ProductCard({
   actionText: string;
   bookSize?: "sm" | "default" | "lg";
   onSelect?: () => void;
-  onOpenFlipBook?: (type: 'matematica' | 'ciencias' | 'obmep' | 'provao-paulista') => void;
+  onOpenFlipBook?: (type: FlipBookType) => void;
 }) {
   const isMatematica = produto.id.startsWith('matematica');
   const isCiencias = produto.id.startsWith('ciencias');
@@ -292,30 +293,32 @@ export function Produtos({ onNavigate, onOpenFlipBook }: ProdutosProps) {
               </div>
             </div>
 
-            {/* BOTÕES ENTRE A ESCRITA E A CAIXA DOS APOSTILÕES - ALINHADOS COM OS CARDS */}
-            <div className="flex flex-wrap items-center gap-3 mb-6">
-              {onOpenFlipBook && (
-                <>
+            {/* Botões centralizados acima de cada caixa dos apostilões */}
+            {onOpenFlipBook && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                <div className="flex justify-center">
                   <button
                     type="button"
                     onClick={() => onOpenFlipBook('matematica')}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
                   >
                     <Sparkles size={15} className="text-wine-300 animate-pulse" />
                     <span>Folhear Amostra de Matemática (13 Páginas 3D)</span>
                   </button>
+                </div>
 
+                <div className="flex justify-center">
                   <button
                     type="button"
                     onClick={() => onOpenFlipBook('ciencias')}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md hover:shadow-lg transition-all cursor-pointer group"
                   >
                     <Sparkles size={15} className="text-wine-300 animate-pulse" />
                     <span>Folhear Amostra de Ciências (14 Páginas 3D)</span>
                   </button>
-                </>
-              )}
-            </div>
+                </div>
+              </div>
+            )}
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {produtos.atividadesAdaptadas.filter(p => p.destaque).map((prod) => (

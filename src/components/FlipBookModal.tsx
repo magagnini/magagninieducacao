@@ -14,7 +14,7 @@ import {
   Sparkles
 } from 'lucide-react';
 
-export type FlipBookType = 'matematica' | 'ciencias' | 'obmep' | 'provao-paulista';
+export type FlipBookType = 'matematica' | 'ciencias' | 'obmep' | 'provao-paulista' | 'produtividade-inteligente';
 
 interface FlipBookModalProps {
   isOpen: boolean;
@@ -52,13 +52,18 @@ export function FlipBookModal({
   } else if (bookType === 'obmep') {
     defaultTitle = "Apostila da OBMEP — Volume 1";
     defaultSubtitle = "Amostra Pedagógica • 10 Primeiras Páginas";
-    defaultBuyUrl = "https://obmep-1-edicao.vercel.app/#comprar";
+    defaultBuyUrl = "https://pay.cakto.com.br/oiqigca_1260017";
     pages = Array.from({ length: 10 }, (_, i) => `/assets/amostras/livro-3d/AMOSTRA APOSTILA OBMEP/${i + 1}.png`);
   } else if (bookType === 'provao-paulista') {
     defaultTitle = "Apostila Preparatória • Provão Paulista";
     defaultSubtitle = "Amostra Pedagógica • 9 Primeiras Páginas";
     defaultBuyUrl = "https://pay.cakto.com.br/ypkhicy_752822";
     pages = Array.from({ length: 9 }, (_, i) => `/assets/amostras/livro-3d/APOSTILA PROVAO PAULISTA/${i + 1}.png`);
+  } else if (bookType === 'produtividade-inteligente') {
+    defaultTitle = "Livro Produtividade Inteligente — Do Estudo ao Resultado";
+    defaultSubtitle = "Amostra Oficial • 18 Primeiras Páginas";
+    defaultBuyUrl = "https://pay.cakto.com.br/un24g4z_1240721";
+    pages = Array.from({ length: 18 }, (_, i) => `/assets/amostras/livro-3d/LIVRO PRODUTIVIDADE INTELIGENTE/${i + 1}.png`);
   } else {
     defaultTitle = "Apostila Adaptada de Matemática — Anos Finais";
     defaultSubtitle = "Amostra Pedagógica • 13 Primeiras Páginas";

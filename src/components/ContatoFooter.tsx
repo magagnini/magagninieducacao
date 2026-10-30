@@ -148,11 +148,11 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div className="flex flex-col items-center md:items-start">
             <img 
-              src="/assets/logo/magagnini-mista-preta.png" 
+              src="/assets/logo/logo-branca.png" 
               alt="Magagnini Educação" 
-              className="h-12 w-auto object-contain mb-4 rounded-lg"
+              className="h-12 w-auto object-contain mb-4"
               onError={(e) => {
-                e.currentTarget.src = '/assets/logo/MISTA PRETA - 1920X800.png';
+                e.currentTarget.src = '/assets/logo/LOGO BRANCA PNG.png';
               }}
             />
             <p className="text-gray-400 font-medium text-sm">

@@ -107,11 +107,11 @@ export function CienciasAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Cien
               
               <a href="#inicio" className="flex items-center gap-3 group">
                 <img
-                  src="/assets/logo/magagnini-mista-branca.png"
+                  src="/assets/logo/logo-preta.png"
                   alt="Magagnini Educação"
                   className="h-10 w-auto object-contain"
                   onError={(e) => {
-                    e.currentTarget.src = "/assets/logo/logo.png";
+                    e.currentTarget.src = "/assets/logo/LOGO PRETA PNG.png";
                   }}
                 />
                 <span className="hidden sm:inline-block border-l border-neutral-300 pl-3 text-xs font-bold text-wine-800 uppercase tracking-widest">
@@ -673,11 +673,11 @@ export function CienciasAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Cien
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-10 border-b border-neutral-900">
             <div className="flex items-center gap-3">
               <img
-                src="/assets/logo/magagnini-mista-preta.png"
+                src="/assets/logo/logo-branca.png"
                 alt="Magagnini Educação"
-                className="h-10 w-auto object-contain rounded"
+                className="h-10 w-auto object-contain"
                 onError={(e) => {
-                  e.currentTarget.src = "/assets/logo/MISTA PRETA - 1920X800.png";
+                  e.currentTarget.src = "/assets/logo/LOGO BRANCA PNG.png";
                 }}
               />
               <span className="text-xs text-neutral-400">

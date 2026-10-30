@@ -22,11 +22,13 @@ import { motion } from 'framer-motion';
 interface ProdutividadeInteligentePageProps {
   onBackToMagagnini?: () => void;
   onNavigateToAlunos?: () => void;
+  onOpenFlipBook?: () => void;
 }
 
 export function ProdutividadeInteligentePage({
   onBackToMagagnini,
-  onNavigateToAlunos
+  onNavigateToAlunos,
+  onOpenFlipBook
 }: ProdutividadeInteligentePageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -82,11 +84,11 @@ export function ProdutividadeInteligentePage({
                 className="flex items-center gap-3 group text-left cursor-pointer flex-shrink-0"
               >
                 <img
-                  src="/assets/logo/magagnini-mista-branca.png"
+                  src="/assets/logo/logo-branca.png"
                   alt="Magagnini Educação"
                   className="h-8 sm:h-9 w-auto object-contain flex-shrink-0"
                   onError={(e) => {
-                    e.currentTarget.src = "/assets/logo/MISTA BRANCA - 1920X800.png";
+                    e.currentTarget.src = "/assets/logo/LOGO BRANCA PNG.png";
                   }}
                 />
                 <span className="hidden md:inline-block border-l border-neutral-700 pl-3 text-xs font-bold text-wine-400 uppercase tracking-widest whitespace-nowrap">
@@ -224,7 +226,7 @@ export function ProdutividadeInteligentePage({
               </p>
 
               {/* CTAs */}
-              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+              <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start items-center">
                 <a
                   href={CHECKOUT_URL}
                   target="_blank"
@@ -235,6 +237,17 @@ export function ProdutividadeInteligentePage({
                   <span>Garantir meu exemplar agora</span>
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </a>
+
+                {onOpenFlipBook && (
+                  <button
+                    type="button"
+                    onClick={onOpenFlipBook}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-base font-bold text-white bg-white/10 hover:bg-white/15 border border-white/20 shadow-sm transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <Sparkles size={18} className="text-wine-400" />
+                    <span>Folhear Amostra (18 Pág. 3D)</span>
+                  </button>
+                )}
 
                 <a
                   href="#sobre-o-livro"
@@ -274,15 +287,33 @@ export function ProdutividadeInteligentePage({
                 <div className="absolute -inset-4 bg-gradient-to-tr from-wine-800/30 via-wine-600/20 to-transparent rounded-3xl blur-2xl opacity-75 group-hover:opacity-100 transition-opacity pointer-events-none" />
                 
                 {/* 3D Perspective Book */}
-                <div className="relative py-4 flex justify-center [perspective:1200px]">
+                <div 
+                  onClick={onOpenFlipBook}
+                  className={`relative py-4 flex flex-col items-center justify-center [perspective:1200px] ${onOpenFlipBook ? 'cursor-pointer group' : ''}`}
+                  title={onOpenFlipBook ? "Clique para folhear a amostra digital em 3D (18 páginas)" : undefined}
+                >
                   <PerspectiveBook
                     size="lg"
-                    coverImage="/assets/produtos/livros/produtividade-inteligente-capa.png"
+                    coverImage="/assets/produtos/apostilas-academicas/PRODUTIVIDADE INTELIGENTE CAPA.jpeg"
                     title="Produtividade Inteligente"
                     subtitle="do estudo ao resultado"
                     badge="1º Livro Publicado"
                     isDestaque={true}
                   />
+
+                  {onOpenFlipBook && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenFlipBook();
+                      }}
+                      className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-wine-200 bg-wine-900/80 hover:bg-wine-900 border border-wine-500/40 shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                    >
+                      <Sparkles size={13} className="text-wine-400" />
+                      <span>Folhear amostra oficial (18 pág. 3D)</span>
+                    </button>
+                  )}
                 </div>
 
                 {/* Subtitle Card with Quick Summary */}
@@ -398,11 +429,11 @@ export function ProdutividadeInteligentePage({
                 <div className="relative group max-w-md w-full">
                   <div className="absolute -inset-2 bg-wine-800/20 rounded-3xl blur-xl opacity-60 pointer-events-none" />
                   <img
-                    src="/assets/produtos/livros/produtividade-inteligente.png"
-                    alt="Mockup do Livro Produtividade Inteligente"
+                    src="/assets/produtos/apostilas-academicas/PRODUTIVIDADE INTELIGENTE CAPA.jpeg"
+                    alt="Capa do Livro Produtividade Inteligente"
                     className="w-full h-auto rounded-2xl border border-neutral-800 shadow-2xl object-contain filter drop-shadow-2xl"
                     onError={(e) => {
-                      e.currentTarget.src = "/assets/produtos/livros/produtividade-inteligente-capa.png";
+                      e.currentTarget.src = "/assets/produtos/livros/produtividade-inteligente-capa.jpeg";
                     }}
                   />
                   <div className="mt-3 text-center text-xs text-neutral-500">
@@ -666,11 +697,11 @@ export function ProdutividadeInteligentePage({
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-10 border-b border-neutral-900">
             <div className="flex items-center gap-3">
               <img
-                src="/assets/logo/magagnini-mista-preta.png"
+                src="/assets/logo/logo-branca.png"
                 alt="Magagnini Educação"
-                className="h-9 w-auto object-contain rounded"
+                className="h-9 w-auto object-contain"
                 onError={(e) => {
-                  e.currentTarget.src = "/assets/logo/MISTA PRETA - 1920X800.png";
+                  e.currentTarget.src = "/assets/logo/LOGO BRANCA PNG.png";
                 }}
               />
               <span className="text-xs text-neutral-400">
