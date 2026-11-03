@@ -251,7 +251,16 @@ export function ProdutividadeInteligentePage({
 
                 <a
                   href="#sobre-o-livro"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-300 bg-white/5 hover:bg-white/10 border border-white/15 transition-all"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.getElementById('sobre-o-livro');
+                    if (el) {
+                      const yOffset = -80; // Compensação da barra fixa superior
+                      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                      window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                  }}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-300 bg-white/5 hover:bg-white/10 border border-white/15 transition-all cursor-pointer"
                 >
                   <BookOpen size={18} className="text-wine-400" />
                   <span>Conhecer a obra ↓</span>
@@ -337,7 +346,7 @@ export function ProdutividadeInteligentePage({
       {/* ========================================================= */}
       {/* 3. A HISTÓRIA & PROPOSTA DA OBRA                          */}
       {/* ========================================================= */}
-      <section id="sobre-o-livro" className="py-24 bg-neutral-900/60 border-y border-neutral-800/80">
+      <section id="sobre-o-livro" className="scroll-mt-20 py-24 bg-neutral-900/60 border-y border-neutral-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="max-w-3xl mx-auto text-center mb-16">

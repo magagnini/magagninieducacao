@@ -1,6 +1,15 @@
 import { ArrowRight, BookOpen, Laptop, Sparkles, GraduationCap, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PerspectiveBook } from './PerspectiveBook';
+import { MathHeroAnimation } from './MathHeroAnimation';
+
+// =========================================================================
+// MODO DE EXIBIÇÃO DA HERO:
+// 'animacao' => Nova animação interativa com equações matemáticas e lasers (HTML/Canvas)
+// 'V1OFC'    => Modo anterior (Versão 1 Oficial com PerspectiveBook padrão)
+// Para voltar à versão anterior instantaneamente, basta alterar para 'V1OFC'
+// =========================================================================
+const MODO_HERO: 'animacao' | 'V1OFC' = 'animacao';
 
 interface HeroProps {
   onOpenFlipBook?: () => void;
@@ -126,108 +135,117 @@ export function Hero({ onOpenFlipBook }: HeroProps = {}) {
           {/* Right Column: Visual Composition with 3D Book Showcase */}
           <div className="mt-14 lg:mt-0 lg:col-span-5 relative flex justify-center items-center">
             
-            {/* Glowing Backdrop Pedestal */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-wine-800/40 via-wine-600/20 to-black/60 rounded-3xl blur-2xl transform scale-95" />
+            {MODO_HERO === 'animacao' ? (
+              <MathHeroAnimation onOpenFlipBook={onOpenFlipBook} />
+            ) : (
+              /* =========================================================================
+                 VERSÃO ORIGINAL V1OFC (PerspectiveBook estático com pedestal iluminado)
+                 ========================================================================= */
+              <>
+                {/* Glowing Backdrop Pedestal */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-wine-800/40 via-wine-600/20 to-black/60 rounded-3xl blur-2xl transform scale-95" />
 
-            {/* Composition Card Container */}
-            <div className="relative w-full max-w-md rounded-3xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/15 p-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden">
-              
-              {/* Header inside showcase */}
-              <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-wine-500" />
-                  <span className="text-xs font-sans font-bold tracking-widest text-white/90 uppercase">
-                    Portal Magagnini
-                  </span>
-                </div>
-                <span className="text-[11px] font-sans font-semibold px-2.5 py-0.5 rounded-full bg-wine-800/80 text-wine-200 border border-wine-500/30">
-                  Alunos • Professores • Gestores
-                </span>
-              </div>
+                {/* Composition Card Container */}
+                <div className="relative w-full max-w-md rounded-3xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/15 p-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden">
+                  
+                  {/* Header inside showcase */}
+                  <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2.5 h-2.5 rounded-full bg-wine-500" />
+                      <span className="text-xs font-sans font-bold tracking-widest text-white/90 uppercase">
+                        Portal Magagnini
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-sans font-semibold px-2.5 py-0.5 rounded-full bg-wine-800/80 text-wine-200 border border-wine-500/30">
+                      Alunos • Professores • Gestores
+                    </span>
+                  </div>
 
-              {/* 3D Perspective Book inside Hero com rotação cinematográfica de entrada */}
-              <div 
-                onClick={onOpenFlipBook}
-                className={`py-2 flex flex-col items-center justify-center [perspective:1200px] ${onOpenFlipBook ? 'cursor-pointer group' : ''}`}
-                title={onOpenFlipBook ? "Clique para folhear a amostra digital em 3D" : undefined}
-              >
-                <motion.div
-                  initial={{ 
-                    opacity: 0, 
-                    rotateY: -220, 
-                    rotateX: 18, 
-                    scale: 0.65, 
-                    y: 40 
-                  }}
-                  animate={{ 
-                    opacity: 1, 
-                    rotateY: 0, 
-                    rotateX: 0, 
-                    scale: 1, 
-                    y: 0 
-                  }}
-                  transition={{ 
-                    duration: 1.35, 
-                    ease: [0.16, 1, 0.3, 1],
-                    delay: 0.25
-                  }}
-                  style={{ transformStyle: 'preserve-3d' }}
-                >
-                  <PerspectiveBook
-                    size="lg"
-                    coverImage="/assets/produtos/atividades-adaptadas/apostilao-matematica-anos-finais.png"
-                    title="Apostilão de Matemática — Anos Finais"
-                    subtitle="Mais de 500 atividades adaptadas e estruturadas"
-                    badge="+500 atividades"
-                    isDestaque={true}
-                  />
-                </motion.div>
-
-                {onOpenFlipBook && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onOpenFlipBook();
-                    }}
-                    className="mt-3 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold text-wine-200 bg-white/10 hover:bg-wine-800 border border-white/20 hover:border-wine-500 shadow-md backdrop-blur-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                  {/* 3D Perspective Book inside Hero com rotação cinematográfica de entrada */}
+                  <div 
+                    onClick={onOpenFlipBook}
+                    className={`py-2 flex flex-col items-center justify-center [perspective:1200px] ${onOpenFlipBook ? 'cursor-pointer group' : ''}`}
+                    title={onOpenFlipBook ? "Clique para folhear a amostra digital em 3D" : undefined}
                   >
-                    <Sparkles size={12} className="text-wine-400" />
-                    <span>Folhear amostra interativa (13 pág.)</span>
-                  </button>
-                )}
-              </div>
+                    <motion.div
+                      initial={{ 
+                        opacity: 0, 
+                        rotateY: -220, 
+                        rotateX: 18, 
+                        scale: 0.65, 
+                        y: 40 
+                      }}
+                      animate={{ 
+                        opacity: 1, 
+                        rotateY: 0, 
+                        rotateX: 0, 
+                        scale: 1, 
+                        y: 0 
+                      }}
+                      transition={{ 
+                        duration: 1.35, 
+                        ease: [0.16, 1, 0.3, 1],
+                        delay: 0.25
+                      }}
+                      style={{ transformStyle: 'preserve-3d' }}
+                    >
+                      <PerspectiveBook
+                        size="lg"
+                        coverImage="/assets/produtos/atividades-adaptadas/apostilao-matematica-anos-finais.png"
+                        title="Apostilão de Matemática — Anos Finais"
+                        subtitle="Mais de 500 atividades adaptadas e estruturadas"
+                        badge="+500 atividades"
+                        isDestaque={true}
+                      />
+                    </motion.div>
 
-              {/* Floating Floating Badges around the book */}
-              <div className="pt-2 grid grid-cols-2 gap-3">
-                <div className="bg-black/60 border border-white/10 rounded-2xl p-3 backdrop-blur-md">
-                  <div className="flex items-center gap-2 text-wine-300 font-bold text-xs mb-1">
-                    <GraduationCap size={14} />
-                    <span>Acadêmico</span>
+                    {onOpenFlipBook && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onOpenFlipBook();
+                        }}
+                        className="mt-3 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold text-wine-200 bg-white/10 hover:bg-wine-800 border border-white/20 hover:border-wine-500 shadow-md backdrop-blur-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                      >
+                        <Sparkles size={12} className="text-wine-400" />
+                        <span>Folhear amostra interativa (13 pág.)</span>
+                      </button>
+                    )}
                   </div>
-                  <p className="text-[11px] text-neutral-300 leading-tight">
-                    OBMEP & Provão Paulista
-                  </p>
-                </div>
 
-                <div className="bg-black/60 border border-white/10 rounded-2xl p-3 backdrop-blur-md">
-                  <div className="flex items-center gap-2 text-rose-300 font-bold text-xs mb-1">
-                    <Laptop size={14} />
-                    <span>Tecnologia</span>
+                  {/* Floating Floating Badges around the book */}
+                  <div className="pt-2 grid grid-cols-2 gap-3">
+                    <div className="bg-black/60 border border-white/10 rounded-2xl p-3 backdrop-blur-md">
+                      <div className="flex items-center gap-2 text-wine-300 font-bold text-xs mb-1">
+                        <GraduationCap size={14} />
+                        <span>Acadêmico</span>
+                      </div>
+                      <p className="text-[11px] text-neutral-300 leading-tight">
+                        OBMEP & Provão Paulista
+                      </p>
+                    </div>
+
+                    <div className="bg-black/60 border border-white/10 rounded-2xl p-3 backdrop-blur-md">
+                      <div className="flex items-center gap-2 text-rose-300 font-bold text-xs mb-1">
+                        <Laptop size={14} />
+                        <span>Tecnologia</span>
+                      </div>
+                      <p className="text-[11px] text-neutral-300 leading-tight">
+                        Themis Class & Atheneum
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-[11px] text-neutral-300 leading-tight">
-                    Themis Class & Atheneum
-                  </p>
-                </div>
-              </div>
 
-              {/* Caption */}
-              <div className="mt-4 text-center">
-                <p className="text-[11px] font-sans text-neutral-400">
-                  Conhecimento para ensinar • Oportunidades para aprender • Tecnologia para transformar
-                </p>
-              </div>
-            </div>
+                  {/* Caption */}
+                  <div className="mt-4 text-center">
+                    <p className="text-[11px] font-sans text-neutral-400">
+                      Conhecimento para ensinar • Oportunidades para aprender • Tecnologia para transformar
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
 
           </div>
 
