@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import { produtos } from '../data/produtos';
 import { PerspectiveBook } from '../components/PerspectiveBook';
+import { InteractiveHeroBook } from '../components/InteractiveHeroBook';
+import { MathCanvasBackground } from '../components/MathCanvasBackground';
 import { EmpilhamentoDeVantagens } from '../components/EmpilhamentoDeVantagens';
 
 const WHATSAPP_URL = "https://wa.me/5511998713683?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20Apostilas%20Adaptadas%20de%20Ci%C3%AAncias";
@@ -187,24 +189,31 @@ export function CienciasAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Cien
       {/* ========================================================= */}
       {/* 2. HERO — APOSTILAS ADAPTADAS DE CIÊNCIAS (REGRA 55)      */}
       {/* ========================================================= */}
-      <section id="inicio" className="pt-32 pb-20 lg:pt-44 lg:pb-28 bg-gradient-to-b from-neutral-50 via-white to-white overflow-hidden relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="inicio" className="pt-32 pb-20 lg:pt-44 lg:pb-28 bg-gradient-to-b from-[#021819] via-[#042a2b] to-[#021819] text-white overflow-hidden relative">
+        {/* Full Interactive Canvas Animation (Teal/Emerald Lasers, Atoms with Orbiting Electrons, DNA, Saturn & Science Formulas) */}
+        <MathCanvasBackground theme="ciencias" particleDensity="high" interactive={true} />
+
+        {/* Ambient Cosmic Bioluminescent Glows */}
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-teal-600/20 rounded-full blur-[130px] pointer-events-none" />
+        <div className="absolute -bottom-20 left-0 w-[450px] h-[450px] bg-emerald-600/20 rounded-full blur-[110px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
             
             <div className="lg:col-span-7 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-50 border border-wine-200 text-wine-800 text-xs font-bold uppercase tracking-wider mb-6">
-                <Sparkles size={14} className="text-wine-700" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-950/80 border border-teal-500/40 text-teal-200 text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-md">
+                <Sparkles size={14} className="text-emerald-400" />
                 <span>Ciências da Natureza • Anos Finais</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-950 tracking-tight leading-[1.15]">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15]">
                 Apostilas Adaptadas de Ciências.<br />
-                <span className="text-wine-800 underline decoration-wine-200 decoration-wavy decoration-2">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 underline decoration-teal-400/40 decoration-wavy decoration-2">
                   Ciência Acessível e Concreta.
                 </span>
               </h1>
 
-              <p className="mt-6 text-lg sm:text-xl text-neutral-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              <p className="mt-6 text-lg sm:text-xl text-neutral-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                 Materiais estruturados e adaptados com ilustrações didáticas para o 6º, 7º, 8º e 9º anos e o Apostilão de Ciências Anos Finais (+500 atividades).
               </p>
 
@@ -215,8 +224,8 @@ export function CienciasAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Cien
                   'Adequadas para AEE e sala regular',
                   'Economia de tempo para o professor'
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2.5 text-sm font-semibold text-neutral-800">
-                    <CheckCircle2 size={18} className="text-wine-800 flex-shrink-0" />
+                  <div key={idx} className="flex items-center gap-2.5 text-sm font-semibold text-neutral-200">
+                    <CheckCircle2 size={18} className="text-teal-400 flex-shrink-0" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -225,7 +234,7 @@ export function CienciasAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Cien
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
                 <a
                   href="#produtos"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-wine-800 to-wine-900 shadow-3d-wine hover:shadow-3d-wine-hover hover:-translate-y-0.5 transition-all border border-wine-600/40"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-emerald-700 via-teal-600 to-emerald-700 hover:from-emerald-600 hover:to-teal-500 shadow-[0_10px_30px_-5px_rgba(20,184,166,0.45)] hover:-translate-y-0.5 transition-all border border-teal-400/50"
                 >
                   <span>Ver Todos os Materiais de Ciências</span>
                   <ArrowRight size={18} />
@@ -233,7 +242,7 @@ export function CienciasAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Cien
 
                 <a
                   href="#diferenciais"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-700 bg-white border border-neutral-300 hover:border-wine-800 hover:text-wine-800 shadow-sm transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-200 bg-white/10 hover:bg-white/15 border border-white/20 shadow-sm transition-all backdrop-blur-sm"
                 >
                   <span>Ver Diferenciais Pedagógicos ↓</span>
                 </a>
@@ -241,18 +250,20 @@ export function CienciasAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Cien
             </div>
 
             {/* Right: Vitrine de Capa Real 3D */}
-            <div className="mt-12 lg:mt-0 lg:col-span-5 flex justify-center relative">
-              <div className="relative group">
-                <div className="absolute -inset-4 bg-gradient-to-tr from-wine-800/20 to-transparent rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                <PerspectiveBook
-                  size="lg"
-                  coverImage="/assets/produtos/atividades-adaptadas/ciencias-8-ano.png"
-                  title="Ciências Adaptadas"
-                  subtitle="Anos Finais"
-                  badge="+500 Atividades"
-                  isDestaque={true}
-                />
-              </div>
+            <div className="mt-12 lg:mt-0 lg:col-span-5 flex flex-col items-center justify-center relative">
+              <InteractiveHeroBook
+                coverImage="/assets/produtos/atividades-adaptadas/apostilao-ciencias-anos-finais.png"
+                title="Apostilão de Ciências"
+                subtitle="Anos Finais"
+                badge="+500 Atividades"
+                flipBookLabel="Folhear amostra interativa (14 pág. 3D)"
+                theme="ciencias"
+                extraBadge={{
+                  icon: "🔬",
+                  text: "4 Bimestres Completos • BNCC"
+                }}
+                onOpenFlipBook={onOpenFlipBook}
+              />
             </div>
 
           </div>

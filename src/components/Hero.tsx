@@ -2,6 +2,7 @@ import { ArrowRight, BookOpen, Laptop, Sparkles, GraduationCap, CheckCircle } fr
 import { motion } from 'framer-motion';
 import { PerspectiveBook } from './PerspectiveBook';
 import { MathHeroAnimation } from './MathHeroAnimation';
+import { MathCanvasBackground } from './MathCanvasBackground';
 
 // =========================================================================
 // MODO DE EXIBIÇÃO DA HERO:
@@ -21,6 +22,9 @@ export function Hero({ onOpenFlipBook }: HeroProps = {}) {
       id="inicio" 
       className="relative pt-32 pb-24 lg:pt-48 lg:pb-36 overflow-hidden bg-[#090204]"
     >
+      {/* Full Interactive Canvas Animation across the entire Hero */}
+      <MathCanvasBackground theme="wine" particleDensity="high" interactive={true} />
+
       {/* Dynamic Multi-Layer Gradient & Atmosphere */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Deep ambient wine radial glow 1 */}

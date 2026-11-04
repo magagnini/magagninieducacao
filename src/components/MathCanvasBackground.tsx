@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export type MathCanvasTheme = 'wine' | 'obmep';
+export type MathCanvasTheme = 'wine' | 'obmep' | 'matematica' | 'ciencias';
 
 interface MathCanvasBackgroundProps {
   theme?: MathCanvasTheme;
@@ -14,15 +14,17 @@ interface Particle {
   y: number;
   z: number;
   text?: string;
-  type: 'math' | 'polyhedron' | 'spark';
+  type: 'math' | 'polyhedron' | 'spark' | 'atom' | 'dna' | 'planet';
   size: number;
   alpha: number;
   speedX: number;
   speedY: number;
   rotation: number;
   rotSpeed: number;
+  color?: string;
   polyhedronIndex?: number;
   rot3D?: { rx: number; ry: number; rz: number; speedRx: number; speedRy: number; speedRz: number };
+  orbitAngle?: number;
 }
 
 interface LaserBeam {
@@ -67,6 +69,17 @@ const OCTAHEDRON: PolyhedronDefinition = {
   ]
 };
 
+const PYRAMID: PolyhedronDefinition = {
+  vertices: [
+    [0, 1.4, 0], // Apex
+    [-1, -0.8, -1], [1, -0.8, -1], [1, -0.8, 1], [-1, -0.8, 1] // Base
+  ],
+  edges: [
+    [0, 1], [0, 2], [0, 3], [0, 4],
+    [1, 2], [2, 3], [3, 4], [4, 1]
+  ]
+};
+
 const PHI = (1 + Math.sqrt(5)) / 2;
 const ICOSAHEDRON: PolyhedronDefinition = {
   vertices: [
@@ -84,7 +97,10 @@ const ICOSAHEDRON: PolyhedronDefinition = {
   ]
 };
 
-const POLYHEDRA = [OCTAHEDRON, CUBE, ICOSAHEDRON];
+const POLYHEDRA = [OCTAHEDRON, CUBE, ICOSAHEDRON, PYRAMID];
+
+// 4 Inclusion badge colors (from cover: Blue, Yellow, Green, Purple)
+const INCLUSION_COLORS = ['#38bdf8', '#fbbf24', '#34d399', '#c084fc'];
 
 export function MathCanvasBackground({
   theme = 'wine',
@@ -116,7 +132,6 @@ export function MathCanvasBackground({
 
     window.addEventListener('resize', handleResize);
 
-    // Mouse movement listener
     const handleMouseMove = (e: MouseEvent) => {
       if (!interactive || !container) return;
       const rect = container.getBoundingClientRect();
@@ -179,37 +194,113 @@ export function MathCanvasBackground({
       'θ'
     ];
 
-    const activeFormulas = theme === 'obmep' ? formulasObmep : formulasWine;
+    const formulasMatematica = [
+      '+',
+      '-',
+      '×',
+      '÷',
+      '=',
+      'π ≈ 3.14',
+      '√x',
+      'x²',
+      '123',
+      'a + b',
+      '1/2',
+      'Δ',
+      'f(x)',
+      '∠ 90°',
+      'r²',
+      '2 × 4 = 8',
+      '100%',
+      'A = b × h',
+      'V = a³'
+    ];
 
-    // Density config
+    const formulasCiencias = [
+      'H₂O',
+      'CO₂',
+      'O₂',
+      'pH = 7',
+      'E = mc²',
+      'DNA',
+      'ATP',
+      'NaCl',
+      'Fe²⁺',
+      'v = λf',
+      'μm',
+      'C₆H₁₂O₆',
+      'CH₄',
+      'F = m·a',
+      'λ',
+      '1 AU'
+    ];
+
+    let activeFormulas = formulasWine;
+    if (theme === 'obmep') activeFormulas = formulasObmep;
+    else if (theme === 'matematica') activeFormulas = formulasMatematica;
+    else if (theme === 'ciencias') activeFormulas = formulasCiencias;
+
+    // Density
     const countMultiplier = particleDensity === 'high' ? 1.4 : particleDensity === 'subtle' ? 0.6 : 1.0;
-    const baseCount = theme === 'obmep' ? 42 : 46;
+    const baseCount = theme === 'ciencias' || theme === 'matematica' ? 48 : theme === 'obmep' ? 42 : 46;
     const particleCount = Math.floor(baseCount * countMultiplier);
 
     // Initialize particles
     const particles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
-      const isMath = Math.random() < (theme === 'obmep' ? 0.45 : 0.6);
-      const isPoly = !isMath && (theme === 'obmep' ? Math.random() < 0.65 : Math.random() < 0.35);
+      let type: Particle['type'] = 'spark';
+      const rand = Math.random();
+
+      if (theme === 'ciencias') {
+        if (rand < 0.35) type = 'math';
+        else if (rand < 0.55) type = 'atom';
+        else if (rand < 0.70) type = 'dna';
+        else if (rand < 0.80) type = 'planet';
+        else type = 'spark';
+      } else if (theme === 'matematica') {
+        if (rand < 0.45) type = 'math';
+        else if (rand < 0.72) type = 'polyhedron';
+        else type = 'spark';
+      } else if (theme === 'obmep') {
+        if (rand < 0.45) type = 'math';
+        else if (rand < 0.75) type = 'polyhedron';
+        else type = 'spark';
+      } else {
+        if (rand < 0.6) type = 'math';
+        else if (rand < 0.8) type = 'polyhedron';
+        else type = 'spark';
+      }
+
+      const pColor = theme === 'matematica'
+        ? INCLUSION_COLORS[Math.floor(Math.random() * INCLUSION_COLORS.length)]
+        : undefined;
 
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
         z: Math.random() * 0.75 + 0.25,
-        type: isMath ? 'math' : isPoly ? 'polyhedron' : 'spark',
-        text: isMath ? activeFormulas[Math.floor(Math.random() * activeFormulas.length)] : undefined,
-        size: isMath
-          ? Math.floor(Math.random() * 7 + 11)
-          : isPoly
+        type,
+        color: pColor,
+        text: type === 'math' ? activeFormulas[Math.floor(Math.random() * activeFormulas.length)] : undefined,
+        size: type === 'atom'
+          ? Math.floor(Math.random() * 12 + 20)
+          : type === 'planet'
+          ? Math.floor(Math.random() * 8 + 14)
+          : type === 'dna'
+          ? Math.floor(Math.random() * 10 + 16)
+          : type === 'polyhedron'
           ? Math.floor(Math.random() * 14 + 16)
+          : type === 'math'
+          ? Math.floor(Math.random() * 7 + 11)
           : Math.floor(Math.random() * 3 + 2),
-        alpha: Math.random() * 0.5 + 0.15,
-        speedX: (Math.random() - 0.5) * (theme === 'obmep' ? 0.35 : 0.45),
-        speedY: (Math.random() * -0.45) - 0.1, // gently float up
+        alpha: Math.random() * 0.5 + 0.18,
+        speedX: (Math.random() - 0.5) * 0.4,
+        speedY: (Math.random() * -0.45) - 0.1,
         rotation: Math.random() * Math.PI * 2,
         rotSpeed: (Math.random() - 0.5) * 0.015,
         polyhedronIndex: Math.floor(Math.random() * POLYHEDRA.length),
+        orbitAngle: Math.random() * Math.PI * 2,
         rot3D: {
           rx: Math.random() * Math.PI * 2,
           ry: Math.random() * Math.PI * 2,
@@ -222,7 +313,7 @@ export function MathCanvasBackground({
     }
 
     // Laser Beams
-    const beamCount = theme === 'obmep' ? 3 : 5;
+    const beamCount = theme === 'obmep' ? 3 : theme === 'matematica' || theme === 'ciencias' ? 4 : 5;
     const beams: LaserBeam[] = [];
 
     const createBeam = (): LaserBeam => {
@@ -235,6 +326,12 @@ export function MathCanvasBackground({
       if (theme === 'obmep') {
         const goldTones = ['#fbbf24', '#f59e0b', '#fef08a', '#10b981'];
         color = goldTones[Math.floor(Math.random() * goldTones.length)];
+      } else if (theme === 'matematica') {
+        const mathTones = ['#38bdf8', '#60a5fa', '#f59e0b', '#a855f7'];
+        color = mathTones[Math.floor(Math.random() * mathTones.length)];
+      } else if (theme === 'ciencias') {
+        const scienceTones = ['#2dd4bf', '#34d399', '#38bdf8', '#a7f3d0'];
+        color = scienceTones[Math.floor(Math.random() * scienceTones.length)];
       } else {
         const wineTones = ['#e11d48', '#9B111E', '#ff4d6d', '#f43f5e'];
         color = wineTones[Math.floor(Math.random() * wineTones.length)];
@@ -259,7 +356,6 @@ export function MathCanvasBackground({
       beams.push(b);
     }
 
-    // Intersection Observer to stop rendering when not visible
     let isVisible = true;
     const observer = new IntersectionObserver(([entry]) => {
       isVisible = entry.isIntersecting;
@@ -289,19 +385,15 @@ export function MathCanvasBackground({
       for (let i = 0; i < poly.vertices.length; i++) {
         let [x, y, z] = poly.vertices[i];
 
-        // Rotate X
         let y1 = y * cosX - z * sinX;
         let z1 = y * sinX + z * cosX;
 
-        // Rotate Y
         let x2 = x * cosY + z1 * sinY;
         let z2 = -x * sinY + z1 * cosY;
 
-        // Rotate Z
         let x3 = x2 * cosZ - y1 * sinZ;
         let y3 = x2 * sinZ + y1 * cosZ;
 
-        // Project
         const distance = 4.2;
         const fov = 1 / (distance - z2 * 0.4);
         projected.push([x3 * scale * fov * 3, y3 * scale * fov * 3, z2]);
@@ -320,8 +412,8 @@ export function MathCanvasBackground({
       }
       ctx.stroke();
 
-      // Draw shiny corner vertices
-      ctx.fillStyle = theme === 'obmep' ? '#fef08a' : '#ffffff';
+      // Shiny corner vertices
+      ctx.fillStyle = theme === 'obmep' ? '#fef08a' : theme === 'matematica' ? '#38bdf8' : '#ffffff';
       for (let i = 0; i < projected.length; i++) {
         ctx.beginPath();
         ctx.arc(projected[i][0], projected[i][1], 1.5, 0, Math.PI * 2);
@@ -331,14 +423,122 @@ export function MathCanvasBackground({
       ctx.restore();
     };
 
+    // Helper: Draw Atom with rotating electrons (Ciências)
+    const drawAtom = (radius: number, angle: number, alpha: number) => {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+
+      // Nucleus
+      ctx.fillStyle = '#2dd4bf';
+      ctx.shadowColor = '#14b8a6';
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.arc(0, 0, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 3 Elliptical orbits
+      const orbitAngles = [0, Math.PI / 3, (2 * Math.PI) / 3];
+      ctx.lineWidth = 0.9;
+
+      orbitAngles.forEach((orbAngle, idx) => {
+        ctx.save();
+        ctx.rotate(orbAngle);
+        ctx.strokeStyle = 'rgba(45, 212, 191, 0.4)';
+        ctx.beginPath();
+        ctx.ellipse(0, 0, radius, radius * 0.38, 0, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Orbiting electron
+        const eAngle = angle * (idx % 2 === 0 ? 1 : -1.2) + idx * 2.1;
+        const ex = Math.cos(eAngle) * radius;
+        const ey = Math.sin(eAngle) * radius * 0.38;
+
+        ctx.fillStyle = '#ffffff';
+        ctx.shadowColor = '#34d399';
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.arc(ex, ey, 1.8, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+      });
+
+      ctx.restore();
+    };
+
+    // Helper: Draw DNA double helix segment (Ciências)
+    const drawDNA = (length: number, angle: number, alpha: number) => {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.rotate(angle * 0.5);
+
+      const rungs = 5;
+      const rungSpacing = length / rungs;
+
+      for (let i = -rungs / 2; i <= rungs / 2; i++) {
+        const t = (i * rungSpacing) * 0.12 + angle;
+        const y = i * rungSpacing;
+        const x1 = Math.sin(t) * 9;
+        const x2 = -Math.sin(t) * 9;
+
+        // Base pair line
+        ctx.strokeStyle = 'rgba(52, 211, 153, 0.35)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x1, y);
+        ctx.lineTo(x2, y);
+        ctx.stroke();
+
+        // Strand nodes
+        ctx.fillStyle = '#2dd4bf';
+        ctx.beginPath();
+        ctx.arc(x1, y, 1.4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.beginPath();
+        ctx.arc(x2, y, 1.4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.restore();
+    };
+
+    // Helper: Draw Saturn / Ringed Planet (Ciências)
+    const drawPlanet = (radius: number, angle: number, alpha: number) => {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.rotate(angle * 0.2);
+
+      // Planet sphere
+      const grad = ctx.createLinearGradient(-radius, -radius, radius, radius);
+      grad.addColorStop(0, '#38bdf8');
+      grad.addColorStop(1, '#0d9488');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Planet rings
+      ctx.strokeStyle = 'rgba(254, 240, 138, 0.65)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, radius * 1.8, radius * 0.5, Math.PI / 6, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.restore();
+    };
+
     // Main animation loop
+    let time = 0;
     const render = () => {
       if (!isVisible || document.hidden) {
         animId = requestAnimationFrame(render);
         return;
       }
 
-      // Smooth mouse interpolation
+      time += 0.02;
+
       mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.08;
       mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.08;
 
@@ -374,7 +574,6 @@ export function MathCanvasBackground({
         ctx.lineTo(headX, headY);
         ctx.stroke();
 
-        // Tip spark
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
         ctx.arc(headX, headY, beam.width * 1.3, 0, Math.PI * 2);
@@ -382,9 +581,8 @@ export function MathCanvasBackground({
         ctx.restore();
       });
 
-      // 2. Draw Floating Particles (Formulas, 3D Polyhedra, Sparks)
+      // 2. Draw Floating Particles
       particles.forEach((p) => {
-        // Mouse avoidance/attraction
         if (mouseRef.current.x > 0 && mouseRef.current.y > 0) {
           const dx = p.x - mouseRef.current.x;
           const dy = p.y - mouseRef.current.y;
@@ -399,6 +597,7 @@ export function MathCanvasBackground({
         p.x += p.speedX;
         p.y += p.speedY;
         p.rotation += p.rotSpeed;
+        if (p.orbitAngle !== undefined) p.orbitAngle += 0.025;
 
         if (p.rot3D) {
           p.rot3D.rx += p.rot3D.speedRx;
@@ -406,7 +605,6 @@ export function MathCanvasBackground({
           p.rot3D.rz += p.rot3D.speedRz;
         }
 
-        // Wrap around borders
         if (p.x < -80) p.x = width + 80;
         if (p.x > width + 80) p.x = -80;
         if (p.y < -50) p.y = height + 50;
@@ -421,18 +619,37 @@ export function MathCanvasBackground({
           ctx.font = `${p.size * p.z}px "KaTeX_Math", "Times New Roman", serif, italic`;
 
           if (theme === 'obmep') {
-            ctx.fillStyle = '#fbbf24'; // Olympic amber gold
+            ctx.fillStyle = '#fbbf24';
             ctx.shadowColor = '#d97706';
+          } else if (theme === 'matematica') {
+            ctx.fillStyle = p.color || '#38bdf8';
+            ctx.shadowColor = '#0284c7';
+          } else if (theme === 'ciencias') {
+            ctx.fillStyle = '#2dd4bf';
+            ctx.shadowColor = '#0d9488';
           } else {
-            ctx.fillStyle = '#f87171'; // Soft rose wine
+            ctx.fillStyle = '#f87171';
             ctx.shadowColor = '#9B111E';
           }
 
           ctx.shadowBlur = 8;
           ctx.fillText(p.text, 0, 0);
+        } else if (p.type === 'atom' && p.orbitAngle !== undefined) {
+          drawAtom(p.size * p.z, p.orbitAngle, p.alpha * p.z);
+        } else if (p.type === 'dna') {
+          drawDNA(p.size * p.z * 1.8, time + p.rotation, p.alpha * p.z);
+        } else if (p.type === 'planet') {
+          drawPlanet(p.size * p.z * 0.7, p.rotation, p.alpha * p.z);
         } else if (p.type === 'polyhedron' && p.rot3D && p.polyhedronIndex !== undefined) {
           const poly = POLYHEDRA[p.polyhedronIndex % POLYHEDRA.length];
-          const color = theme === 'obmep' ? 'rgba(251, 191, 36, 0.85)' : 'rgba(255, 255, 255, 0.55)';
+          const color = theme === 'obmep'
+            ? 'rgba(251, 191, 36, 0.85)'
+            : theme === 'matematica'
+            ? p.color || 'rgba(56, 189, 248, 0.85)'
+            : theme === 'ciencias'
+            ? 'rgba(45, 212, 191, 0.85)'
+            : 'rgba(255, 255, 255, 0.55)';
+
           drawPolyhedron(
             poly,
             p.size * p.z,
@@ -445,8 +662,8 @@ export function MathCanvasBackground({
         } else {
           // Floating Spark / Stardust
           ctx.globalAlpha = p.alpha * p.z;
-          ctx.fillStyle = theme === 'obmep' ? '#fbbf24' : '#ffffff';
-          ctx.shadowColor = theme === 'obmep' ? '#f59e0b' : '#e11d48';
+          ctx.fillStyle = p.color || (theme === 'obmep' ? '#fbbf24' : theme === 'ciencias' ? '#34d399' : '#ffffff');
+          ctx.shadowColor = theme === 'obmep' ? '#f59e0b' : theme === 'matematica' ? '#38bdf8' : theme === 'ciencias' ? '#14b8a6' : '#e11d48';
           ctx.shadowBlur = 6;
           ctx.beginPath();
           ctx.arc(0, 0, p.size * p.z * 0.8, 0, Math.PI * 2);

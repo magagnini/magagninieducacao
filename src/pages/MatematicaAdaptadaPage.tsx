@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import { produtos } from '../data/produtos';
 import { PerspectiveBook } from '../components/PerspectiveBook';
+import { InteractiveHeroBook } from '../components/InteractiveHeroBook';
+import { MathCanvasBackground } from '../components/MathCanvasBackground';
 import { EmpilhamentoDeVantagens } from '../components/EmpilhamentoDeVantagens';
 
 interface MatematicaAdaptadaPageProps {
@@ -177,24 +179,31 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Ma
       {/* ========================================================= */}
       {/* 2. HERO — APOSTILAS ADAPTADAS DE MATEMÁTICA               */}
       {/* ========================================================= */}
-      <section id="inicio" className="pt-32 pb-20 lg:pt-44 lg:pb-28 bg-gradient-to-b from-neutral-50 via-white to-white overflow-hidden relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="inicio" className="pt-32 pb-20 lg:pt-44 lg:pb-28 bg-gradient-to-b from-[#031124] via-[#06203d] to-[#031124] text-white overflow-hidden relative">
+        {/* Full Interactive Canvas Animation (Cyan/Gold Lasers, 3D Pyramids, Cubes, Math Signs & 4-Color Inclusion Sparks) */}
+        <MathCanvasBackground theme="matematica" particleDensity="high" interactive={true} />
+
+        {/* Ambient Vibrant Glows */}
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-cyan-600/20 rounded-full blur-[130px] pointer-events-none" />
+        <div className="absolute -bottom-20 left-0 w-[450px] h-[450px] bg-blue-600/20 rounded-full blur-[110px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
             
             <div className="lg:col-span-7 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-50 border border-wine-200 text-wine-800 text-xs font-bold uppercase tracking-wider mb-6">
-                <Sparkles size={14} className="text-wine-700" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-200 text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-md">
+                <Sparkles size={14} className="text-amber-400" />
                 <span>Educação Inclusiva & Ensino Fundamental</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-950 tracking-tight leading-[1.15]">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15]">
                 Apostilas Adaptadas de Matemática.<br />
-                <span className="text-wine-800 underline decoration-wine-200 decoration-wavy decoration-2">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-cyan-400 to-amber-300 underline decoration-cyan-400/40 decoration-wavy decoration-2">
                   Inclusão e Aprendizado Real.
                 </span>
               </h1>
 
-              <p className="mt-6 text-lg sm:text-xl text-neutral-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              <p className="mt-6 text-lg sm:text-xl text-neutral-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                 Materiais estruturados com rigor pedagógico, recursos visuais intuitivos e gradação de dificuldade para o 6º, 7º, 8º e 9º anos e o Apostilão Anos Finais.
               </p>
 
@@ -205,8 +214,8 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Ma
                   'Alinhadas às habilidades da BNCC',
                   'Economia de horas de planejamento'
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2.5 text-sm font-semibold text-neutral-800">
-                    <CheckCircle2 size={18} className="text-wine-800 flex-shrink-0" />
+                  <div key={idx} className="flex items-center gap-2.5 text-sm font-semibold text-neutral-200">
+                    <CheckCircle2 size={18} className="text-cyan-400 flex-shrink-0" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -215,7 +224,7 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Ma
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
                 <a
                   href="#produtos"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-wine-800 to-wine-900 shadow-3d-wine hover:shadow-3d-wine-hover hover:-translate-y-0.5 transition-all border border-wine-600/40"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-blue-700 via-cyan-600 to-blue-700 hover:from-blue-600 hover:to-cyan-500 shadow-[0_10px_30px_-5px_rgba(14,165,233,0.45)] hover:-translate-y-0.5 transition-all border border-cyan-400/50"
                 >
                   <span>Ver Todos os Materiais de Matemática</span>
                   <ArrowRight size={18} />
@@ -223,7 +232,7 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Ma
 
                 <a
                   href="#diferenciais"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-700 bg-white border border-neutral-300 hover:border-wine-800 hover:text-wine-800 shadow-sm transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-200 bg-white/10 hover:bg-white/15 border border-white/20 shadow-sm transition-all backdrop-blur-sm"
                 >
                   <span>Conhecer os Diferenciais ↓</span>
                 </a>
@@ -232,32 +241,19 @@ export function MatematicaAdaptadaPage({ onBackToMagagnini, onOpenFlipBook }: Ma
 
             {/* Right: Showcase with 3D Book */}
             <div className="mt-12 lg:mt-0 lg:col-span-5 flex flex-col items-center justify-center relative">
-              <div 
-                onClick={onOpenFlipBook}
-                className={`relative group ${onOpenFlipBook ? 'cursor-pointer' : ''}`}
-                title={onOpenFlipBook ? "Clique para folhear a amostra digital em 3D" : undefined}
-              >
-                <div className="absolute -inset-4 bg-gradient-to-tr from-wine-800/20 to-transparent rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                <PerspectiveBook
-                  size="lg"
-                  coverImage="/assets/produtos/atividades-adaptadas/apostilao-matematica-anos-finais.png"
-                  title="Apostilão de Matemática"
-                  subtitle="Anos Finais"
-                  badge="+500 Atividades"
-                  isDestaque={true}
-                />
-              </div>
-
-              {onOpenFlipBook && (
-                <button
-                  type="button"
-                  onClick={onOpenFlipBook}
-                  className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-wine-900 bg-wine-50 hover:bg-wine-100 border border-wine-300 shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
-                >
-                  <Sparkles size={13} className="text-wine-800" />
-                  <span>Folhear amostra interativa (13 pág.)</span>
-                </button>
-              )}
+              <InteractiveHeroBook
+                coverImage="/assets/produtos/atividades-adaptadas/apostilao-matematica-anos-finais.png"
+                title="Apostilão de Matemática"
+                subtitle="Anos Finais"
+                badge="+500 Atividades"
+                flipBookLabel="Folhear amostra interativa (13 pág. 3D)"
+                theme="matematica"
+                extraBadge={{
+                  icon: "📐",
+                  text: "Inclusão & +500 Atividades Adaptadas"
+                }}
+                onOpenFlipBook={onOpenFlipBook}
+              />
             </div>
 
           </div>
