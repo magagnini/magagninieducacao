@@ -16,7 +16,8 @@ import {
   Menu,
   X
 } from 'lucide-react';
-import { PerspectiveBook } from '../components/PerspectiveBook';
+import { InteractiveHeroBook } from '../components/InteractiveHeroBook';
+import { MathCanvasBackground } from '../components/MathCanvasBackground';
 import { EmpilhamentoDeVantagens } from '../components/EmpilhamentoDeVantagens';
 
 const COMPRA_URL = "https://pay.cakto.com.br/oiqigca_1260017";
@@ -226,26 +227,33 @@ export function ObmepPage({ onBackToMagagnini, onOpenFlipBook }: ObmepPageProps)
       {/* ========================================================= */}
       {/* 2. HERO — APOSTILA OBMEP (REGRA 27)                       */}
       {/* ========================================================= */}
-      <section id="inicio" className="pt-32 pb-20 lg:pt-44 lg:pb-28 bg-gradient-to-b from-neutral-50 via-white to-white overflow-hidden relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="inicio" className="pt-32 pb-20 lg:pt-44 lg:pb-28 bg-gradient-to-b from-[#02180d] via-[#042816] to-[#02180d] text-white overflow-hidden relative">
+        {/* Full Olympic Emerald & Gold Canvas Animation (Rotating 3D Polyhedrons, Golden Math, Particles) */}
+        <MathCanvasBackground theme="obmep" particleDensity="high" interactive={true} />
+
+        {/* Ambient Olympic Glows */}
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-emerald-600/20 rounded-full blur-[130px] pointer-events-none" />
+        <div className="absolute -bottom-20 left-0 w-[450px] h-[450px] bg-amber-500/15 rounded-full blur-[110px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
             
             <div className="lg:col-span-7 text-center lg:text-left">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-50 border border-wine-200 text-wine-800 text-xs font-bold uppercase tracking-wider mb-6">
-                <Sparkles size={14} className="text-wine-700" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-amber-300 text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-md">
+                <Sparkles size={14} className="text-amber-400" />
                 <span>Olimpíada Brasileira de Matemática das Escolas Públicas</span>
               </div>
 
               {/* Title & Subtitle */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-950 tracking-tight leading-[1.15]">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15]">
                 Apostila da OBMEP.<br />
-                <span className="text-wine-800 underline decoration-wine-200 decoration-wavy decoration-2">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-400 underline decoration-amber-400/40 decoration-wavy decoration-2">
                   A Preparação Definitiva.
                 </span>
               </h1>
 
-              <p className="mt-6 text-lg sm:text-xl text-neutral-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              <p className="mt-6 text-lg sm:text-xl text-emerald-100/90 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                 Questões dos últimos 3 anos dos 3 níveis da OBMEP com resoluções escritas detalhadas e em vídeo.
               </p>
 
@@ -257,8 +265,8 @@ export function ObmepPage({ onBackToMagagnini, onOpenFlipBook }: ObmepPageProps)
                   'Explicações passo a passo',
                   'Material ideal para treinar para a OBMEP'
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2.5 text-sm font-semibold text-neutral-800">
-                    <CheckCircle2 size={18} className="text-wine-800 flex-shrink-0" />
+                  <div key={idx} className="flex items-center gap-2.5 text-sm font-semibold text-emerald-50">
+                    <CheckCircle2 size={18} className="text-amber-400 flex-shrink-0" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -270,7 +278,7 @@ export function ObmepPage({ onBackToMagagnini, onOpenFlipBook }: ObmepPageProps)
                   href={COMPRA_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-wine-800 to-wine-900 shadow-3d-wine hover:shadow-3d-wine-hover hover:-translate-y-0.5 transition-all border border-wine-600/40"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-extrabold text-neutral-950 bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 shadow-[0_10px_30px_-5px_rgba(245,158,11,0.5)] hover:-translate-y-0.5 transition-all border border-yellow-200/60"
                 >
                   <span>QUERO GARANTIR MINHA APOSTILA</span>
                   <ArrowRight size={18} />
@@ -280,52 +288,37 @@ export function ObmepPage({ onBackToMagagnini, onOpenFlipBook }: ObmepPageProps)
                   <button
                     type="button"
                     onClick={onOpenFlipBook}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-base font-bold text-wine-900 bg-wine-50 hover:bg-wine-100 border border-wine-300 shadow-sm transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-base font-bold text-amber-200 bg-emerald-950/70 hover:bg-emerald-900/80 border border-emerald-500/50 shadow-sm transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98] backdrop-blur-md"
                   >
-                    <Sparkles size={18} className="text-wine-800" />
+                    <Sparkles size={18} className="text-amber-400" />
                     <span>Folhear Amostra (10 Pág. 3D)</span>
                   </button>
                 )}
 
                 <a
                   href="#o-que-encontrar"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-700 bg-white border border-neutral-300 hover:border-wine-800 hover:text-wine-800 shadow-sm transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-base font-semibold text-emerald-200 bg-white/5 hover:bg-white/10 border border-emerald-500/30 shadow-sm transition-all backdrop-blur-sm"
                 >
                   <span>Ver Conteúdo Completo ↓</span>
                 </a>
               </div>
             </div>
 
-            {/* Right: Real Book Cover in 3D Perspective */}
+            {/* Right: Interactive 3D Book with Toucan Mascot Accent */}
             <div className="mt-12 lg:mt-0 lg:col-span-5 flex flex-col items-center justify-center relative">
-              <div 
-                onClick={onOpenFlipBook}
-                className={`relative group flex flex-col items-center ${onOpenFlipBook ? 'cursor-pointer' : ''}`}
-                title={onOpenFlipBook ? "Clique para folhear a amostra digital em 3D (10 páginas)" : undefined}
-              >
-                <div className="absolute -inset-4 bg-gradient-to-tr from-wine-800/20 to-transparent rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                <PerspectiveBook
-                  size="lg"
-                  coverImage="/assets/produtos/apostilas-academicas/obmep-vol-1.png"
-                  title="Apostila OBMEP"
-                  subtitle="Volume 1 • 2023 a 2025"
-                  badge="3 Níveis • Com Vídeos"
-                  isDestaque={true}
-                />
-                {onOpenFlipBook && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onOpenFlipBook();
-                    }}
-                    className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-wine-900 bg-wine-50 hover:bg-wine-100 border border-wine-300 shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
-                  >
-                    <Sparkles size={13} className="text-wine-800" />
-                    <span>Folhear amostra interativa (10 pág. 3D)</span>
-                  </button>
-                )}
-              </div>
+              <InteractiveHeroBook
+                coverImage="/assets/produtos/apostilas-academicas/obmep-vol-1.png"
+                title="Apostila OBMEP"
+                subtitle="Volume 1 • 2023 a 2025"
+                badge="3 Níveis • Com Vídeos"
+                flipBookLabel="Folhear amostra interativa (10 pág. 3D)"
+                theme="obmep"
+                extraBadge={{
+                  icon: "🦜",
+                  text: "Mascote Olímpico • 180 Questões"
+                }}
+                onOpenFlipBook={onOpenFlipBook}
+              />
             </div>
 
           </div>

@@ -13,7 +13,8 @@ import {
   X,
   FileText
 } from 'lucide-react';
-import { PerspectiveBook } from '../components/PerspectiveBook';
+import { InteractiveHeroBook } from '../components/InteractiveHeroBook';
+import { MathCanvasBackground } from '../components/MathCanvasBackground';
 import { EmpilhamentoDeVantagens } from '../components/EmpilhamentoDeVantagens';
 
 const CHECKOUT_PROVAO = "https://pay.cakto.com.br/ypkhicy_752822";
@@ -189,24 +190,31 @@ export function ProvaoPaulistaPage({ onBackToMagagnini, onOpenFlipBook }: Provao
       {/* ========================================================= */}
       {/* 2. HERO                                                   */}
       {/* ========================================================= */}
-      <section id="inicio" className="pt-32 pb-20 lg:pt-44 lg:pb-28 bg-gradient-to-b from-neutral-50 via-white to-white overflow-hidden relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="inicio" className="pt-32 pb-20 lg:pt-44 lg:pb-28 bg-gradient-to-b from-neutral-950 via-[#180308] to-neutral-950 text-white overflow-hidden relative">
+        {/* Full Interactive Canvas Animation across the entire Hero (Red Lasers, Formulas, Particles) */}
+        <MathCanvasBackground theme="wine" particleDensity="high" interactive={true} />
+
+        {/* Ambient Wine Glow Effects */}
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-wine-800/25 rounded-full blur-[130px] pointer-events-none" />
+        <div className="absolute -bottom-20 left-0 w-[450px] h-[450px] bg-wine-900/20 rounded-full blur-[110px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
             
             <div className="lg:col-span-7 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-50 border border-wine-200 text-wine-800 text-xs font-bold uppercase tracking-wider mb-6">
-                <Sparkles size={14} className="text-wine-700" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wine-900/60 border border-wine-500/40 text-wine-200 text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-md">
+                <Sparkles size={14} className="text-wine-400" />
                 <span>Vestibular Seriado Paulista</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-950 tracking-tight leading-[1.15]">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15]">
                 Apostila do Provão Paulista.<br />
-                <span className="text-wine-800 underline decoration-wine-200 decoration-wavy decoration-2">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-rose-400 to-wine-300 underline decoration-wine-400/40 decoration-wavy decoration-2">
                   Sua Vaga nas Melhores Universidades.
                 </span>
               </h1>
 
-              <p className="mt-6 text-lg sm:text-xl text-neutral-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              <p className="mt-6 text-lg sm:text-xl text-neutral-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                 Material preparatório completo com questões comentadas, separação por área do conhecimento e análise detalhada dos conteúdos mais cobrados.
               </p>
 
@@ -217,8 +225,8 @@ export function ProvaoPaulistaPage({ onBackToMagagnini, onOpenFlipBook }: Provao
                   'Gabaritos explicados passo a passo',
                   'Foco em USP, UNICAMP, UNESP e FATEC'
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2.5 text-sm font-semibold text-neutral-800">
-                    <CheckCircle2 size={18} className="text-wine-800 flex-shrink-0" />
+                  <div key={idx} className="flex items-center gap-2.5 text-sm font-semibold text-neutral-200">
+                    <CheckCircle2 size={18} className="text-wine-400 flex-shrink-0" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -229,7 +237,7 @@ export function ProvaoPaulistaPage({ onBackToMagagnini, onOpenFlipBook }: Provao
                   href={CHECKOUT_PROVAO}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-wine-800 to-wine-900 shadow-3d-wine hover:shadow-3d-wine-hover hover:-translate-y-0.5 transition-all border border-wine-600/40"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-wine-800 to-wine-700 shadow-3d-wine hover:shadow-3d-wine-hover hover:-translate-y-0.5 transition-all border border-wine-500/50"
                 >
                   <span>QUERO MINHA APOSTILA</span>
                   <ArrowRight size={18} />
@@ -239,52 +247,37 @@ export function ProvaoPaulistaPage({ onBackToMagagnini, onOpenFlipBook }: Provao
                   <button
                     type="button"
                     onClick={onOpenFlipBook}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-base font-bold text-wine-900 bg-wine-50 hover:bg-wine-100 border border-wine-300 shadow-sm transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-base font-bold text-wine-100 bg-white/10 hover:bg-white/15 border border-white/20 shadow-sm transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98] backdrop-blur-md"
                   >
-                    <Sparkles size={18} className="text-wine-800" />
+                    <Sparkles size={18} className="text-amber-300" />
                     <span>Folhear Amostra (9 Pág. 3D)</span>
                   </button>
                 )}
 
                 <a
                   href="#sobre-o-material"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-700 bg-white border border-neutral-300 hover:border-wine-800 hover:text-wine-800 shadow-sm transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-base font-semibold text-neutral-300 bg-white/5 hover:bg-white/10 border border-white/15 shadow-sm transition-all backdrop-blur-sm"
                 >
                   <span>Conhecer Conteúdo ↓</span>
                 </a>
               </div>
             </div>
 
-            {/* Right: Book in 3D */}
+            {/* Right: Book in 3D Interactive Parallax */}
             <div className="mt-12 lg:mt-0 lg:col-span-5 flex flex-col items-center justify-center relative">
-              <div 
-                onClick={onOpenFlipBook}
-                className={`relative group flex flex-col items-center ${onOpenFlipBook ? 'cursor-pointer' : ''}`}
-                title={onOpenFlipBook ? "Clique para folhear a amostra digital em 3D (9 páginas)" : undefined}
-              >
-                <div className="absolute -inset-4 bg-gradient-to-tr from-wine-800/20 to-transparent rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                <PerspectiveBook
-                  size="lg"
-                  coverImage="/assets/produtos/apostilas-academicas/provao-paulista.png"
-                  title="Provão Paulista"
-                  subtitle="Preparatório Oficial"
-                  badge="Ensino Médio • Resolvida"
-                  isDestaque={true}
-                />
-                {onOpenFlipBook && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onOpenFlipBook();
-                    }}
-                    className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-wine-900 bg-wine-50 hover:bg-wine-100 border border-wine-300 shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
-                  >
-                    <Sparkles size={13} className="text-wine-800" />
-                    <span>Folhear amostra interativa (9 pág. 3D)</span>
-                  </button>
-                )}
-              </div>
+              <InteractiveHeroBook
+                coverImage="/assets/produtos/apostilas-academicas/provao-paulista.png"
+                title="Provão Paulista"
+                subtitle="Preparatório Oficial"
+                badge="Ensino Médio • Resolvida"
+                flipBookLabel="Folhear amostra interativa (9 pág. 3D)"
+                theme="wine"
+                extraBadge={{
+                  icon: "🏛️",
+                  text: "Vagas Diretas USP • UNESP • UNICAMP"
+                }}
+                onOpenFlipBook={onOpenFlipBook}
+              />
             </div>
 
           </div>

@@ -17,6 +17,8 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PerspectiveBook } from '../components/PerspectiveBook';
+import { InteractiveHeroBook } from '../components/InteractiveHeroBook';
+import { MathCanvasBackground } from '../components/MathCanvasBackground';
 import type { FlipBookType } from '../components/FlipBookModal';
 
 function YoutubeIcon({ className = "w-5 h-5", size = 20 }: { className?: string; size?: number }) {
@@ -242,6 +244,9 @@ export function AlunosPage({
       {/* 2. HERO — ALUNOS                                          */}
       {/* ========================================================= */}
       <section className="pt-32 pb-20 lg:pt-44 lg:pb-32 bg-gradient-to-b from-neutral-950 via-[#0e0306] to-neutral-950 text-white relative overflow-hidden">
+        {/* Full Interactive Canvas Animation across the entire Hero */}
+        <MathCanvasBackground theme="wine" particleDensity="high" interactive={true} />
+
         {/* Glow Effects */}
         <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-wine-800/25 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute -bottom-20 left-0 w-[400px] h-[400px] bg-wine-900/20 rounded-full blur-[100px] pointer-events-none" />
@@ -310,34 +315,19 @@ export function AlunosPage({
               transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="mt-14 lg:mt-0 lg:col-span-5 flex justify-center relative"
             >
-              <div 
-                onClick={() => onOpenFlipBook?.('provao-paulista')}
-                className={`relative group flex flex-col items-center ${onOpenFlipBook ? 'cursor-pointer' : ''}`}
-                title={onOpenFlipBook ? "Clique para folhear a amostra digital em 3D" : undefined}
-              >
-                <div className="absolute -inset-4 bg-wine-800/30 rounded-3xl blur-2xl opacity-75 pointer-events-none" />
-                <PerspectiveBook
-                  size="lg"
-                  coverImage="/assets/produtos/apostilas-academicas/provao-paulista.png"
-                  title="Apostila Provão Paulista"
-                  subtitle="Preparação Completa com Questões Comentadas"
-                  badge="Ensino Médio"
-                  isDestaque={true}
-                />
-                {onOpenFlipBook && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onOpenFlipBook('provao-paulista');
-                    }}
-                    className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-wine-900 bg-wine-50 hover:bg-wine-100 border border-wine-300 shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
-                  >
-                    <Sparkles size={13} className="text-wine-800" />
-                    <span>Folhear amostra interativa (9 pág. 3D)</span>
-                  </button>
-                )}
-              </div>
+              <InteractiveHeroBook
+                coverImage="/assets/produtos/apostilas-academicas/provao-paulista.png"
+                title="Apostila Provão Paulista"
+                subtitle="Preparação Completa com Questões Comentadas"
+                badge="Ensino Médio"
+                flipBookLabel="Folhear amostra interativa (9 pág. 3D)"
+                theme="wine"
+                extraBadge={{
+                  icon: "🎓",
+                  text: "100 Questões Oficiais Comentadas"
+                }}
+                onOpenFlipBook={onOpenFlipBook ? () => onOpenFlipBook('provao-paulista') : undefined}
+              />
             </motion.div>
 
           </div>
