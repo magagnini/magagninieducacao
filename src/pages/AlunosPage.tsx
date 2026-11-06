@@ -709,11 +709,12 @@ export function AlunosPage({
             
             {/* Card 1: Apostila Provão Paulista */}
             <motion.div 
+              id="provao"
               initial={{ opacity: 0, x: -70 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-white rounded-3xl p-8 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all flex flex-col justify-between"
+              className="bg-white rounded-3xl p-8 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all flex flex-col justify-between scroll-mt-24"
             >
               <div>
                 <div 
@@ -772,7 +773,7 @@ export function AlunosPage({
                   </button>
                 ) : (
                   <a
-                    href="#provao-paulista"
+                    href="/provao-paulista"
                     className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md transition-all"
                   >
                     <span>Conhecer a apostila</span>
@@ -805,11 +806,12 @@ export function AlunosPage({
 
             {/* Card 2: Apostila OBMEP Vol. 1 */}
             <motion.div 
+              id="obmep"
               initial={{ opacity: 0, x: 70 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-white rounded-3xl p-8 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all flex flex-col justify-between"
+              className="bg-white rounded-3xl p-8 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-wine-300 transition-all flex flex-col justify-between scroll-mt-24"
             >
               <div>
                 <div 
@@ -868,7 +870,7 @@ export function AlunosPage({
                   </button>
                 ) : (
                   <a
-                    href="#obmep"
+                    href="/obmep"
                     className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl text-sm font-bold text-white bg-wine-800 hover:bg-wine-900 shadow-md transition-all"
                   >
                     <span>Conhecer a apostila</span>

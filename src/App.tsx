@@ -47,19 +47,19 @@ function App() {
       const path = window.location.pathname;
       const hash = window.location.hash;
       
+      // Direct access to specific book/product pages
+      if (path === '/obmep' || path === '/materiais/obmep' || (path !== '/alunos' && hash === '#obmep')) return 'obmep';
+      if (path === '/provao' || path === '/provao-paulista' || path === '/materiais/provao-paulista' || (path !== '/alunos' && hash === '#provao-paulista')) return 'provao-paulista';
+      if (path === '/themis-class' || path === '/themis' || hash === '#themis-class') return 'themis';
+      if (path === '/atheneum-lib' || path === '/atheneum' || hash === '#atheneum-lib') return 'atheneum';
+      if (path === '/matematica' || path === '/matematica-adaptada' || path === '/materiais/matematica' || hash === '#matematica-adaptada') return 'matematica';
+      if (path === '/ciencias' || path === '/ciencias-adaptadas' || path === '/materiais/ciencias' || hash === '#ciencias-adaptadas') return 'ciencias';
+      if (path === '/produtividade-inteligente' || path === '/livros/produtividade-inteligente' || hash === '#produtividade-inteligente') return 'produtividade-inteligente';
+
       // Profiles
       if (path === '/alunos' || hash === '#alunos') return 'alunos';
       if (path === '/professores' || hash === '#professores') return 'professores';
       if (path === '/gestores' || hash === '#gestores') return 'gestores';
-
-      // Products & Solutions
-      if (path === '/themis-class' || hash === '#themis-class') return 'themis';
-      if (path === '/atheneum-lib' || hash === '#atheneum-lib') return 'atheneum';
-      if (path === '/materiais/obmep' || hash === '#obmep') return 'obmep';
-      if (path === '/materiais/provao-paulista' || hash === '#provao-paulista') return 'provao-paulista';
-      if (path === '/materiais/matematica' || hash === '#matematica-adaptada') return 'matematica';
-      if (path === '/materiais/ciencias' || hash === '#ciencias-adaptadas') return 'ciencias';
-      if (path === '/livros/produtividade-inteligente' || path === '/produtividade-inteligente' || hash === '#produtividade-inteligente') return 'produtividade-inteligente';
     }
     return 'magagnini';
   });
@@ -69,26 +69,26 @@ function App() {
       const path = window.location.pathname;
       const hash = window.location.hash;
 
-      if (path === '/alunos' || hash === '#alunos') {
+      if (path === '/obmep' || path === '/materiais/obmep' || (path !== '/alunos' && hash === '#obmep')) {
+        setCurrentPage('obmep');
+      } else if (path === '/provao' || path === '/provao-paulista' || path === '/materiais/provao-paulista' || (path !== '/alunos' && hash === '#provao-paulista')) {
+        setCurrentPage('provao-paulista');
+      } else if (path === '/themis-class' || path === '/themis' || hash === '#themis-class') {
+        setCurrentPage('themis');
+      } else if (path === '/atheneum-lib' || path === '/atheneum' || hash === '#atheneum-lib') {
+        setCurrentPage('atheneum');
+      } else if (path === '/matematica' || path === '/matematica-adaptada' || path === '/materiais/matematica' || hash === '#matematica-adaptada') {
+        setCurrentPage('matematica');
+      } else if (path === '/ciencias' || path === '/ciencias-adaptadas' || path === '/materiais/ciencias' || hash === '#ciencias-adaptadas') {
+        setCurrentPage('ciencias');
+      } else if (path === '/produtividade-inteligente' || path === '/livros/produtividade-inteligente' || hash === '#produtividade-inteligente') {
+        setCurrentPage('produtividade-inteligente');
+      } else if (path === '/alunos' || hash === '#alunos') {
         setCurrentPage('alunos');
       } else if (path === '/professores' || hash === '#professores') {
         setCurrentPage('professores');
       } else if (path === '/gestores' || hash === '#gestores') {
         setCurrentPage('gestores');
-      } else if (path === '/themis-class' || hash === '#themis-class') {
-        setCurrentPage('themis');
-      } else if (path === '/atheneum-lib' || hash === '#atheneum-lib') {
-        setCurrentPage('atheneum');
-      } else if (path === '/materiais/obmep' || hash === '#obmep') {
-        setCurrentPage('obmep');
-      } else if (path === '/materiais/provao-paulista' || hash === '#provao-paulista') {
-        setCurrentPage('provao-paulista');
-      } else if (path === '/materiais/matematica' || hash === '#matematica-adaptada') {
-        setCurrentPage('matematica');
-      } else if (path === '/materiais/ciencias' || hash === '#ciencias-adaptadas') {
-        setCurrentPage('ciencias');
-      } else if (path === '/livros/produtividade-inteligente' || path === '/produtividade-inteligente' || hash === '#produtividade-inteligente') {
-        setCurrentPage('produtividade-inteligente');
       } else {
         setCurrentPage('magagnini');
       }
@@ -110,13 +110,13 @@ function App() {
     if (page === 'alunos') targetUrl = '/alunos';
     else if (page === 'professores') targetUrl = '/professores';
     else if (page === 'gestores') targetUrl = '/gestores';
-    else if (page === 'themis') targetUrl = '#themis-class';
-    else if (page === 'atheneum') targetUrl = '#atheneum-lib';
-    else if (page === 'obmep') targetUrl = '#obmep';
-    else if (page === 'provao-paulista') targetUrl = '#provao-paulista';
-    else if (page === 'matematica') targetUrl = '#matematica-adaptada';
-    else if (page === 'ciencias') targetUrl = '#ciencias-adaptadas';
-    else if (page === 'produtividade-inteligente') targetUrl = '#produtividade-inteligente';
+    else if (page === 'themis') targetUrl = '/themis-class';
+    else if (page === 'atheneum') targetUrl = '/atheneum-lib';
+    else if (page === 'obmep') targetUrl = '/obmep';
+    else if (page === 'provao-paulista') targetUrl = '/provao-paulista';
+    else if (page === 'matematica') targetUrl = '/matematica';
+    else if (page === 'ciencias') targetUrl = '/ciencias';
+    else if (page === 'produtividade-inteligente') targetUrl = '/produtividade-inteligente';
 
     try {
       window.history.pushState({}, '', targetUrl);
